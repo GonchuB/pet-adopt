@@ -64,3 +64,12 @@ bin/rake db:setup
 ```bash
 bin/rails server -p 3000
 ```
+### Creating a model
+```bash
+bin/rails generate model NAME field[:type][:index]
+```
+For example
+```bash
+bin/rails generate scaffold Pet type:string:index name:string description:text
+bin/rake db:migrate
+```
