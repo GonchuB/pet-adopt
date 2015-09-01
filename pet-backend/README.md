@@ -1,3 +1,5 @@
+# Ruby on Rails backend
+
 ## RVM with Ruby and Rails
 ```bash
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
@@ -51,7 +53,7 @@ wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 heroku login
 ```
 
-## Creating Rails app
+## Creating Rails app (already created)
 ```bash
 rails new <app-name> --database=postgresql
 ```
@@ -64,11 +66,7 @@ bin/rake db:setup
 ```bash
 bin/rails server -p 3000
 ```
-### Creating a model
-```bash
-bin/rails generate model NAME field[:type][:index]
-```
-For example
+### Creating a scaffolded model (Pet model already created, try another one)
 ```bash
 bin/rails generate scaffold Pet type:string:index name:string description:text
 bin/rake db:migrate
