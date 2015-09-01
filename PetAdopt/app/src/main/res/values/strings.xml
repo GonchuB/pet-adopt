@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Pet Adopt</string>
+    <string name="app_id">1599819030268203</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_adoption_search">Adoption Search</string>
 
     <string name="edit_message">Edit me</string>
     <string name="button_send">Send</string>
