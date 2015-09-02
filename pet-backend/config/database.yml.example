@@ -10,14 +10,12 @@ development:
   database: pet-backend_development
   username: postgres
   password: password
-  template: template0
 
 test:
   <<: *default
   database: pet-backend_test
   username: postgres
   password: password
-  template: template0
 
 production:
   <<: *default

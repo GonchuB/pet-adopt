@@ -58,7 +58,11 @@ heroku login
 rails new <app-name> --database=postgresql
 ```
 ### Setup the database
+Configure the ```database.yml``` file, create database, run migrations and seed the database.
+
 ```bash
+cp config/database.yml.example config/database.yml
+bin/rake db:create
 bin/rake db:migrate
 bin/rake db:setup
 ```
