@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Needs transit home:
+  = @publication.needs_transit_home
+%p
+  %b Description:
+  = @publication.description
+%p
+  %b Pet:
+  = @publication.pet
+%p
+  %b User:
+  = @publication.user
+
+= link_to 'Edit', edit_publication_path(@publication)
+\|
+= link_to 'Back', publications_path
