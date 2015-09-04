@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  needs_transit_home: false
+  description: MyText
+  pet_id: 
+  user_id: 
+
+two:
+  needs_transit_home: false
+  description: MyText
+  pet_id: 
+  user_id: 
