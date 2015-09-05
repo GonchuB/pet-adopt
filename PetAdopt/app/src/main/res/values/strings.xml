@@ -8,4 +8,7 @@
 
     <string name="edit_message">Edit me</string>
     <string name="button_send">Send</string>
+    <string name="show_main_screen">Bypass login and show main</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Closed</string>
 </resources>

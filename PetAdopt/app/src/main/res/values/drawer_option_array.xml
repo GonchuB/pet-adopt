@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="drawer_option_array">
+        <item>Matches</item>
+        <item>Search</item>
+        <item>My pets</item>
+        <item>Settings</item>
+        <item>Logout</item>
+    </string-array>
+</resources>

@@ -1,13 +1,8 @@
-package com.fiuba.tdp.petadopt;
+package com.fiuba.tdp.petadopt.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
@@ -21,7 +16,7 @@ public class AdoptionSearchActivity extends AppCompatActivity {
 
         // Get the message from the intent
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MyActivity.EXTRA_MESSAGE);
+        String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
 
         // Create the text view
         TextView textView = new TextView(this);
