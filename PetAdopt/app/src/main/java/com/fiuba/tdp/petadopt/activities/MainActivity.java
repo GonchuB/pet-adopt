@@ -16,13 +16,37 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import service.PublicationClient;
 
 public class MainActivity extends AppCompatActivity {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private PublicationClient client;
 
+    private void fetchPublications() {
+        client = new PublicationClient();
+        client.getPublications(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers,JSONObject body) {
+                String items = "";
+                try {
+                    items = body.toString();
+                    Log.v("JSON",items);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        this.fetchPublications();
 
     }
 

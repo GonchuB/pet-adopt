@@ -3,6 +3,7 @@ package com.fiuba.tdp.petadopt.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
-        info = (TextView) findViewById(R.id.info);
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -41,12 +41,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 String facebookId = loginResult.getAccessToken().getUserId();
                 String facebookToken = loginResult.getAccessToken().getToken();
-                info.setText(
-                        "User ID: "
-                                + facebookId
-                                + "\n" +
-                                "Auth Token: "
-                                + facebookToken
+                Log.v("FB",
+                    "User ID: "
+                        + facebookId
+                    + " " +
+                    "Auth Token: "
+                        + facebookToken
                 );
                 User.user().loggedInWithFacebook(facebookId, facebookToken);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
