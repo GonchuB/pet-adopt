@@ -18,6 +18,27 @@ android {
         }
     }
 
+    productFlavors {
+        def BASE_ENDPOINT = "BASE_ENDPOINT"
+
+        dev {
+            applicationId "com.fiuba.tdp.petadopt"
+            // For running in emulator: 10.0.2.2 is the ip for host machine.
+            // Server should run in host at port 3000
+            buildConfigField "String", BASE_ENDPOINT, '"http://10.0.2.2:3000/"'
+        }
+
+        qa {
+            applicationId "com.fiuba.tdp.petadopt"
+            buildConfigField "String", BASE_ENDPOINT, '"http://my-qa-url.fakehost.com/"'
+        }
+
+        prod {
+            applicationId "com.fiuba.tdp.petadopt"
+            buildConfigField "String", BASE_ENDPOINT, '"http://my-pro-durl.fakehost.com/"'
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'

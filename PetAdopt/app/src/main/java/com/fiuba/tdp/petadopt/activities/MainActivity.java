@@ -20,23 +20,21 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import service.PublicationClient;
+import service.PetsClient;
 
 public class MainActivity extends AppCompatActivity {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private PublicationClient client;
+    private PetsClient client;
 
-    private void fetchPublications() {
-        client = new PublicationClient();
+    private void fetchPets() {
+        client = new PetsClient();
         client.getPublications(new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int code, Header[] headers,JSONObject body) {
+            public void onSuccess(int code, Header[] headers,JSONArray body) {
                 String items = "";
                 try {
                     items = body.toString();
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        this.fetchPublications();
+        this.fetchPets();
 
     }
 
