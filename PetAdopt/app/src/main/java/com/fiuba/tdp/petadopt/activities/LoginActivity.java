@@ -22,7 +22,6 @@ import com.fiuba.tdp.petadopt.model.User;
 public class LoginActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.fiuba.tdp.petadopt.MESSAGE";
-    private TextView info;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -54,12 +53,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                info.setText("Login attempt canceled.");
+                Log.v("FB","Login attempt canceled.");
             }
 
             @Override
             public void onError(FacebookException e) {
-                info.setText("Login attempt failed.");
+                Log.v("FB","Login attempt failed.");
             }
         });
 
