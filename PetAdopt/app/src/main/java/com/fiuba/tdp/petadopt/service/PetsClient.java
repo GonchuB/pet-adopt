@@ -3,7 +3,7 @@
  * Example HTTP Client
  */
 
-package service;
+package com.fiuba.tdp.petadopt.service;
 
 import com.fiuba.tdp.petadopt.BuildConfig;
 

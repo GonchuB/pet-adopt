@@ -1,4 +1,4 @@
-package model;
+package com.fiuba.tdp.petadopt.model;
 
 /**
  * Created by lucas on 9/5/15.
