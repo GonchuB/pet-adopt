@@ -26,14 +26,6 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
-        <activity
-            android:name=".activities.AdoptionSearchActivity"
-            android:label="@string/title_activity_adoption_search"
-            android:parentActivityName=".activities.LoginActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AdoptionSearchActivity" />
-        </activity>
     </application>
 
 </manifest>

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
-    private int initialFragment = 0;
+    private int initialFragmentIndex = 0;
 
     private void fetchPets() {
         client = new PetsClient();
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         };
-        listener.displayView(initialFragment);
+        listener.displayView(initialFragmentIndex);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
