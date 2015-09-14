@@ -5,31 +5,25 @@
 
 package com.fiuba.tdp.petadopt.service;
 
-import com.fiuba.tdp.petadopt.BuildConfig;
+import android.util.Log;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 
-public class PetsClient {
+public class PetsClient extends HttpClient {
 
-    private final String API_BASE_URL = BuildConfig.BASE_ENDPOINT;
-    private AsyncHttpClient client;
+    private String auth_token;
 
-    public PetsClient() {
-        this.client = new AsyncHttpClient();
+    public PetsClient(String auth_token) {
+        this.auth_token = auth_token;
     }
 
-    public void getPublications(JsonHttpResponseHandler handler) {
+    public void getPets(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         RequestParams params = new RequestParams();
+        Log.v("after intent", auth_token);
+        params.put("user_token", auth_token);
         client.get(url, params, handler);
     }
-
-    private String getApiUrl(String relativeUrl) {
-        return API_BASE_URL + relativeUrl;
-    }
-
-
 }

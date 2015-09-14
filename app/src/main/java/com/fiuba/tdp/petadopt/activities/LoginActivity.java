@@ -17,13 +17,20 @@ import com.facebook.login.widget.LoginButton;
 import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
+import com.fiuba.tdp.petadopt.service.AuthClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    public final static String EXTRA_MESSAGE = "com.fiuba.tdp.petadopt.MESSAGE";
+    public final static String AUTH_TOKEN = "com.fiuba.tdp.petadopt.AUTH_TOKEN";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private AuthClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,26 +46,41 @@ public class LoginActivity extends AppCompatActivity {
                 String facebookId = loginResult.getAccessToken().getUserId();
                 String facebookToken = loginResult.getAccessToken().getToken();
                 Log.v("FB",
-                    "User ID: "
-                        + facebookId
-                    + " " +
-                    "Auth Token: "
-                        + facebookToken
+                        "User ID: "
+                                + facebookId
+                                + " " +
+                                "Auth Token: "
+                                + facebookToken
                 );
                 User.user().loggedInWithFacebook(facebookId, facebookToken);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "communicating activities");
-                startActivity(intent);
+                client = new AuthClient();
+                client.signUp(getApplicationContext(), facebookId, facebookToken, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int code, Header[] headers, JSONObject body) {
+                                String auth_token = "";
+                                try {
+                                    auth_token = body.getString("authentication_token");
+                                    Log.v("JSON", body.toString());
+                                    Log.v("authtok", auth_token);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.putExtra(AUTH_TOKEN, auth_token);
+                                    startActivity(intent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                );
             }
 
             @Override
             public void onCancel() {
-                Log.v("FB","Login attempt canceled.");
+                Log.v("FB", "Login attempt canceled.");
             }
 
             @Override
             public void onError(FacebookException e) {
-                Log.v("FB","Login attempt failed.");
+                Log.v("FB", "Login attempt failed.");
             }
         });
 

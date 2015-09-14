@@ -35,16 +35,17 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
     private int initialFragmentIndex = 0;
+    private String auth_token;
 
     private void fetchPets() {
-        client = new PetsClient();
-        client.getPublications(new JsonHttpResponseHandler() {
+        client = new PetsClient(auth_token);
+        client.getPets(new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int code, Header[] headers,JSONArray body) {
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
                 String items = "";
                 try {
                     items = body.toString();
-                    Log.v("JSON",items);
+                    Log.v("JSON", items);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -54,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                auth_token= null;
+            } else {
+                auth_token= extras.getString(LoginActivity.AUTH_TOKEN);
+            }
+        } else {
+            auth_token = (String) savedInstanceState.getSerializable(LoginActivity.AUTH_TOKEN);
+        }
 
         DrawerItemClickListener listener = new DrawerItemClickListener();
 
