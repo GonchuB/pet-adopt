@@ -11,4 +11,7 @@
     <string name="show_main_screen">Bypass login and show main</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Closed</string>
+    <string name="exit_toast">Press Back again to Exit.</string>
+
+    <string name="new_pet_button">Add Pet</string>
 </resources>

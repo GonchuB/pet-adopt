@@ -32,6 +32,10 @@ public class AuthClient extends HttpClient {
         }
     }
 
+    public void login(Context context) {
+
+    }
+
 //    public void signUp(String email, String password){
 //
 //    }
