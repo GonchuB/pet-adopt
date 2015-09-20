@@ -7,5 +7,6 @@
 
     <color name="main_orange">#ffa500</color>
     <color name="hover_orange">#ff8607</color>
+    <color name="background">#ffe2bb</color>
 
 </resources>
