@@ -2,6 +2,7 @@ package com.fiuba.tdp.petadopt.service;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -24,6 +25,7 @@ public class AuthClient extends HttpClient {
             userData.put("facebook_id", fb_id);
             userData.put("facebook_token", fb_token);
             user.put("user", userData);
+            Log.v("JSON",user.toString());
             entity = new StringEntity(user.toString());
             client.post(context, url, entity, "application/json", handler);
 

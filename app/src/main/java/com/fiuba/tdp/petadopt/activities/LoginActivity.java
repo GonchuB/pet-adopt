@@ -99,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     private void continueToHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
