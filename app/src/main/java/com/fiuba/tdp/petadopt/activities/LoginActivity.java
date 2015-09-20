@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -18,16 +17,17 @@ import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.AuthClient;
+import com.fiuba.tdp.petadopt.service.UserPersistenceService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class LoginActivity extends AppCompatActivity {
 
     public final static String AUTH_TOKEN = "com.fiuba.tdp.petadopt.AUTH_TOKEN";
+    public static final String EXIT_FLAG = "exit_flag";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private AuthClient client;
@@ -35,6 +35,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        UserPersistenceService ups = new UserPersistenceService(this);
+        User user = ups.getUserIfPresent();
+        if (user != null) {
+            continueToHome();
+            return;
+        }
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
@@ -58,13 +66,14 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(int code, Header[] headers, JSONObject body) {
                                 String auth_token = "";
+                                UserPersistenceService ups = new UserPersistenceService(LoginActivity.this);
                                 try {
                                     auth_token = body.getString("authentication_token");
+                                    User.user().setAuthToken(auth_token);
+                                    ups.saveUserData(User.user());
                                     Log.v("JSON", body.toString());
                                     Log.v("authtok", auth_token);
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra(AUTH_TOKEN, auth_token);
-                                    startActivity(intent);
+                                    continueToHome();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -87,11 +96,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void continueToHome() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
 
     @Override
     protected void onResume() {
@@ -99,14 +113,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
     }
 
     public void showMainScreen(View view) {

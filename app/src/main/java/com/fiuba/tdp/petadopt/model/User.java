@@ -8,6 +8,15 @@ public class User {
     private static User user;
     private String facebookId;
     private String facebookToken;
+    private String authToken;
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
 
     public String getFacebookId() {
         return facebookId;

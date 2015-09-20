@@ -8,7 +8,11 @@
 
     <string name="edit_message">Edit me</string>
     <string name="button_send">Send</string>
-    <string name="show_main_screen">Bypass login and show main</string>
+    <string name="login_message">Please login</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Closed</string>
+    <string name="exit_toast">Press Back again to Exit.</string>
+
+    <string name="new_pet_button">Add Pet</string>
+    <string name="new_pet_title">Add a pet!</string>
 </resources>
