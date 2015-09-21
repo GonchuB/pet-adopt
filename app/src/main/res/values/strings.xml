@@ -14,5 +14,14 @@
     <string name="exit_toast">Press Back again to Exit.</string>
 
     <string name="new_pet_button">Add Pet</string>
-    <string name="new_pet_title">Add a pet!</string>
+    <string name="new_pet_title">Add a new pet!</string>
+    <string name="new_pet_name_hint">Pet Name</string>
+    <string name="new_pet_type_hint">Pet Type</string>
+    <string name="new_pet_age_hint">Pet Age</string>
+    <string name="new_pet_gender_hint">Pet Gender</string>
+    <string name="new_pet_main_color_hint">Pet Main Color</string>
+    <string name="new_pet_second_color_hint">Pet Second Color</string>
+    <string name="new_pet_description_hint">Pet Description</string>
+    <string name="new_pet_vaccinated_hint">is vaccinated</string>
+    <string name="new_pet_submit">Create New Pet</string>
 </resources>

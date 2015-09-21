@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MatchesFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.SearchFragment;
@@ -221,6 +222,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void showAddPetFragment(View view) {
+        Fragment fragment = new AddPetFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+        setTitle(R.string.new_pet_title);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     @Override

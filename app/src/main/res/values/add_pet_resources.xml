@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pet_type_array">
+        <item>Cat</item>
+        <item>Dog</item>
+    </string-array>
+    <string-array name="pet_gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="pet_color_array">
+        <item>Black</item>
+        <item>Gray</item>
+        <item>Brown</item>
+        <item>Chocolate</item>
+        <item>Red</item>
+        <item>Gold</item>
+        <item>Yellow</item>
+        <item>Cream</item>
+        <item>Silver</item>
+        <item>White</item>
+    </string-array>
+</resources>

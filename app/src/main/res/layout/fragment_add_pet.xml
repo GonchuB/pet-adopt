@@ -1,19 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/add_pet_layout"
+    android:background="@color/background">
 
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/pet_name"
+        android:layout_marginTop="36dp"
+        android:hint="@string/new_pet_name_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/pet_age"
+        android:hint="@string/new_pet_age_hint"
+        android:layout_alignTop="@+id/pet_name"
+        android:layout_toRightOf="@+id/pet_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fragTitle"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="23dp"
-        android:text="@string/new_pet_title"
-        style="@style/Base.TextAppearance.AppCompat.Title"
-        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_pet_type_hint"
+        android:id="@+id/type_hint"
+        android:layout_below="@+id/pet_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_pet_gender_hint"
+        android:id="@+id/gender_hint"
+        android:layout_below="@+id/type_hint"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_pet_main_color_hint"
+        android:id="@+id/main_color_hint"
+        android:layout_below="@+id/gender_hint"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_type"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/type_hint"
+        android:layout_toEndOf="@+id/type_hint"
+        android:layout_alignBottom="@+id/type_hint"
+        android:layout_alignTop="@+id/type_hint" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_gender"
+        android:layout_toEndOf="@+id/pet_vaccinated"
+        android:layout_alignTop="@+id/gender_hint"
+        android:spinnerMode="dropdown"
+        android:layout_alignBottom="@+id/gender_hint"
+        android:layout_toRightOf="@+id/pet_vaccinated" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_main_color"
+        android:layout_toEndOf="@+id/main_color_hint"
+        android:spinnerMode="dropdown"
+        android:layout_alignBottom="@+id/main_color_hint"
+        android:layout_below="@+id/gender_hint"
+        android:layout_toRightOf="@+id/main_color_hint" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/new_pet_second_color_hint"
+        android:id="@+id/pet_second_color_hint"
+        android:layout_below="@+id/main_color_hint"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_second_color"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/pet_second_color_hint"
+        android:layout_toEndOf="@+id/pet_second_color_hint"
+        android:layout_alignBottom="@+id/pet_second_color_hint"
+        android:layout_alignTop="@+id/pet_second_color_hint" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/pet_description"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="@string/new_pet_description_hint"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:singleLine="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_pet_vaccinated_hint"
+        android:id="@+id/pet_vaccinated"
+        android:layout_marginTop="25dp"
+        android:checked="false"
+        android:layout_below="@+id/pet_description"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pet_submit"
+        android:text="@string/new_pet_submit"
+        android:layout_below="@+id/pet_vaccinated"
+        android:layout_toRightOf="@+id/pet_name"
+        android:layout_toEndOf="@+id/pet_name" />
+
 </RelativeLayout>
