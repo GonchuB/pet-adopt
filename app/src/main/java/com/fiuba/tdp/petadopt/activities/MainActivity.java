@@ -26,7 +26,13 @@ import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.SearchFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
-import com.fiuba.tdp.petadopt.service.UserPersistenceService;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -48,30 +54,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        UserPersistenceService ups = new UserPersistenceService(this);
-        User user = ups.getUserIfPresent();
-        if (user == null) {
-            promptLogin();
-        } else {
-            auth_token = user.getAuthToken();
+        User.currentContext = getApplicationContext();
+        if (User.user().isLoggedIn()) {
+            auth_token = User.user().getAuthToken();
             setupActivity();
+        } else{
+            promptLogin();
         }
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        UserPersistenceService ups = new UserPersistenceService(this);
-        User user = ups.getUserIfPresent();
-        if (user == null) {
-            finish();
-        } else {
-            auth_token = user.getAuthToken();
+        if (User.user().isLoggedIn()){
+            auth_token = User.user().getAuthToken();
             setupActivity();
+        } else{
+            finish();
         }
-
     }
 
     private void setupActivity() {
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new MatchesFragment();
+                    fragment = new MapFragment();
                     break;
                 case 1:
                     fragment = new SearchFragment();
@@ -215,8 +217,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goBackToLogin() {
-        UserPersistenceService ups = new UserPersistenceService(this);
-        ups.destroyUserData();
+        User.user().logout();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
@@ -241,4 +242,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }

@@ -17,7 +17,6 @@ import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.AuthClient;
-import com.fiuba.tdp.petadopt.service.UserPersistenceService;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -36,9 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserPersistenceService ups = new UserPersistenceService(this);
-        User user = ups.getUserIfPresent();
-        if (user != null) {
+        if (User.user().isLoggedIn()) {
             continueToHome();
             return;
         }
@@ -66,11 +63,9 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(int code, Header[] headers, JSONObject body) {
                                 String auth_token = "";
-                                UserPersistenceService ups = new UserPersistenceService(LoginActivity.this);
                                 try {
                                     auth_token = body.getString("authentication_token");
                                     User.user().setAuthToken(auth_token);
-                                    ups.saveUserData(User.user());
                                     Log.v("JSON", body.toString());
                                     Log.v("authtok", auth_token);
                                     continueToHome();
