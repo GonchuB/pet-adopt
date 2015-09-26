@@ -44,6 +44,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.fiuba.tdp.petadopt.service.PetsClient;
+
+import java.io.File;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String[] optionTitles;
@@ -203,6 +209,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Set the Image in ImageView after decoding the String
                 imgView.setImageBitmap(BitmapFactory
                         .decodeFile(imgDecodableString));
+
+                PetsClient petsClient = new PetsClient(new UserPersistenceService(getApplicationContext()).getUserIfPresent().getAuthToken());
+
+                petsClient.uploadImage("42", new File(imgDecodableString),new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int code, Header[] headers, JSONObject body) {
+                        String items = "";
+                        try {
+                            items = body.getString("original_url");
+                            Log.v("image response", items);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
             } else {
                 Toast.makeText(this, "You haven't picked Image",
