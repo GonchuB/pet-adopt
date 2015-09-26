@@ -93,4 +93,9 @@ public class PetsClient extends HttpClient {
 
         return params;
     }
+
+    public void uploadImage(JsonHttpResponseHandler handler){
+        String url = getApiUrl("/pets.json");
+
+    }
 }
