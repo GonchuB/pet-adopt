@@ -24,4 +24,9 @@
     <string name="new_pet_description_hint">Pet Description</string>
     <string name="new_pet_vaccinated_hint">is vaccinated</string>
     <string name="new_pet_submit">Create New Pet</string>
+    <string name="new_pet_title">Add a pet!</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="center_pin">Center pin</string>
 </resources>

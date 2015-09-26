@@ -1,12 +1,13 @@
 package com.fiuba.tdp.petadopt.activities;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,21 +22,23 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
-import com.fiuba.tdp.petadopt.fragments.AddPetFragment;
-import com.fiuba.tdp.petadopt.fragments.MatchesFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.SearchFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
-import com.fiuba.tdp.petadopt.service.UserPersistenceService;
+import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 
-import com.fiuba.tdp.petadopt.service.PetsClient;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -45,18 +48,17 @@ public class MainActivity extends AppCompatActivity {
     private String auth_token;
     private Boolean created = false;
     private Boolean exit = false;
+    private Fragment mapFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        UserPersistenceService ups = new UserPersistenceService(this);
-        User user = ups.getUserIfPresent();
-        if (user == null) {
-            promptLogin();
-        } else {
-            auth_token = user.getAuthToken();
+        User.currentContext = getApplicationContext();
+        if (User.user().isLoggedIn()) {
+            auth_token = User.user().getAuthToken();
             setupActivity();
+        } else{
+            promptLogin();
         }
 
     }
@@ -64,19 +66,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        UserPersistenceService ups = new UserPersistenceService(this);
-        User user = ups.getUserIfPresent();
-        if (user == null) {
-            finish();
-        } else {
-            auth_token = user.getAuthToken();
+        if (User.user().isLoggedIn()){
+            auth_token = User.user().getAuthToken();
             setupActivity();
+        } else{
+            finish();
         }
 
     }
 
     private void setupActivity() {
         if (!created) {
+            mapFragment = new ChooseLocationMapFragment();
+
             DrawerItemClickListener listener = new DrawerItemClickListener();
 
             setContentView(R.layout.activity_main);
@@ -148,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
@@ -164,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new MatchesFragment();
+                    fragment = mapFragment;
                     break;
                 case 1:
                     fragment = new SearchFragment();
@@ -183,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (fragment != null) {
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, fragment).commit();
 
@@ -216,8 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goBackToLogin() {
-        UserPersistenceService ups = new UserPersistenceService(this);
-        ups.destroyUserData();
+        User.user().logout();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
@@ -251,4 +259,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
