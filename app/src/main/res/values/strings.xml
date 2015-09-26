@@ -32,4 +32,9 @@
     <string name="pet_creation_success">Publicación creada!</string>
     <string name="add_pet_name_not_completed">El nombre no puede estar vacio</string>
     <string name="add_pet_age_not_completed">La edad no puede estar vacía</string>
+
+    <string name="search_button">Buscar</string>
+    <string name="search_hint">Introduce tu búsqueda</string>
+    <string name="search_title">Búsqueda Simple</string>
+    <string name="advance_search_title">Búsqueda Avanzada</string>
 </resources>

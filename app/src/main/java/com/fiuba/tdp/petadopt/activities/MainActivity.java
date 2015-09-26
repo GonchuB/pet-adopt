@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.AdvancedSearchFragment;
+import com.fiuba.tdp.petadopt.fragments.MatchesFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
@@ -135,6 +137,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
+        if (item.getItemId() == R.id.advance_search_action){
+            return displayFragment(new AdvancedSearchFragment());
+        }
+
+        if (item.getItemId() == R.id.simple_search_action){
+            return displayFragment(new SearchFragment());
+        }
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -196,9 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment).commit();
+                displayFragment(fragment);
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -210,6 +218,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.e("MainActivity", "Error in creating fragment");
             }
         }
+    }
+
+    private boolean displayFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+
+        return true;
     }
 
     private void fetchPets() {
