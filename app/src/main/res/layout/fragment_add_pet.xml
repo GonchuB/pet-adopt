@@ -1,148 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_pet_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/add_pet_layout"
     android:background="@color/background">
 
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:id="@+id/pet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="36dp"
-        android:hint="@string/new_pet_name_hint" />
+        android:background="#FFF"
+        android:ems="10"
+        android:hint="@string/new_pet_name_hint"
+        android:inputType="textPersonName"
+        android:padding="5dp" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
         android:id="@+id/pet_age"
-        android:hint="@string/new_pet_age_hint"
-        android:layout_alignTop="@+id/pet_name"
-        android:layout_toRightOf="@+id/pet_name"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/new_pet_type_hint"
-        android:id="@+id/type_hint"
+        android:layout_alignLeft="@+id/pet_name"
+        android:layout_alignStart="@+id/pet_name"
         android:layout_below="@+id/pet_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginTop="10dp"
+        android:background="#FFF"
+        android:ems="10"
+        android:hint="@string/new_pet_age_hint"
+        android:inputType="numberDecimal"
+        android:padding="5dp" />
 
     <TextView
+        android:id="@+id/type_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/pet_age"
+        android:layout_below="@+id/pet_age"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_type_hint"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/new_pet_gender_hint"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/gender_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/type_hint"
         android:layout_below="@+id/type_hint"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_gender_hint"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/new_pet_main_color_hint"
         android:id="@+id/main_color_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/gender_hint"
         android:layout_below="@+id/gender_hint"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pet_type"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/type_hint"
-        android:layout_toEndOf="@+id/type_hint"
-        android:layout_alignBottom="@+id/type_hint"
-        android:layout_alignTop="@+id/type_hint" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pet_gender"
-        android:layout_toEndOf="@+id/pet_vaccinated"
-        android:layout_alignTop="@+id/gender_hint"
-        android:spinnerMode="dropdown"
-        android:layout_alignBottom="@+id/gender_hint"
-        android:layout_toRightOf="@+id/pet_vaccinated" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pet_main_color"
-        android:layout_toEndOf="@+id/main_color_hint"
-        android:spinnerMode="dropdown"
-        android:layout_alignBottom="@+id/main_color_hint"
-        android:layout_below="@+id/gender_hint"
-        android:layout_toRightOf="@+id/main_color_hint" />
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_main_color_hint"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/pet_second_color_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/new_pet_second_color_hint"
-        android:id="@+id/pet_second_color_hint"
+        android:layout_alignStart="@id/gender_hint"
         android:layout_below="@+id/main_color_hint"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_second_color_hint"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
     <Spinner
+        android:id="@+id/pet_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/type_hint"
+        android:layout_alignLeft="@+id/pet_gender"
+        android:layout_alignStart="@+id/pet_gender"
+        android:layout_alignTop="@+id/type_hint"
+        android:layout_toEndOf="@+id/type_hint"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/pet_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gender_hint"
+        android:layout_alignTop="@+id/gender_hint"
+        android:layout_toEndOf="@+id/gender_hint"
+        android:layout_toRightOf="@+id/gender_hint"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/pet_main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_color_hint"
+        android:layout_alignTop="@+id/main_color_hint"
+        android:layout_toEndOf="@+id/main_color_hint"
+        android:layout_toRightOf="@+id/main_color_hint"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
         android:id="@+id/pet_second_color"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/pet_second_color_hint"
-        android:layout_toEndOf="@+id/pet_second_color_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/pet_second_color_hint"
-        android:layout_alignTop="@+id/pet_second_color_hint" />
+        android:layout_alignTop="@+id/pet_second_color_hint"
+        android:layout_toEndOf="@+id/pet_second_color_hint"
+        android:layout_toRightOf="@+id/pet_second_color_hint"
+        android:spinnerMode="dropdown" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
         android:id="@+id/pet_description"
-        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/pet_second_color_hint"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/pet_vaccinated"
+        android:ems="10"
         android:hint="@string/new_pet_description_hint"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:singleLine="true" />
+        android:inputType="textMultiLine"
+        android:singleLine="true"
+        android:layout_alignRight="@+id/pet_second_color"
+        android:layout_alignEnd="@+id/pet_second_color"
+        android:layout_margin="10dp"/>
 
     <CheckBox
+        android:id="@+id/pet_vaccinated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_pet_vaccinated_hint"
-        android:id="@+id/pet_vaccinated"
-        android:layout_marginTop="25dp"
-        android:checked="false"
-        android:layout_below="@+id/pet_description"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/pet_submit"
+        android:checked="false"
+        android:text="@string/new_pet_vaccinated_hint"
+        android:layout_margin="10dp"/>
+
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/pet_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/new_pet_submit"
-        android:layout_below="@+id/pet_vaccinated"
-        android:layout_toRightOf="@+id/pet_name"
-        android:layout_toEndOf="@+id/pet_name" />
+        android:textColor="#FFF"
+        android:background="@color/submit_button"
+        android:onClick="createPublication"/>
 
 </RelativeLayout>

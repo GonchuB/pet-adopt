@@ -1,6 +1,5 @@
 package com.fiuba.tdp.petadopt.activities;
 
-import android.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -179,12 +178,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = new SearchFragment();
                     break;
                 case 2:
-                    fragment = new MyPetsFragment();
+                    fragment = new AddPetFragment();
                     break;
                 case 3:
-                    fragment = new SettingsFragment();
+                    fragment = new MyPetsFragment();
                     break;
                 case 4:
+                    fragment = new SettingsFragment();
+                    break;
+                case 5:
                     goBackToLogin();
                     break;
                 default:
@@ -234,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void showAddPetFragment(View view) {
         Fragment fragment = new AddPetFragment();
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
         setTitle(R.string.new_pet_title);

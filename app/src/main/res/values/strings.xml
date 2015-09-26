@@ -3,30 +3,29 @@
     <string name="app_id">1599819030268203</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_adoption_search">Adoption Search</string>
+    <string name="action_settings">Configuración</string>
+    <string name="title_activity_adoption_search">Búsqueda adopción</string>
 
-    <string name="edit_message">Edit me</string>
-    <string name="button_send">Send</string>
-    <string name="login_message">Please login</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Closed</string>
-    <string name="exit_toast">Press Back again to Exit.</string>
+    <string name="edit_message">Editame</string>
+    <string name="button_send">Enviar</string>
+    <string name="login_message">Por favor, logueate</string>
+    <string name="drawer_open">Abierto</string>
+    <string name="drawer_close">Cerrado</string>
+    <string name="exit_toast">Presiona atrás de nuevo para salir</string>
 
-    <string name="new_pet_button">Add Pet</string>
-    <string name="new_pet_title">Add a new pet!</string>
-    <string name="new_pet_name_hint">Pet Name</string>
-    <string name="new_pet_type_hint">Pet Type</string>
-    <string name="new_pet_age_hint">Pet Age</string>
-    <string name="new_pet_gender_hint">Pet Gender</string>
-    <string name="new_pet_main_color_hint">Pet Main Color</string>
-    <string name="new_pet_second_color_hint">Pet Second Color</string>
-    <string name="new_pet_description_hint">Pet Description</string>
-    <string name="new_pet_vaccinated_hint">is vaccinated</string>
-    <string name="new_pet_submit">Create New Pet</string>
-    <string name="new_pet_title">Add a pet!</string>
+    <string name="new_pet_button">Agregar mascota</string>
+    <string name="new_pet_title">Agregá una mascota nueva!</string>
+    <string name="new_pet_name_hint">Nombre</string>
+    <string name="new_pet_type_hint">Tipo</string>
+    <string name="new_pet_age_hint">Edad</string>
+    <string name="new_pet_gender_hint">Género</string>
+    <string name="new_pet_main_color_hint">Color principal</string>
+    <string name="new_pet_second_color_hint">Color secundario</string>
+    <string name="new_pet_description_hint">Descripción</string>
+    <string name="new_pet_vaccinated_hint">¿Está vacunada?</string>
+    <string name="new_pet_submit">Crear publicación</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="center_pin">Center pin</string>
+    <string name="center_pin">Centrar pin</string>
 </resources>

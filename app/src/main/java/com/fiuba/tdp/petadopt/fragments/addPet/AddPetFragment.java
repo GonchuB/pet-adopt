@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.fiuba.tdp.petadopt.R;
@@ -31,6 +32,12 @@ public class AddPetFragment extends Fragment {
         populateSpinner(rootView, R.id.pet_main_color, R.array.pet_color_array);
         populateSpinner(rootView, R.id.pet_second_color, R.array.pet_color_array);
 
+        final Button button = (Button) getView().findViewById(R.id.pet_submit);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
         return rootView;
     }
 
