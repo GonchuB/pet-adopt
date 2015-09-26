@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
     private int initialFragmentIndex = 0;
+    private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
     private Boolean exit = false;
@@ -224,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
+
+        this.currentFragment = fragment;
 
         return true;
     }

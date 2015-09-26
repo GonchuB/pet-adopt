@@ -6,18 +6,32 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class Pet {
+    private int id;
+    private int user_id;
     private String name;
     private String age;
     private Type type;
     private Gender gender;
     private String description;
+    private String metadata;
     private Boolean vaccinated;
+    private boolean needsTransitHome;
+    private boolean published;
     private LatLng location;
     private String firstColor;
     private String secondColor;
     private String colors;
+    ArrayList<String> images;
+    private String url;
 
 
     public Pet() {
@@ -120,9 +134,71 @@ public class Pet {
         return jo.toString();
     }
 
+    public void loadFromJSON(JSONObject jsonObject) throws JSONException {
+        this.id = jsonObject.getInt("id");
+        this.user_id = jsonObject.getInt("user_id");
+        this.name = jsonObject.getString("name");
+        this.description = jsonObject.getString("description");
+        this.url = jsonObject.getString("url");
+        this.metadata = jsonObject.getString("metadata");
+        this.vaccinated = jsonObject.getBoolean("vaccinated");
+        this.needsTransitHome = jsonObject.getBoolean("needs_transit_home");
+        this.published = jsonObject.getBoolean("published");
+        this.type = parseType(jsonObject.getString("type"));
+        this.gender = parseGender(jsonObject.getString("gender"));
+        this.colors = jsonObject.getString("colors");
+        this.images = parseImages(jsonObject.getJSONArray("images"));
+    }
+
+    private ArrayList<String> parseImages(JSONArray imagesArray) throws JSONException {
+        ArrayList<String> images = new ArrayList<>(imagesArray.length());
+        for(int i = 0; i < imagesArray.length(); i++) {
+            String image = imagesArray.getString(i);
+            images.add(i,image);
+        }
+
+        return images;
+    }
+
+    private Gender parseGender(String gender) {
+        if (gender.equals("male")) {
+            return Gender.male;
+        } else {
+            return Gender.female;
+        }
+    }
+
+    private Type parseType(String type) {
+        if (type.toLowerCase().equals("cat")) {
+            return Type.Cat;
+        } else if (type.toLowerCase().equals("dog")) {
+            return Type.Dog;
+        }
+        return Type.Unknown;
+    }
+
+    @Override
+    public String toString() {
+        String gender;
+        String type;
+        if (this.gender == Gender.male) {
+            gender = "Macho";
+        } else {
+            gender = "Hembra";
+        }
+        if (this.type == Type.Cat) {
+            type = "Gato";
+        } else {
+            type = "Perro";
+        }
+
+        return this.name + ": " + type + " " + gender;
+    }
+
     public enum Type {
         Cat,
-        Dog
+        Dog,
+        Unknown
     }
 
 

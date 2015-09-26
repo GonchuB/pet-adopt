@@ -63,4 +63,12 @@ public class PetsClient extends HttpClient {
             Log.e("Error in post request", e.getLocalizedMessage());
         }
     }
+
+    public void simpleQueryPets(String query, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        RequestParams params = new RequestParams();
+        params.put("metadata", query);
+        Log.v("after intent", auth_token);
+        client.get(url, params, handler);
+    }
 }
