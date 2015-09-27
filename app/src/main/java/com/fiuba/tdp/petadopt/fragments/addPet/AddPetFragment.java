@@ -30,9 +30,16 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Map;
+
 @SuppressWarnings("ALL")
 public class AddPetFragment extends Fragment {
 
+
+    private EditText nameEditText;
+    private EditText ageEditText;
 
     public AddPetFragment() {
     }
@@ -51,7 +58,7 @@ public class AddPetFragment extends Fragment {
         populateSpinner(rootView, R.id.pet_gender, R.array.pet_gender_array);
         populateSpinner(rootView, R.id.pet_main_color, R.array.pet_color_array);
         populateSpinner(rootView, R.id.pet_second_color, R.array.pet_color_array);
-        TextView locationView = (TextView)rootView.findViewById(R.id.chosen_location);
+        TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
         final Button button = (Button) rootView.findViewById(R.id.choose_location);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +68,7 @@ public class AddPetFragment extends Fragment {
                     @Override
                     public void locationWasChosen(LatLng location, String address) {
                         pet.setLocation(location);
-                        TextView locationView = (TextView)rootView.findViewById(R.id.chosen_location);
+                        TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
                         locationView.setText(address);
                     }
                 });
@@ -80,27 +87,51 @@ public class AddPetFragment extends Fragment {
         final Button button = (Button) rootView.findViewById(R.id.pet_submit);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ValidationStatus status = validateFields();
+                if (status.isError) {
+                    Toast toast = Toast.makeText(getContext(), status.prettyPrintFields(), Toast.LENGTH_LONG);
+                    toast.show();
+                    return;
+                }
                 final ProgressDialog progress = new ProgressDialog(v.getContext());
                 progress.setTitle(R.string.loading);
                 progress.show();
                 PetsClient.instance().createPet(pet, new JsonHttpResponseHandler() {
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        progress.dismiss();
+                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_success, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                         progress.dismiss();
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, duration);
+                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, Toast.LENGTH_SHORT);
                         toast.show();
                         Log.e("Error creating pet", pet.toJson());
                     }
                 });
             }
         });
+    }
+
+    private ValidationStatus validateFields() {
+        ValidationStatus status = new ValidationStatus();
+        String ageText = ageEditText.getText().toString();
+        if (ageText == null || ageText.equals("")) {
+            status.isError = true;
+            status.addErrorField(getString(R.string.add_pet_age_not_completed));
+        }
+        String nameText = ageEditText.getText().toString();
+        if (nameText == null || nameText.equals("")) {
+            status.isError = true;
+            status.addErrorField(getString(R.string.add_pet_name_not_completed));
+        }
+        ;
+        return status;
     }
 
     private void setUpPetFillingCallbacks(View rootView) {
@@ -118,6 +149,7 @@ public class AddPetFragment extends Fragment {
             }
 
         });
+        spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_gender);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -132,6 +164,7 @@ public class AddPetFragment extends Fragment {
 
             }
         });
+        spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_main_color);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -147,6 +180,7 @@ public class AddPetFragment extends Fragment {
             }
 
         });
+        spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_second_color);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -163,6 +197,7 @@ public class AddPetFragment extends Fragment {
         });
 
         final EditText editText = (EditText) rootView.findViewById(R.id.pet_name);
+        nameEditText = editText;
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -181,6 +216,7 @@ public class AddPetFragment extends Fragment {
         });
 
         final EditText ageEditText = (EditText) rootView.findViewById(R.id.pet_name);
+        this.ageEditText = ageEditText;
         ageEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -209,4 +245,25 @@ public class AddPetFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
+    private class ValidationStatus {
+        public Boolean isError;
+        public ArrayList<String> erroringFields;
+
+        public ValidationStatus() {
+            isError = false;
+            erroringFields = new ArrayList<>();
+        }
+
+        public void addErrorField(String fieldName) {
+            erroringFields.add(fieldName);
+        }
+
+        public String prettyPrintFields() {
+            String prettyString = "";
+            for (String error : erroringFields) {
+                prettyString = prettyString + error + ", ";
+            }
+            return prettyString.substring(0, prettyString.length() - 2);
+        }
+    }
 }

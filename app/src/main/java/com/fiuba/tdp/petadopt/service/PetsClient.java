@@ -20,16 +20,15 @@ import java.io.UnsupportedEncodingException;
 public class PetsClient extends HttpClient {
 
 
-
     private String auth_token;
     private static PetsClient singletonClient;
 
-    private PetsClient(){
+    private PetsClient() {
 
     }
 
     public static PetsClient instance() {
-        if (singletonClient==null){
+        if (singletonClient == null) {
             singletonClient = new PetsClient();
         }
         return singletonClient;
@@ -37,17 +36,23 @@ public class PetsClient extends HttpClient {
 
     public void setAuth_token(String auth_token) {
         this.auth_token = auth_token;
-        client.addHeader("user_token",auth_token);
+        client.addHeader("user_token", auth_token);
     }
 
     public void getPets(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         RequestParams params = new RequestParams();
-        Log.v("after intent", auth_token);
-        params.put("user_token", User.user().getAuthToken());
         client.get(url, params, handler);
     }
 
+    @Override
+    public String getApiUrl(String relativeUrl) {
+        String url = super.getApiUrl(relativeUrl);
+        if (auth_token != null) {
+            return url + "?user_token=" + auth_token;
+        }
+        return url;
+    }
 
     public void createPet(Pet pet, JsonHttpResponseHandler handler) {
         try {

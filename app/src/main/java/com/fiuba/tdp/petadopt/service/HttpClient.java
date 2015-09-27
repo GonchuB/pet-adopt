@@ -12,6 +12,7 @@ public class HttpClient {
 
     public HttpClient(){
         client = new AsyncHttpClient();
+        client.addHeader("Content-Type","application/json");
     }
     public String getApiUrl(String relativeUrl) {
         return BuildConfig.BASE_ENDPOINT + relativeUrl;

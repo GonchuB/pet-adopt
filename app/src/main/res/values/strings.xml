@@ -29,4 +29,7 @@
     <string name="center_pin">Centrar pin</string>
 
     <string name="pet_creation_error">Error creando publicación, intentá nuevamente más tarde</string>
+    <string name="pet_creation_success">Publicación creada!</string>
+    <string name="add_pet_name_not_completed">El nombre no puede estar vacio</string>
+    <string name="add_pet_age_not_completed">La edad no puede estar vacía</string>
 </resources>

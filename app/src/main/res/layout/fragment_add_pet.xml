@@ -143,6 +143,7 @@
         android:layout_toRightOf="@+id/choose_location"
         android:layout_toEndOf="@+id/choose_location"
         android:text=""
+        android:textSize="14sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
