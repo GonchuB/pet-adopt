@@ -121,13 +121,37 @@
         android:layout_toRightOf="@+id/pet_second_color_hint"
         android:spinnerMode="dropdown" />
 
+    <Button
+        android:id="@+id/choose_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pet_second_color_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="@string/choose_location"
+        android:textColor="#FFF"
+        android:background="@color/submit_button"/>
+
+    <TextView
+        android:id="@+id/chosen_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/choose_location"
+        android:layout_alignBottom="@+id/choose_location"
+        android:layout_toRightOf="@+id/choose_location"
+        android:layout_toEndOf="@+id/choose_location"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <EditText
         android:id="@+id/pet_description"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/pet_second_color_hint"
+        android:layout_below="@+id/choose_location"
         android:layout_marginTop="10dp"
         android:layout_above="@+id/pet_vaccinated"
         android:ems="10"
@@ -161,7 +185,6 @@
         android:layout_marginBottom="10dp"
         android:text="@string/new_pet_submit"
         android:textColor="#FFF"
-        android:background="@color/submit_button"
-        android:onClick="createPublication"/>
+        android:background="@color/submit_button"/>
 
 </RelativeLayout>

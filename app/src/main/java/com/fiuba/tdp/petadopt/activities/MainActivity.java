@@ -246,23 +246,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (exit) {
-            finish(); // finish activity
-
-        } else {
-            Toast.makeText(this, R.string.exit_toast,
-                    Toast.LENGTH_SHORT).show();
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
-                }
-            }, 3 * 1000);
-
-        }
-    }
 
 }

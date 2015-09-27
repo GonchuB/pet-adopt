@@ -24,6 +24,7 @@
     <string name="new_pet_description_hint">Descripción</string>
     <string name="new_pet_vaccinated_hint">¿Está vacunada?</string>
     <string name="new_pet_submit">Crear publicación</string>
+    <string name="choose_location">Elegir ubicación</string>
     <string name="loading">Cargando</string>
     <string name="center_pin">Centrar pin</string>
 
