@@ -173,7 +173,6 @@
         android:text="@string/new_pet_vaccinated_hint"
         android:layout_margin="10dp"/>
 
-
     <Button
         android:id="@+id/pet_submit"
         android:layout_width="fill_parent"

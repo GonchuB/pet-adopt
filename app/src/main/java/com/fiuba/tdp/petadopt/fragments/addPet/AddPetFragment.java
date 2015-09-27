@@ -28,6 +28,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 @SuppressWarnings("ALL")
 public class AddPetFragment extends Fragment {
@@ -84,17 +85,13 @@ public class AddPetFragment extends Fragment {
                 progress.show();
                 PetsClient.instance().createPet(pet, new JsonHttpResponseHandler() {
                     @Override
-                    public void onSuccess(int code, Header[] headers, JSONArray body) {
-                        progress.dismiss();
-                        String items = "";
-                        items = body.toString();
-                        Log.v("Pet created", pet.toJson());
-
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
                         progress.dismiss();
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, duration);

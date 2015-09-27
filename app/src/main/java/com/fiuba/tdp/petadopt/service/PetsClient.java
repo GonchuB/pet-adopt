@@ -37,6 +37,7 @@ public class PetsClient extends HttpClient {
 
     public void setAuth_token(String auth_token) {
         this.auth_token = auth_token;
+        client.addHeader("user_token",auth_token);
     }
 
     public void getPets(JsonHttpResponseHandler handler) {
