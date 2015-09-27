@@ -1,4 +1,4 @@
-package com.fiuba.tdp.petadopt.fragments;
+package com.fiuba.tdp.petadopt.fragments.search;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

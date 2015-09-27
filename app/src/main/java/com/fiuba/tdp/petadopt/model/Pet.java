@@ -29,12 +29,13 @@ public class Pet {
     private LatLng location;
     private String firstColor;
     private String secondColor;
-    private String colors;
+    private ArrayList<String> colors;
     ArrayList<String> images;
     private String url;
 
 
     public Pet() {
+        colors = new ArrayList<>();
     }
 
     public String getName() {
@@ -104,25 +105,24 @@ public class Pet {
     }
 
     public String getColors() {
-        return firstColor + " " + secondColor;
+        String colors = "";
+        for (int i = 0; i < this.colors.size(); i++) {
+            colors = colors + this.colors.get(i);
+            if (i < this.colors.size() -1 ) {
+                colors = colors + ", ";
+            }
+        }
+        return colors;
     }
 
     public void setFirstColor(String firstColor) {
         this.firstColor = firstColor;
-        if (secondColor != null) {
-            colors = getColors();
-        } else {
-            colors = firstColor;
-        }
+        colors.add(0,firstColor);
     }
 
     public void setSecondColor(String secondColor) {
         this.secondColor = secondColor;
-        if (firstColor != null) {
-            colors = getColors();
-        } else {
-            colors = secondColor;
-        }
+        colors.add(1,secondColor);
     }
 
 
@@ -146,8 +146,19 @@ public class Pet {
         this.published = jsonObject.getBoolean("published");
         this.type = parseType(jsonObject.getString("type"));
         this.gender = parseGender(jsonObject.getString("gender"));
-        this.colors = jsonObject.getString("colors");
+        this.colors = parseColors(jsonObject.getString("colors"));
         this.images = parseImages(jsonObject.getJSONArray("images"));
+    }
+
+    private ArrayList<String> parseColors(String colors) {
+        ArrayList<String> a = new ArrayList<>(Arrays.asList(colors.split("\\s* \\s*")));
+        if (a.size() > 0) {
+            firstColor = a.get(0);
+        }
+        if (a.size() > 1) {
+            secondColor = a.get(1);
+        }
+        return a;
     }
 
     private ArrayList<String> parseImages(JSONArray imagesArray) throws JSONException {

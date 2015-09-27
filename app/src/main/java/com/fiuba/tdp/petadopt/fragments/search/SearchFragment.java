@@ -1,4 +1,4 @@
-package com.fiuba.tdp.petadopt.fragments;
+package com.fiuba.tdp.petadopt.fragments.search;
 
 /**
  * Created by joaquinstankus on 07/09/15.
@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
@@ -29,10 +30,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SearchFragment extends Fragment {
 
     private ListView lv;
+    private List<Pet> pets;
 
     public SearchFragment(){}
 
@@ -80,14 +85,26 @@ public class SearchFragment extends Fragment {
         client.simpleQueryPets(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                ArrayList<Pet> pets = parsePets(body);
-                ArrayAdapter<Pet> adapter = new ArrayAdapter<Pet>(getActivity(), android.R.layout.simple_list_item_1, pets);
-                lv.setAdapter(adapter);
+                pets = parsePets(body);
+                renderResults();
             }
         });
 
+    }
 
-
+    private void renderResults() {
+        List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+        for (int i = 0; i < pets.size() ; i++) {
+            HashMap<String, String> m = new HashMap<String, String>();
+            m.put("line_1", pets.get(i).toString());
+            m.put("line_2", pets.get(i).getColors());
+            data.add(m);
+        }
+        String[] from = {"line_1", "line_2"};
+        int[] to = {R.id.line_1, R.id.line_2};
+        List<? extends Map<String, ?>> castedData = (List<? extends Map<String, ?>>)data;
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), castedData, R.layout.pet_list_item, from, to);
+        lv.setAdapter(adapter);
     }
 
     private ArrayList<Pet> parsePets(JSONArray petArray) {
