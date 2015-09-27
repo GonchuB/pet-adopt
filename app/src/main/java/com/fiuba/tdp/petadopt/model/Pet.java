@@ -1,10 +1,15 @@
 package com.fiuba.tdp.petadopt.model;
 
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class Pet {
@@ -17,7 +22,7 @@ public class Pet {
     private LatLng location;
     private String firstColor;
     private String secondColor;
-    private String colors;
+    private Boolean published = true;
 
 
     public Pet() {
@@ -95,29 +100,42 @@ public class Pet {
 
     public void setFirstColor(String firstColor) {
         this.firstColor = firstColor;
-        if (secondColor != null) {
-            colors = getColors();
-        } else {
-            colors = firstColor;
-        }
     }
 
     public void setSecondColor(String secondColor) {
         this.secondColor = secondColor;
-        if (firstColor != null) {
-            colors = getColors();
-        } else {
-            colors = secondColor;
-        }
     }
 
 
     public String toJson() {
-        Gson gson = new Gson();
-        JsonElement je = gson.toJsonTree(this);
-        JsonObject jo = new JsonObject();
-        jo.add("pet", je);
-        return jo.toString();
+        JSONObject jsonObject= new JSONObject();
+        try {
+            jsonObject.put("type", type.toString());
+            jsonObject.put("gender", gender.toString());
+            jsonObject.put("name", name);
+            jsonObject.put("age", age);
+            jsonObject.put("description", description);
+            jsonObject.put("published", published);
+            if (location!=null) {
+                jsonObject.put("location", prettyLocation());
+            }
+            jsonObject.put("colors", getColors());
+            jsonObject.put("vaccinated", vaccinated);
+
+            JSONObject jo = new JSONObject();
+            jo.put("pet", jsonObject);
+            return jo.toString();
+        } catch (JSONException e){
+            Log.e("Error creating pet JSON",e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    private String prettyLocation() {
+        if (location!=null){
+            return String.valueOf(location.latitude)+","+String.valueOf(location.longitude);
+        }
+        return "";
     }
 
     public enum Type {
