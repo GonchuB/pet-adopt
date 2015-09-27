@@ -1,14 +1,13 @@
 package com.fiuba.tdp.petadopt.service;
 
+import android.content.Context;
+
 import com.fiuba.tdp.petadopt.BuildConfig;
 import com.loopj.android.http.AsyncHttpClient;
 
-/**
- * Created by joaquinstankus on 13/09/15.
- */
 
 public class HttpClient {
-
+    public static Context ActivityContext;
     protected AsyncHttpClient client;
 
     public HttpClient(){
@@ -17,4 +16,6 @@ public class HttpClient {
     public String getApiUrl(String relativeUrl) {
         return BuildConfig.BASE_ENDPOINT + relativeUrl;
     }
+
+
 }

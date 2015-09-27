@@ -27,6 +27,7 @@ import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.SearchFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
+import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {
             auth_token = User.user().getAuthToken();
@@ -211,7 +213,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void fetchPets() {
-        client = new PetsClient(auth_token);
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
         client.getPets(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {

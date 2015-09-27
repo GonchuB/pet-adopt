@@ -73,6 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                             }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                super.onFailure(statusCode, headers, responseString, throwable);
+                                Log.v("Error signing in", responseString);
+                            }
                         }
                 );
             }

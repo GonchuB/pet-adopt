@@ -1,24 +1,36 @@
 package com.fiuba.tdp.petadopt.fragments.addPet;
 
-import android.support.v4.app.Fragment;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
-import com.fiuba.tdp.petadopt.activities.MainActivity;
+import com.fiuba.tdp.petadopt.model.Pet;
+import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
-/**
- * Created by tomas on 19/09/15.
- */
+import org.apache.http.Header;
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+
+@SuppressWarnings("ALL")
 public class AddPetFragment extends Fragment {
 
     public AddPetFragment(){}
+    private Pet pet = new Pet();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,19 +38,140 @@ public class AddPetFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_add_pet, container, false);
 
+        setUpPetFillingCallbacks(rootView);
 
         populateSpinner(rootView, R.id.pet_type, R.array.pet_type_array);
         populateSpinner(rootView, R.id.pet_gender, R.array.pet_gender_array);
         populateSpinner(rootView, R.id.pet_main_color, R.array.pet_color_array);
         populateSpinner(rootView, R.id.pet_second_color, R.array.pet_color_array);
 
-        final Button button = (Button) getView().findViewById(R.id.pet_submit);
+
+        final Button button = (Button) rootView.findViewById(R.id.pet_submit);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                final ProgressDialog progress = new ProgressDialog(v.getContext());
+                progress.setTitle(R.string.loading);
+                progress.show();
+                PetsClient.instance().createPet(pet,new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int code, Header[] headers, JSONArray body) {
+                        progress.dismiss();
+                        String items = "";
+                        items = body.toString();
+                        Log.v("Pet created", pet.toJson());
 
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        progress.dismiss();
+                        super.onFailure(statusCode, headers, responseString, throwable);
+
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, duration);
+                        toast.show();
+                        Log.e("Error creating pet", pet.toJson());
+                    }
+                });
             }
         });
         return rootView;
+    }
+
+    private void setUpPetFillingCallbacks(View rootView) {
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.pet_type_array);
+                pet.setType(petTypes[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+
+        spinner = (Spinner) rootView.findViewById(R.id.pet_gender);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.pet_gender_array);
+                pet.setGender(petTypes[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner = (Spinner) rootView.findViewById(R.id.pet_main_color);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.pet_color_array);
+                pet.setFirstColor(petTypes[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+
+        spinner = (Spinner) rootView.findViewById(R.id.pet_second_color);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.pet_color_array);
+                pet.setSecondColor(petTypes[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final EditText editText = (EditText)rootView.findViewById(R.id.pet_name);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                pet.setName(editText.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        final EditText ageEditText = (EditText)rootView.findViewById(R.id.pet_name);
+        ageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                pet.setAge(ageEditText.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void populateSpinner(View rootView, int viewId, int arrayId) {
