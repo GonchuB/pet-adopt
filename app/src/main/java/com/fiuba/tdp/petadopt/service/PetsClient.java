@@ -71,4 +71,21 @@ public class PetsClient extends HttpClient {
         Log.v("after intent", auth_token);
         client.get(url, params, handler);
     }
+
+    public void advanceSearch(Pet pet, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        RequestParams params = buildParameters(pet);
+        Log.v("after intent", auth_token);
+        client.get(url, params, handler);
+    }
+
+    private RequestParams buildParameters(Pet pet) {
+        RequestParams params = new RequestParams();
+        if (pet.getAge() != null) {
+            params.add("age", pet.getAge());
+        }
+
+
+        return params;
+    }
 }

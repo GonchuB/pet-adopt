@@ -15,23 +15,19 @@ import java.util.Arrays;
 
 
 public class Pet {
-    private int id;
-    private int user_id;
+    private Integer id;
     private String name;
     private String age;
     private Type type;
     private Gender gender;
     private String description;
-    private String metadata;
     private Boolean vaccinated;
-    private boolean needsTransitHome;
-    private boolean published;
+    private Boolean needs_transit_home;
     private LatLng location;
     private String firstColor;
     private String secondColor;
     private ArrayList<String> colors;
     ArrayList<String> images;
-    private String url;
 
 
     public Pet() {
@@ -129,21 +125,22 @@ public class Pet {
     public String toJson() {
         Gson gson = new Gson();
         JsonElement je = gson.toJsonTree(this);
-        JsonObject jo = new JsonObject();
-        jo.add("pet", je);
+        JsonObject jo = je.getAsJsonObject();
+        jo.remove("id");
+        jo.remove("images");
+        jo.remove("firstColor");
+        jo.remove("secondColor");
+        jo.addProperty("location", String.valueOf(this.location.latitude) + "," + String.valueOf(this.location.longitude));
+        jo.addProperty("color", this.getColors());
         return jo.toString();
     }
 
     public void loadFromJSON(JSONObject jsonObject) throws JSONException {
         this.id = jsonObject.getInt("id");
-        this.user_id = jsonObject.getInt("user_id");
         this.name = jsonObject.getString("name");
         this.description = jsonObject.getString("description");
-        this.url = jsonObject.getString("url");
-        this.metadata = jsonObject.getString("metadata");
         this.vaccinated = jsonObject.getBoolean("vaccinated");
-        this.needsTransitHome = jsonObject.getBoolean("needs_transit_home");
-        this.published = jsonObject.getBoolean("published");
+        this.needs_transit_home = jsonObject.getBoolean("needs_transit_home");
         this.type = parseType(jsonObject.getString("type"));
         this.gender = parseGender(jsonObject.getString("gender"));
         this.colors = parseColors(jsonObject.getString("colors"));

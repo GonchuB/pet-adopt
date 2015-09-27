@@ -7,79 +7,65 @@
 
 
     <EditText
-        android:id="@+id/pet_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="#FFF"
-        android:ems="10"
-        android:hint="@string/new_pet_name_hint"
-        android:inputType="textPersonName"
-        android:padding="5dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:id="@+id/pet_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pet_name"
-        android:layout_alignStart="@+id/pet_name"
-        android:layout_below="@+id/pet_name"
         android:layout_marginTop="10dp"
         android:background="#FFF"
         android:ems="10"
         android:hint="@string/new_pet_age_hint"
         android:inputType="numberDecimal"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/type_hint" />
 
     <TextView
         android:id="@+id/type_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pet_age"
         android:layout_below="@+id/pet_age"
         android:layout_marginTop="10dp"
         android:gravity="end"
         android:text="@string/new_pet_type_hint"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/gender_hint" />
 
     <TextView
         android:id="@+id/gender_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/type_hint"
         android:layout_below="@+id/type_hint"
         android:layout_marginTop="10dp"
         android:gravity="end"
         android:text="@string/new_pet_gender_hint"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/main_color_hint" />
 
     <TextView
         android:id="@+id/main_color_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/gender_hint"
         android:layout_below="@+id/gender_hint"
         android:layout_marginTop="10dp"
         android:gravity="end"
         android:text="@string/new_pet_main_color_hint"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/pet_second_color_hint" />
 
     <TextView
         android:id="@+id/pet_second_color_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/gender_hint"
         android:layout_below="@+id/main_color_hint"
         android:layout_marginTop="10dp"
         android:gravity="end"
         android:text="@string/new_pet_second_color_hint"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/search_submit" />
 
     <Spinner
         android:id="@+id/pet_type"
@@ -129,12 +115,11 @@
         android:layout_below="@+id/pet_second_color_hint"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:padding="10dp"
         android:text="@string/advance_search_location"
         android:textColor="#FFF"
         android:background="@color/submit_button"
-        android:layout_alignEnd="@+id/pet_description"
         android:layout_alignStart="@+id/pet_description" />
 
     <TextView
@@ -144,10 +129,10 @@
         android:layout_alignTop="@+id/choose_location"
         android:layout_alignBottom="@+id/choose_location"
         android:layout_toRightOf="@+id/choose_location"
-        android:layout_toEndOf="@+id/choose_location"
         android:text=""
         android:textSize="14sp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignEnd="@+id/pet_description" />
 
     <EditText
         android:id="@+id/pet_description"
@@ -157,28 +142,30 @@
         android:layout_alignParentStart="false"
         android:layout_below="@+id/choose_location"
         android:layout_marginTop="10dp"
-        android:layout_above="@+id/pet_vaccinated"
         android:ems="10"
         android:hint="@string/new_pet_description_hint"
         android:inputType="textMultiLine"
         android:singleLine="true"
         android:layout_alignRight="@+id/pet_second_color"
         android:layout_alignEnd="@+id/pet_second_color"
-        android:layout_margin="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_above="@+id/pet_vaccinated" />
 
     <CheckBox
         android:id="@+id/pet_vaccinated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/pet_submit"
         android:checked="false"
         android:text="@string/new_pet_vaccinated_hint"
-        android:layout_margin="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="55dp"
+        android:layout_above="@+id/search_submit"
+        android:layout_alignStart="@+id/pet_description" />
 
     <Button
-        android:id="@+id/pet_submit"
+        android:id="@+id/search_submit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -202,7 +189,6 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/submit_button"
         android:textStyle="bold"
-        android:layout_alignStart="@+id/pet_name"
         android:layout_marginBottom="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
