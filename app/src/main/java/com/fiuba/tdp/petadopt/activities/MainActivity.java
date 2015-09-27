@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onSuccess(int code, Header[] headers, JSONObject body) {
                         String items = "";
                         try {
-                            items = body.getString("original_url");
+                            items = body.toString();
                             Log.v("image response", items);
                         } catch (Exception e) {
                             e.printStackTrace();

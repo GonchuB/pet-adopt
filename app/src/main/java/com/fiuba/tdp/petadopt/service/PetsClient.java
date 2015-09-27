@@ -108,6 +108,7 @@ public class PetsClient extends HttpClient {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        //params.setForceMultipartEntityContentType(true);
 
         client.post(url,params,handler);
 
