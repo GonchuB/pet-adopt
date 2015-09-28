@@ -1,5 +1,6 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.content.ClipData;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -50,6 +51,7 @@ import com.fiuba.tdp.petadopt.service.PetsClient;
 
 import java.io.File;
 import java.net.URI;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String[] optionTitles;
@@ -64,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean exit = false;
     private static int RESULT_LOAD_IMAGE = 1;
     private Fragment mapFragment;
+    private int[] imgViews = {
+            R.id.imgView1,
+            R.id.imgView2,
+            R.id.imgView3,
+            R.id.imgView4,
+            R.id.imgView5
+    };
     private HomeFragment homeFragment;
 
     @Override
@@ -175,69 +184,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (created) {
             mDrawerToggle.syncState();
         }
-    }
-
-    public void launchGallery(View view) {
-        // Create intent to Open Image applications like Gallery, Google Photos
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // Start the Intent
-        startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
-                    && null != data) {
-                // Get the Image from data
-
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-                // Get the cursor
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
-                ImageView imgView = (ImageView) findViewById(R.id.imgView);
-                // Set the Image in ImageView after decoding the String
-                imgView.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
-
-                PetsClient petsClient = new PetsClient(new UserPersistenceService(getApplicationContext()).getUserIfPresent().getAuthToken());
-
-                petsClient.uploadImage("42", new File(imgDecodableString),new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int code, Header[] headers, JSONObject body) {
-                        String items = "";
-                        try {
-                            items = body.toString();
-                            Log.v("image response", items);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-            } else {
-                Toast.makeText(this, "You haven't picked Image",
-                        Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
-        }
-
-    }
-
-    public void addPet(View view) {
-
     }
 
     @Override

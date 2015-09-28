@@ -5,184 +5,234 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <EditText
-        android:id="@+id/pet_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="36dp"
-        android:background="#FFF"
-        android:ems="10"
-        android:hint="@string/new_pet_name_hint"
-        android:inputType="textPersonName"
-        android:padding="5dp" />
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:paddingBottom="70dp">
+            <EditText
+                android:id="@+id/pet_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="36dp"
+                android:background="#FFF"
+                android:ems="10"
+                android:hint="@string/new_pet_name_hint"
+                android:inputType="textPersonName"
+                android:padding="5dp" />
 
-    <EditText
-        android:id="@+id/pet_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/pet_name"
-        android:layout_alignStart="@+id/pet_name"
-        android:layout_below="@+id/pet_name"
-        android:layout_marginTop="10dp"
-        android:background="#FFF"
-        android:ems="10"
-        android:hint="@string/new_pet_age_hint"
-        android:inputType="numberDecimal"
-        android:padding="5dp" />
+            <EditText
+                android:id="@+id/pet_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/pet_name"
+                android:layout_alignStart="@+id/pet_name"
+                android:layout_below="@+id/pet_name"
+                android:layout_marginTop="10dp"
+                android:background="#FFF"
+                android:ems="10"
+                android:hint="@string/new_pet_age_hint"
+                android:inputType="numberDecimal"
+                android:padding="5dp" />
 
-    <TextView
-        android:id="@+id/type_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/pet_age"
-        android:layout_below="@+id/pet_age"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:text="@string/new_pet_type_hint"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/type_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/pet_age"
+                android:layout_below="@+id/pet_age"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="@string/new_pet_type_hint"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/gender_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/type_hint"
-        android:layout_below="@+id/type_hint"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:text="@string/new_pet_gender_hint"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/gender_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/type_hint"
+                android:layout_below="@+id/type_hint"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="@string/new_pet_gender_hint"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/main_color_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/gender_hint"
-        android:layout_below="@+id/gender_hint"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:text="@string/new_pet_main_color_hint"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/main_color_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/gender_hint"
+                android:layout_below="@+id/gender_hint"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="@string/new_pet_main_color_hint"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/pet_second_color_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/gender_hint"
-        android:layout_below="@+id/main_color_hint"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:text="@string/new_pet_second_color_hint"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/pet_second_color_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/gender_hint"
+                android:layout_below="@+id/main_color_hint"
+                android:layout_marginTop="10dp"
+                android:gravity="end"
+                android:text="@string/new_pet_second_color_hint"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/pet_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/type_hint"
-        android:layout_alignLeft="@+id/pet_gender"
-        android:layout_alignStart="@+id/pet_gender"
-        android:layout_alignTop="@+id/type_hint"
-        android:layout_toEndOf="@+id/type_hint"
-        android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/pet_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/type_hint"
+                android:layout_alignLeft="@+id/pet_gender"
+                android:layout_alignStart="@+id/pet_gender"
+                android:layout_alignTop="@+id/type_hint"
+                android:layout_toEndOf="@+id/type_hint"
+                android:spinnerMode="dropdown" />
 
-    <Spinner
-        android:id="@+id/pet_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gender_hint"
-        android:layout_alignTop="@+id/gender_hint"
-        android:layout_toEndOf="@+id/gender_hint"
-        android:layout_toRightOf="@+id/gender_hint"
-        android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/pet_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/gender_hint"
+                android:layout_alignTop="@+id/gender_hint"
+                android:layout_toEndOf="@+id/gender_hint"
+                android:layout_toRightOf="@+id/gender_hint"
+                android:spinnerMode="dropdown" />
 
-    <Spinner
-        android:id="@+id/pet_main_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/main_color_hint"
-        android:layout_alignTop="@+id/main_color_hint"
-        android:layout_toEndOf="@+id/main_color_hint"
-        android:layout_toRightOf="@+id/main_color_hint"
-        android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/pet_main_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/main_color_hint"
+                android:layout_alignTop="@+id/main_color_hint"
+                android:layout_toEndOf="@+id/main_color_hint"
+                android:layout_toRightOf="@+id/main_color_hint"
+                android:spinnerMode="dropdown" />
 
-    <Spinner
-        android:id="@+id/pet_second_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/pet_second_color_hint"
-        android:layout_alignTop="@+id/pet_second_color_hint"
-        android:layout_toEndOf="@+id/pet_second_color_hint"
-        android:layout_toRightOf="@+id/pet_second_color_hint"
-        android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/pet_second_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/pet_second_color_hint"
+                android:layout_alignTop="@+id/pet_second_color_hint"
+                android:layout_toEndOf="@+id/pet_second_color_hint"
+                android:layout_toRightOf="@+id/pet_second_color_hint"
+                android:spinnerMode="dropdown" />
 
-    <Button
-        android:id="@+id/choose_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pet_second_color_hint"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:text="@string/choose_location"
-        android:textColor="#FFF"
-        android:background="@color/submit_button"/>
+            <Button
+                android:id="@+id/choose_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pet_second_color_hint"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/choose_location"
+                android:textColor="#FFF"
+                android:background="@color/submit_button"/>
 
-    <TextView
-        android:id="@+id/chosen_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/choose_location"
-        android:layout_alignBottom="@+id/choose_location"
-        android:layout_toRightOf="@+id/choose_location"
-        android:layout_toEndOf="@+id/choose_location"
-        android:text=""
-        android:textSize="14sp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/chosen_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/choose_location"
+                android:layout_alignBottom="@+id/choose_location"
+                android:layout_toRightOf="@+id/choose_location"
+                android:layout_toEndOf="@+id/choose_location"
+                android:text=""
+                android:textSize="14sp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/pet_description"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
-        android:layout_below="@+id/choose_location"
-        android:layout_marginTop="10dp"
-        android:layout_above="@+id/pet_vaccinated"
-        android:ems="10"
-        android:hint="@string/new_pet_description_hint"
-        android:inputType="textMultiLine"
-        android:singleLine="true"
-        android:layout_alignRight="@+id/pet_second_color"
-        android:layout_alignEnd="@+id/pet_second_color"
-        android:layout_margin="10dp"/>
+            <EditText
+                android:id="@+id/pet_description"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/choose_location"
+                android:ems="10"
+                android:hint="@string/new_pet_description_hint"
+                android:inputType="textMultiLine"
+                android:singleLine="true"
+                android:layout_margin="10dp"/>
 
-    <CheckBox
-        android:id="@+id/pet_vaccinated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/pet_submit"
-        android:checked="false"
-        android:text="@string/new_pet_vaccinated_hint"
-        android:layout_margin="10dp"/>
+            <CheckBox
+                android:id="@+id/pet_vaccinated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pet_description"
+                android:checked="false"
+                android:text="@string/new_pet_vaccinated_hint"
+                android:layout_margin="10dp"/>
 
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/pet_submit"-->
-        <!--android:text="@string/new_pet_submit"-->
-        <!--android:layout_below="@+id/pet_vaccinated"-->
-        <!--android:layout_toRightOf="@+id/pet_name"-->
-        <!--android:layout_toEndOf="@+id/pet_name" />-->
-    <!-- -->
+
+            <Button
+                android:id="@+id/pet_submit_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:text="@string/new_pet_submit_image"
+                android:layout_below="@+id/pet_vaccinated"
+                android:textColor="#FFF"
+                android:background="@color/submit_button"/>
+
+            <ImageView
+                android:id="@+id/imgView1"
+                android:layout_below="@+id/pet_submit_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"/>
+
+
+            <ImageView
+                android:id="@+id/imgView2"
+                android:layout_toEndOf="@+id/imgView1"
+                android:layout_below="@+id/pet_submit_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/imgView3"
+                android:layout_toEndOf="@+id/imgView2"
+                android:layout_below="@+id/pet_submit_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/imgView4"
+                android:layout_below="@+id/imgView1"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/imgView5"
+                android:layout_below="@+id/imgView2"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="15dp"/>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
     <Button
         android:id="@+id/pet_submit"
         android:layout_width="fill_parent"
@@ -195,22 +245,5 @@
         android:text="@string/new_pet_submit"
         android:textColor="#FFF"
         android:background="@color/submit_button"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pet_submit_image"
-        android:text="@string/new_pet_submit_image"
-        android:layout_below="@+id/pet_vaccinated"
-        android:layout_toRightOf="@+id/pet_name"
-        android:layout_toEndOf="@+id/pet_name"
-        android:onClick="launchGallery" />
-
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_below="@+id/pet_submit_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
 
 </RelativeLayout>
