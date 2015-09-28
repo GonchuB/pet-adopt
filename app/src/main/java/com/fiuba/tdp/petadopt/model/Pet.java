@@ -113,12 +113,20 @@ public class Pet {
 
     public void setFirstColor(String firstColor) {
         this.firstColor = firstColor;
-        colors.add(0,firstColor);
+        if (colors.size() < 1) {
+            colors.add(0, firstColor);
+        } else {
+            colors.set(0,firstColor);
+        }
     }
 
     public void setSecondColor(String secondColor) {
         this.secondColor = secondColor;
-        colors.add(1,secondColor);
+        if (colors.size() < 2) {
+            colors.add(1,secondColor);
+        } else {
+            colors.set(1,secondColor);
+        }
     }
 
 

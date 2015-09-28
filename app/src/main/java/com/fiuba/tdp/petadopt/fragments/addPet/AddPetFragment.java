@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.LocationChosenDelegate;
 import com.fiuba.tdp.petadopt.model.Pet;
@@ -83,10 +85,14 @@ public class AddPetFragment extends Fragment {
         return rootView;
     }
 
-    private void setupSubmitButton(View rootView) {
+    private void setupSubmitButton(final View rootView) {
         final Button button = (Button) rootView.findViewById(R.id.pet_submit);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                final CheckBox vaccinated = (CheckBox) rootView.findViewById(R.id.pet_vaccinated);
+                final EditText descriptionEditText = (EditText) rootView.findViewById(R.id.pet_description);
+                pet.setVaccinated(vaccinated.isChecked());
+                pet.setDescription(descriptionEditText.getText().toString());
                 ValidationStatus status = validateFields();
                 if (status.isError) {
                     Toast toast = Toast.makeText(getContext(), status.prettyPrintFields(), Toast.LENGTH_LONG);
@@ -103,6 +109,7 @@ public class AddPetFragment extends Fragment {
                         progress.dismiss();
                         Toast toast = Toast.makeText(getContext(), R.string.pet_creation_success, Toast.LENGTH_SHORT);
                         toast.show();
+                        ((MainActivity) getActivity()).goBackToHome();
                     }
 
                     @Override
@@ -226,24 +233,6 @@ public class AddPetFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pet.setAge(ageEditText.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        final EditText descriptionEditText = (EditText) rootView.findViewById(R.id.pet_description);
-        ageEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                pet.setDescription(descriptionEditText.getText().toString());
             }
 
             @Override
