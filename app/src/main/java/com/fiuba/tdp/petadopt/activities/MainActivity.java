@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.HomeFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean created = false;
     private Boolean exit = false;
     private Fragment mapFragment;
+    private HomeFragment homeFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setupActivity() {
         if (!created) {
             mapFragment = new ChooseLocationMapFragment();
+            homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
 
@@ -182,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = mapFragment;
+                    fragment = homeFragment;
                     break;
                 case 1:
                     fragment = new SearchFragment();
@@ -231,16 +234,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void fetchPets() {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
-        client.getPets(new JsonHttpResponseHandler() {
+        client.getPetsForHome(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                String items = "";
-                try {
-                    items = body.toString();
-                    Log.v("JSON", items);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                homeFragment.setResults(body);
+                homeFragment.onStart();
             }
         });
     }
