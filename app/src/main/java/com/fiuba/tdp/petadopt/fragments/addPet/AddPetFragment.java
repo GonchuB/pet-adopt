@@ -372,7 +372,7 @@ public class AddPetFragment extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this.getActivity(), "Algo anduvo mal", Toast.LENGTH_LONG)
+            Toast.makeText(this.getActivity(), "Solo se utilizarán 5 imagenes de las que seleccionaste", Toast.LENGTH_LONG)
                     .show();
         }
 
