@@ -345,7 +345,9 @@ public class AddPetFragment extends Fragment {
                     ImageView imgView = (ImageView) this.getView().findViewById(imgViews[0]);
 
                     imgView.setImageURI(mImageUri);
-                    imageUris.add(mImageUri);
+                    if (imageUris.size() <= 4) {
+                        imageUris.add(mImageUri);
+                    }
 
                 }else{
                     if(data.getClipData()!=null){
@@ -355,7 +357,9 @@ public class AddPetFragment extends Fragment {
 
                             ClipData.Item item = mClipData.getItemAt(i);
                             Uri uri = item.getUri();
-                            imageUris.add(uri);
+                            if (imageUris.size() <= 4) {
+                                imageUris.add(uri);
+                            }
 
                             ImageView imgView = (ImageView) this.getView().findViewById(imgViews[i]);
 
@@ -372,7 +376,7 @@ public class AddPetFragment extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this.getActivity(), "Solo se utilizarán 5 imagenes de las que seleccionaste", Toast.LENGTH_LONG)
+            Toast.makeText(this.getActivity(), "Algo fallo. Por favor reintente de nuevo mas tarde", Toast.LENGTH_LONG)
                     .show();
         }
 
