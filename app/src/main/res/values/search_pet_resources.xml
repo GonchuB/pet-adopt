@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="search_pet_type_array">
+        <item>Cualquiera</item>
+        <item>Gato</item>
+        <item>Perro</item>
+    </string-array>
+    <string-array name="search_pet_gender_array">
+        <item>Cualquiera</item>
+        <item>Macho</item>
+        <item>Hembra</item>
+    </string-array>
+    <string-array name="search_pet_color_array">
+        <item>Cualquiera</item>
+        <item>Negro</item>
+        <item>Gris</item>
+        <item>Marrón</item>
+        <item>Chocolate</item>
+        <item>Rojizo</item>
+        <item>Dorado</item>
+        <item>Amarillo</item>
+        <item>Crema</item>
+        <item>Plateado</item>
+        <item>Blanco</item>
+    </string-array>
+</resources>

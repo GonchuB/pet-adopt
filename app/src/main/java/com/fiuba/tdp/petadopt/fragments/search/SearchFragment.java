@@ -37,7 +37,7 @@ import java.util.Map;
 public class SearchFragment extends Fragment {
 
     private ListView lv;
-    private List<Pet> pets;
+    private List<Pet> pets = null;
 
     public SearchFragment(){}
 
@@ -58,6 +58,12 @@ public class SearchFragment extends Fragment {
         lv = (ListView) rootView.findViewById(R.id.pet_list);
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        renderResults();
     }
 
     @Override
@@ -85,26 +91,35 @@ public class SearchFragment extends Fragment {
         client.simpleQueryPets(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                pets = parsePets(body);
+                setResults(body);
                 renderResults();
             }
         });
 
     }
 
+    public void setResults(JSONArray body) {
+        pets = parsePets(body);
+    }
+
     private void renderResults() {
-        List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-        for (int i = 0; i < pets.size() ; i++) {
-            HashMap<String, String> m = new HashMap<String, String>();
-            m.put("line_1", pets.get(i).toString());
-            m.put("line_2", pets.get(i).getColors());
-            data.add(m);
+        if (pets != null && pets.size() != 0) {
+            List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+            for (int i = 0; i < pets.size(); i++) {
+                HashMap<String, String> m = new HashMap<String, String>();
+                m.put("line_1", pets.get(i).toString());
+                m.put("line_2", pets.get(i).getColors());
+                data.add(m);
+            }
+            String[] from = {"line_1", "line_2"};
+            int[] to = {R.id.line_1, R.id.line_2};
+            List<? extends Map<String, ?>> castedData = (List<? extends Map<String, ?>>) data;
+            SimpleAdapter adapter = new SimpleAdapter(getActivity(), castedData, R.layout.pet_list_item, from, to);
+            lv.setAdapter(adapter);
+            getActivity().findViewById(R.id.no_results).setVisibility(View.INVISIBLE);
+        } else {
+            getActivity().findViewById(R.id.no_results).setVisibility(View.VISIBLE);
         }
-        String[] from = {"line_1", "line_2"};
-        int[] to = {R.id.line_1, R.id.line_2};
-        List<? extends Map<String, ?>> castedData = (List<? extends Map<String, ?>>)data;
-        SimpleAdapter adapter = new SimpleAdapter(getActivity(), castedData, R.layout.pet_list_item, from, to);
-        lv.setAdapter(adapter);
     }
 
     private ArrayList<Pet> parsePets(JSONArray petArray) {

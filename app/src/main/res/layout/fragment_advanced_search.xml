@@ -50,19 +50,7 @@
         android:layout_below="@+id/gender_hint"
         android:layout_marginTop="10dp"
         android:gravity="end"
-        android:text="@string/new_pet_main_color_hint"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:layout_alignStart="@+id/pet_second_color_hint" />
-
-    <TextView
-        android:id="@+id/pet_second_color_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/main_color_hint"
-        android:layout_marginTop="10dp"
-        android:gravity="end"
-        android:text="@string/new_pet_second_color_hint"
+        android:text="@string/advance_search_color"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:layout_alignStart="@+id/search_submit" />
@@ -98,21 +86,10 @@
         android:layout_toRightOf="@+id/main_color_hint"
         android:spinnerMode="dropdown" />
 
-    <Spinner
-        android:id="@+id/pet_second_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/pet_second_color_hint"
-        android:layout_alignTop="@+id/pet_second_color_hint"
-        android:layout_toEndOf="@+id/pet_second_color_hint"
-        android:layout_toRightOf="@+id/pet_second_color_hint"
-        android:spinnerMode="dropdown" />
-
     <Button
         android:id="@+id/choose_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pet_second_color_hint"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
@@ -120,7 +97,7 @@
         android:text="@string/advance_search_location"
         android:textColor="#FFF"
         android:background="@color/submit_button"
-        android:layout_alignStart="@+id/pet_description" />
+        android:layout_below="@+id/main_color_hint" />
 
     <TextView
         android:id="@+id/chosen_location"
@@ -132,25 +109,7 @@
         android:text=""
         android:textSize="14sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignEnd="@+id/pet_description" />
-
-    <EditText
-        android:id="@+id/pet_description"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false"
-        android:layout_below="@+id/choose_location"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="@string/new_pet_description_hint"
-        android:inputType="textMultiLine"
-        android:singleLine="true"
-        android:layout_alignRight="@+id/pet_second_color"
-        android:layout_alignEnd="@+id/pet_second_color"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_above="@+id/pet_vaccinated" />
+        android:layout_alignEnd="@+id/search_submit" />
 
     <CheckBox
         android:id="@+id/pet_vaccinated"
@@ -161,8 +120,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="55dp"
-        android:layout_above="@+id/search_submit"
-        android:layout_alignStart="@+id/pet_description" />
+        android:layout_above="@+id/search_submit" />
 
     <Button
         android:id="@+id/search_submit"
@@ -184,13 +142,13 @@
         android:text="@string/advance_search_title"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/pet_description"
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="5dp"
         android:textColor="@color/submit_button"
         android:textStyle="bold"
         android:layout_marginBottom="5dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/search_submit" />
 
 </RelativeLayout>

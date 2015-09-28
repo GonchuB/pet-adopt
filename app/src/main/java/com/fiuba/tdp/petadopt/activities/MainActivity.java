@@ -253,6 +253,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
+    public void showResults(JSONArray body) {
+        SearchFragment fragment = new SearchFragment();
+        fragment.setResults(body);
+        displayFragment(fragment);
+    }
+
     public void showAddPetFragment(View view) {
         Fragment fragment = new AddPetFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

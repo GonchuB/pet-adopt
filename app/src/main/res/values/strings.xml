@@ -36,6 +36,8 @@
     <string name="search_button">Buscar</string>
     <string name="search_hint">Introduce tu búsqueda</string>
     <string name="search_title">Búsqueda Simple</string>
+    <string name="no_results">No hay resultados para mostrar</string>
     <string name="advance_search_title">Búsqueda Avanzada</string>
+    <string name="advance_search_color">Color</string>
     <string name="advance_search_location">Elegir ubicación cercana</string>
 </resources>

@@ -215,7 +215,7 @@ public class AddPetFragment extends Fragment {
             }
         });
 
-        final EditText ageEditText = (EditText) rootView.findViewById(R.id.pet_name);
+        final EditText ageEditText = (EditText) rootView.findViewById(R.id.pet_age);
         this.ageEditText = ageEditText;
         ageEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -226,6 +226,24 @@ public class AddPetFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 pet.setAge(ageEditText.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        final EditText descriptionEditText = (EditText) rootView.findViewById(R.id.pet_description);
+        ageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                pet.setDescription(descriptionEditText.getText().toString());
             }
 
             @Override

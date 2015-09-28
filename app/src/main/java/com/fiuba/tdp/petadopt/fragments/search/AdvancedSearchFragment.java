@@ -1,29 +1,42 @@
 package com.fiuba.tdp.petadopt.fragments.search;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.LocationChosenDelegate;
-import com.fiuba.tdp.petadopt.model.Pet;
+import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.google.android.gms.maps.model.LatLng;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+
+import java.util.HashMap;
 
 public class AdvancedSearchFragment extends Fragment {
-    private Pet pet;
+    private HashMap<String, String> petFilter = new HashMap<String, String>();
     private View rootView;
     public AdvancedSearchFragment(){
-        pet = new Pet();
     }
 
     @Override
@@ -33,10 +46,9 @@ public class AdvancedSearchFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
         setHasOptionsMenu(true);
 
-        populateSpinner(rootView, R.id.pet_type, R.array.pet_type_array);
-        populateSpinner(rootView, R.id.pet_gender, R.array.pet_gender_array);
-        populateSpinner(rootView, R.id.pet_main_color, R.array.pet_color_array);
-        populateSpinner(rootView, R.id.pet_second_color, R.array.pet_color_array);
+        populateSpinner(rootView, R.id.pet_type, R.array.search_pet_type_array);
+        populateSpinner(rootView, R.id.pet_gender, R.array.search_pet_gender_array);
+        populateSpinner(rootView, R.id.pet_main_color, R.array.search_pet_color_array);
         TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
         final Button button = (Button) rootView.findViewById(R.id.choose_location);
         button.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +58,7 @@ public class AdvancedSearchFragment extends Fragment {
                 mapFragment.setLocationChosenDelegate(new LocationChosenDelegate() {
                     @Override
                     public void locationWasChosen(LatLng location, String address) {
-                        pet.setLocation(location);
+                        petFilter.put("location",String.valueOf(location.latitude) + "," + String.valueOf(location.longitude));
                         TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
                         locationView.setText(address);
                     }
@@ -58,7 +70,107 @@ public class AdvancedSearchFragment extends Fragment {
             }
         });
 
+        setUpPetFillingCallbacks(rootView);
+        setupSubmitButton(rootView);
+
         return rootView;
+    }
+
+    private void setupSubmitButton(View rootView) {
+        final Button button = (Button) rootView.findViewById(R.id.search_submit);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                PetsClient client = PetsClient.instance();
+                client.advanceSearch(petFilter, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int code, Header[] headers, JSONArray body) {
+                        MainActivity ma = (MainActivity) getActivity();
+                        ma.showResults(body);
+                    }
+                });
+            }
+        });
+    }
+
+    private void setUpPetFillingCallbacks(View rootView) {
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.search_pet_type_array);
+                if (position != 0) {
+                    if (position == 1) petFilter.put("type", "Cat");
+                    if (position == 2) petFilter.put("type", "Dog");
+                } else {
+                    petFilter.remove("type");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+        spinner.setSelection(0);
+
+        spinner = (Spinner) rootView.findViewById(R.id.pet_gender);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.search_pet_gender_array);
+                if (position > 0) {
+                    if (position == 1) petFilter.put("gender", "male");
+                    if (position == 2) petFilter.put("gender", "female");
+                } else {
+                    petFilter.remove("gender");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinner.setSelection(0);
+
+        spinner = (Spinner) rootView.findViewById(R.id.pet_main_color);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] petTypes = getResources().getStringArray(R.array.search_pet_color_array);
+                if (position > 0) {
+                    petFilter.put("colors", petTypes[position]);
+                } else {
+                    petFilter.remove("colors");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+        spinner.setSelection(0);
+
+        final EditText ageEditText = (EditText) rootView.findViewById(R.id.pet_age);
+        ageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                petFilter.put("age", ageEditText.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void populateSpinner(View rootView, int viewId, int arrayId) {
