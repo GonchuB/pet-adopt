@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
@@ -98,6 +99,13 @@ public class SearchFragment extends Fragment {
                 progress.dismiss();
                 setResults(body);
                 renderResults();
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                progress.dismiss();
+                Toast toast = Toast.makeText(getContext(), R.string.search_error, Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
 

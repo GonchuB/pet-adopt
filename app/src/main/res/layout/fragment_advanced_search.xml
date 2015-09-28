@@ -119,8 +119,9 @@
         android:text="@string/new_pet_vaccinated_hint"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="55dp"
-        android:layout_above="@+id/search_submit" />
+        android:layout_below="@+id/choose_location"
+        android:layout_alignStart="@+id/choose_location"
+        android:layout_marginTop="45dp" />
 
     <Button
         android:id="@+id/search_submit"

@@ -30,6 +30,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -80,6 +81,11 @@ public class AdvancedSearchFragment extends Fragment {
         final Button button = (Button) rootView.findViewById(R.id.search_submit);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (petFilter.size() <= 0) {
+                    Toast toast = Toast.makeText(getContext(), R.string.advance_search_no_filter, Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
                 PetsClient client = PetsClient.instance();
                 final ProgressDialog progress = new ProgressDialog(v.getContext());
                 progress.setTitle(R.string.loading);
@@ -92,7 +98,16 @@ public class AdvancedSearchFragment extends Fragment {
                         MainActivity ma = (MainActivity) getActivity();
                         ma.showResults(body);
                     }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        progress.dismiss();
+                        Toast toast = Toast.makeText(getContext(), R.string.search_error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 });
+
             }
         });
     }
