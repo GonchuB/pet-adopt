@@ -42,9 +42,10 @@ public class PetsClient extends HttpClient {
         client.addHeader("user_token", auth_token);
     }
 
-    public void getPets(JsonHttpResponseHandler handler) {
+    public void getPetsForHome(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         RequestParams params = new RequestParams();
+        params.put("limit", 10);
         client.get(url, params, handler);
     }
 

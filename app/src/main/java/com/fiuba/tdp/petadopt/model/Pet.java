@@ -131,8 +131,10 @@ public class Pet {
         jo.remove("firstColor");
         jo.remove("secondColor");
         jo.addProperty("location", String.valueOf(this.location.latitude) + "," + String.valueOf(this.location.longitude));
-        jo.addProperty("color", this.getColors());
-        return jo.toString();
+        jo.addProperty("colors", this.getColors());
+        JsonObject result = new JsonObject();
+        result.add("pet", jo);
+        return result.toString();
     }
 
     public void loadFromJSON(JSONObject jsonObject) throws JSONException {
