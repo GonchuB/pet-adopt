@@ -4,7 +4,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,14 +16,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.SearchFragment;
+import com.fiuba.tdp.petadopt.fragments.search.SearchFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
     private int initialFragmentIndex = 0;
+    private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
     private Boolean exit = false;
@@ -135,6 +135,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
+        if (item.getItemId() == R.id.advance_search_action){
+            return displayFragment(new AdvancedSearchFragment());
+        }
+
+        if (item.getItemId() == R.id.simple_search_action){
+            return displayFragment(new SearchFragment());
+        }
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -196,9 +204,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment).commit();
+                displayFragment(fragment);
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -210,6 +216,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.e("MainActivity", "Error in creating fragment");
             }
         }
+    }
+
+    private boolean displayFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+
+        this.currentFragment = fragment;
+
+        return true;
     }
 
     private void fetchPets() {
@@ -235,6 +251,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void showResults(JSONArray body) {
+        SearchFragment fragment = new SearchFragment();
+        fragment.setResults(body);
+        displayFragment(fragment);
     }
 
     public void showAddPetFragment(View view) {

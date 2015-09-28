@@ -15,6 +15,9 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class PetsClient extends HttpClient {
@@ -62,5 +65,31 @@ public class PetsClient extends HttpClient {
         } catch (UnsupportedEncodingException e) {
             Log.e("Error in post request", e.getLocalizedMessage());
         }
+    }
+
+    public void simpleQueryPets(String query, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        RequestParams params = new RequestParams();
+        params.put("metadata", query);
+        Log.v("after intent", auth_token);
+        client.get(url, params, handler);
+    }
+
+    public void advanceSearch(HashMap<String, String> petFilter, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        RequestParams params = buildParameters(petFilter);
+        Log.v("after intent", auth_token);
+        client.get(url, params, handler);
+    }
+
+    private RequestParams buildParameters(HashMap<String, String> petFilter) {
+        RequestParams params = new RequestParams();
+        Iterator it = petFilter.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            params.add(pair.getKey().toString(), pair.getValue().toString());
+        }
+
+        return params;
     }
 }
