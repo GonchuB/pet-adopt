@@ -107,7 +107,7 @@ public class PetsClient extends HttpClient {
         RequestParams params = new RequestParams();
 
         try {
-            params.put("pet_image[image]", new File(path),"multipart/form-data");
+            params.put("pet_image[image]", new File(path));
         } catch (Exception e) {
             e.printStackTrace();
         }

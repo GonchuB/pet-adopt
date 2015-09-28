@@ -283,13 +283,13 @@ public class AddPetFragment extends Fragment {
                 final ProgressDialog progress = new ProgressDialog(v.getContext());
                 progress.setTitle(R.string.loading);
                 progress.show();
-                /*PetsClient.instance().createPet(pet, new JsonHttpResponseHandler() {
+                PetsClient.instance().createPet(pet, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         for (Uri uri : imageUris){
                             try {
-                                PetsClient.instance().uploadImage(response.getString("id"), new File(uri.getPath()), new JsonHttpResponseHandler() {
+                                PetsClient.instance().uploadImage(response.getString("id"), getPath(uri), new JsonHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(int code, Header[] headers, JSONObject body) {
                                         String items = "";
@@ -319,25 +319,8 @@ public class AddPetFragment extends Fragment {
                         toast.show();
                         Log.e("Error creating pet", pet.toJson());
                     }
-                });*/
+                });
 
-
-                for (Uri uri : imageUris){
-                    String path = getPath(uri);
-                    PetsClient.instance().uploadImage("42", path, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int code, Header[] headers, JSONObject body) {
-                            String items = "";
-                            try {
-                                items = body.toString();
-                                Log.v("image response", items);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-                progress.dismiss();
 
             }
         });
