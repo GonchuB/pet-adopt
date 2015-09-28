@@ -5,11 +5,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
+import com.fiuba.tdp.petadopt.service.PetListItemAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,21 +55,12 @@ public class HomeFragment extends Fragment {
         String[] from = {"line_1", "line_2"};
         int[] to = {R.id.line_1, R.id.line_2};
         if (pets != null && pets.size() != 0) {
-            List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-            for (int i = 0; i < pets.size(); i++) {
-                HashMap<String, String> m = new HashMap<String, String>();
-                m.put("line_1", pets.get(i).toString());
-                m.put("line_2", pets.get(i).getColors());
-                data.add(m);
-            }
-            List<? extends Map<String, ?>> castedData = (List<? extends Map<String, ?>>) data;
-            SimpleAdapter adapter = new SimpleAdapter(getActivity(), castedData, R.layout.pet_list_item, from, to);
+            ArrayAdapter adapter = new PetListItemAdapter(getActivity(), pets);
             lv.setAdapter(adapter);
             getActivity().findViewById(R.id.no_results).setVisibility(View.INVISIBLE);
         } else {
             SimpleAdapter adapter = new SimpleAdapter(getActivity(), new ArrayList<HashMap<String, String>>(), R.layout.pet_list_item, from, to);
             lv.setAdapter(adapter);
-
             getActivity().findViewById(R.id.no_results).setVisibility(View.VISIBLE);
         }
     }

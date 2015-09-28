@@ -27,7 +27,7 @@ public class Pet {
     private String firstColor;
     private String secondColor;
     private ArrayList<String> colors;
-    ArrayList<String> images;
+    ArrayList<Image> images;
 
 
     public Pet() {
@@ -172,11 +172,13 @@ public class Pet {
         return a;
     }
 
-    private ArrayList<String> parseImages(JSONArray imagesArray) throws JSONException {
-        ArrayList<String> images = new ArrayList<>(imagesArray.length());
+    private ArrayList<Image> parseImages(JSONArray imagesArray) throws JSONException {
+        ArrayList<Image> images = new ArrayList<>(imagesArray.length());
         for(int i = 0; i < imagesArray.length(); i++) {
-            String image = imagesArray.getString(i);
-            images.add(i,image);
+            JSONObject imageObject = imagesArray.getJSONObject(i);
+            Image image = new Image();
+            image.fromJson(imageObject);
+            images.add(image);
         }
 
         return images;
@@ -217,6 +219,17 @@ public class Pet {
         return this.name + ": " + type + " " + gender;
     }
 
+    public Image getFirstImage() {
+        Image firstImage;
+        try {
+            firstImage = this.images.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+
+        return firstImage;
+    }
+
     public enum Type {
         Cat,
         Dog,
@@ -227,5 +240,44 @@ public class Pet {
     public enum Gender {
         male,
         female
+    }
+
+    public class Image {
+        String thumbUrl;
+        String mediumUrl;
+        String originalUrl;
+
+        public Image() {
+        }
+
+        public String getMediumUrl() {
+            return mediumUrl;
+        }
+
+        public void setMediumUrl(String mediumUrl) {
+            this.mediumUrl = mediumUrl;
+        }
+
+        public String getOriginalUrl() {
+            return originalUrl;
+        }
+
+        public void setOriginalUrl(String originalUrl) {
+            this.originalUrl = originalUrl;
+        }
+
+        public String getThumbUrl() {
+            return thumbUrl;
+        }
+
+        public void setThumbUrl(String thumbUrl) {
+            this.thumbUrl = thumbUrl;
+        }
+
+        public void fromJson(JSONObject object) throws JSONException {
+            thumbUrl = object.getString("thumb_url");
+            mediumUrl = object.getString("medium_url");
+            originalUrl = object.getString("original_url");
+        }
     }
 }

@@ -44,4 +44,5 @@
     <string name="advance_search_location">Elegir ubicación cercana</string>
     <string name="new_pet_submit_image">Añadir imagenes</string>
     <string name="add_pet_location_not_chosen">La ubicación no puede estar vacía</string>
+    <string name="add_pet_image_not_uploaded">Debés subir por lo menos una imagen de tu mascota</string>
 </resources>

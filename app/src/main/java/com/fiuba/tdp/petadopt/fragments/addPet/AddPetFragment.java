@@ -396,6 +396,10 @@ public class AddPetFragment extends Fragment {
             status.isError = true;
             status.addErrorField(getString(R.string.add_pet_location_not_chosen));
         }
+        if (imageUris == null  || imageUris.size() <= 0) {
+            status.isError = true;
+            status.addErrorField(getString(R.string.add_pet_image_not_uploaded));
+        }
 
         return status;
     }
