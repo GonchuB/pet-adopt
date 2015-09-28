@@ -89,6 +89,10 @@ public class SearchFragment extends Fragment {
     public void submitSearch(View view){
         EditText queryTextView = (EditText) getActivity().findViewById(R.id.query);
         String query = queryTextView.getText().toString();
+        if (query.length() == 0) {
+            Toast toast = Toast.makeText(getContext(), R.string.search_error, Toast.LENGTH_SHORT);
+            toast.show();
+        }
         PetsClient client = PetsClient.instance();
         final ProgressDialog progress = new ProgressDialog(view.getContext());
         progress.setTitle(R.string.loading);

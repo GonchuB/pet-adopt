@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void byPassLogin(View view) {
-        String harcodedAuthToken = "R__eHU6fBq5NASj7FxUe";
+        String harcodedAuthToken = "CAJgH_NsxWNR_edmuzvZ";
         User.user().loggedInWithFacebook("HarcodedFB_ID", "HarcodedFB_Token");
         User.user().setAuthToken(harcodedAuthToken);
         continueToHome();

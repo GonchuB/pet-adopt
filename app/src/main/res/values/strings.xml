@@ -37,6 +37,7 @@
     <string name="search_hint">Introduce tu búsqueda</string>
     <string name="search_title">Búsqueda Simple</string>
     <string name="search_error">Hubo un error en la búsqueda. Intente nuevamente más tarde</string>
+    <string name="search_empty">Debés escribir algo para buscar</string>
     <string name="no_results">No hay resultados para mostrar</string>
     <string name="advance_search_title">Búsqueda Avanzada</string>
     <string name="advance_search_color">Color</string>
