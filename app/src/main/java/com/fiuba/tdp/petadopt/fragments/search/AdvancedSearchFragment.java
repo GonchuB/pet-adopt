@@ -81,9 +81,14 @@ public class AdvancedSearchFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 PetsClient client = PetsClient.instance();
+                final ProgressDialog progress = new ProgressDialog(v.getContext());
+                progress.setTitle(R.string.loading);
+                progress.show();
                 client.advanceSearch(petFilter, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int code, Header[] headers, JSONArray body) {
+
+                        progress.dismiss();
                         MainActivity ma = (MainActivity) getActivity();
                         ma.showResults(body);
                     }

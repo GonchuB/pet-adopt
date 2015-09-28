@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Fragment fragment = null;
             switch (position) {
                 case 0:
+                    goBackToHome();
                     fragment = homeFragment;
                     break;
                 case 1:
@@ -252,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void goBackToHome() {
+        fetchPets();
         displayFragment(homeFragment);
     }
 

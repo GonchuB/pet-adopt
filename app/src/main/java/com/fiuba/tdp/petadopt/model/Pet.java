@@ -105,7 +105,11 @@ public class Pet {
         for (int i = 0; i < this.colors.size(); i++) {
             colors = colors + this.colors.get(i);
             if (i < this.colors.size() -1 ) {
-                colors = colors + ", ";
+                if (this.colors.get(i).lastIndexOf(",") < 0) {
+                    colors = colors + ", ";
+                } else {
+                    colors = colors + " ";
+                }
             }
         }
         return colors;
