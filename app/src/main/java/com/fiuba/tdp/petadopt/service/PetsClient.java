@@ -5,6 +5,9 @@
 
 package com.fiuba.tdp.petadopt.service;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 import com.fiuba.tdp.petadopt.model.Pet;
@@ -12,12 +15,16 @@ import com.fiuba.tdp.petadopt.model.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import org.apache.http.entity.StringEntity;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 
 
 public class PetsClient extends HttpClient {
@@ -92,5 +99,21 @@ public class PetsClient extends HttpClient {
         }
 
         return params;
+    }
+
+    public void uploadImage(String petId, String path, JsonHttpResponseHandler handler){
+        String url = getApiUrl("/pets/"+petId+"/images.json");
+
+        RequestParams params = new RequestParams();
+
+        try {
+            params.put("pet_image[image]", new File(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        params.setForceMultipartEntityContentType(true);
+
+        client.post(url,params,handler);
+
     }
 }

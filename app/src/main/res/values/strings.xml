@@ -40,4 +40,5 @@
     <string name="advance_search_title">Búsqueda Avanzada</string>
     <string name="advance_search_color">Color</string>
     <string name="advance_search_location">Elegir ubicación cercana</string>
+    <string name="new_pet_submit_image">Añadir imagenes</string>
 </resources>
