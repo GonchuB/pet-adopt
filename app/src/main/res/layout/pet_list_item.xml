@@ -9,14 +9,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/line_1"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:textStyle="bold"
+        android:textColor="@color/submit_button">
     </TextView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/line_2"
-        android:layout_below="@+id/line_1">
+        android:layout_below="@+id/line_1"
+        android:textStyle="italic"
+        android:textColor="@color/subtitle_color">
     </TextView>
 
 </RelativeLayout>

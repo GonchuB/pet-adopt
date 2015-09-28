@@ -9,5 +9,6 @@
     <color name="hover_orange">#ff8607</color>
     <color name="background">#92DEF7</color>
     <color name="submit_button">#FF5500</color>
+    <color name="subtitle_color">#3b2300</color>
 
 </resources>
