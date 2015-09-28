@@ -7,8 +7,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,23 +36,17 @@ import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.LocationChosenDelegate;
 import com.fiuba.tdp.petadopt.model.Pet;
-import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 @SuppressWarnings("ALL")
 public class AddPetFragment extends Fragment {
@@ -399,7 +391,12 @@ public class AddPetFragment extends Fragment {
             status.isError = true;
             status.addErrorField(getString(R.string.add_pet_name_not_completed));
         }
-        ;
+        LatLng location = pet.getLocation();
+        if (location == null) {
+            status.isError = true;
+            status.addErrorField(getString(R.string.add_pet_location_not_chosen));
+        }
+
         return status;
     }
 
