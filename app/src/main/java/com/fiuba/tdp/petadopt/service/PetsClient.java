@@ -69,6 +69,7 @@ public class PetsClient extends HttpClient {
         try {
             String url = getApiUrl("/pets.json");
             StringEntity entity = new StringEntity(pet.toJson());
+            entity.setContentEncoding("utf8");
             client.post(ActivityContext, url, entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {
             Log.e("Error in post request", e.getLocalizedMessage());
