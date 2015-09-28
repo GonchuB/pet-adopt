@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {

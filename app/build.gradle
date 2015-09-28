@@ -30,7 +30,7 @@ android {
 
         qa {
             applicationId "com.fiuba.tdp.petadopt"
-            buildConfigField "String", BASE_ENDPOINT, '"http://my-qa-url.fakehost.com/"'
+            buildConfigField "String", BASE_ENDPOINT, '"http://pet-backend.herokuapp.com/"'
         }
 
         prod {
