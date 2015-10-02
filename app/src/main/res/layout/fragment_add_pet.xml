@@ -3,7 +3,7 @@
     android:id="@+id/add_pet_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/app_background">
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -137,8 +137,8 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="@string/choose_location"
-                android:textColor="#FFF"
-                android:background="@color/submit_button"/>
+                android:textColor="@color/light_text"
+                android:background="@color/button_background"/>
 
             <TextView
                 android:id="@+id/chosen_location"
@@ -185,8 +185,8 @@
                 android:padding="10dp"
                 android:text="@string/new_pet_submit_image"
                 android:layout_below="@+id/pet_vaccinated"
-                android:textColor="#FFF"
-                android:background="@color/submit_button"/>
+                android:textColor="@color/light_text"
+                android:background="@color/button_background"/>
 
             <ImageView
                 android:id="@+id/imgView1"
@@ -243,7 +243,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/new_pet_submit"
-        android:textColor="#FFF"
-        android:background="@color/submit_button"/>
+        android:textColor="@color/light_text"
+        android:background="@color/button_background"/>
 
 </RelativeLayout>

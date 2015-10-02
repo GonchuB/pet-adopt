@@ -22,7 +22,7 @@
         android:id="@+id/line_1"
         android:layout_alignParentTop="true"
         android:textStyle="bold"
-        android:textColor="@color/submit_button">
+        android:textColor="@color/title_text">
     </TextView>
 
     <TextView
@@ -31,7 +31,7 @@
         android:id="@+id/line_2"
         android:layout_below="@+id/line_1"
         android:textStyle="italic"
-        android:textColor="@color/subtitle_color">
+        android:textColor="@color/light_text">
     </TextView>
 
 </RelativeLayout>

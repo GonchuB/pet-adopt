@@ -3,7 +3,7 @@
     android:id="@+id/add_pet_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/app_background">
 
 
     <EditText
@@ -95,8 +95,8 @@
         android:layout_marginTop="30dp"
         android:padding="10dp"
         android:text="@string/advance_search_location"
-        android:textColor="#FFF"
-        android:background="@color/submit_button"
+        android:textColor="@color/light_text"
+        android:background="@color/button_background"
         android:layout_below="@+id/main_color_hint" />
 
     <TextView
@@ -133,8 +133,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/search_button"
-        android:textColor="#FFF"
-        android:background="@color/submit_button"/>
+        android:textColor="@color/light_text"
+        android:background="@color/button_background"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -145,7 +145,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center_vertical|center_horizontal"
         android:layout_marginTop="5dp"
-        android:textColor="@color/submit_button"
+        android:textColor="@color/title_text"
         android:textStyle="bold"
         android:layout_marginBottom="5dp"
         android:layout_alignParentEnd="true"
