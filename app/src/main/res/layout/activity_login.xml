@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/background">
+    android:background="@drawable/login_background">
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
@@ -12,45 +12,5 @@
         android:layout_marginBottom="73dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/app_icon"
-        android:layout_marginTop="69dp"
-        android:background="@drawable/icon"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Pet Adopt"
-        android:id="@+id/app_title"
-        android:capitalize="characters"
-        android:textColor="@color/main_orange"
-        android:textStyle="bold"
-        android:textSize="37dp"
-        android:layout_marginTop="28dp"
-        android:layout_alignRight="@+id/login_button"
-        android:layout_alignEnd="@+id/login_button"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/login_message"
-        android:id="@+id/login_message"
-        android:layout_below="@+id/app_icon"
-        android:textColor="@color/main_orange"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:id="@+id/bypass"
-        android:onClick="byPassLogin"/>
 
 </RelativeLayout>

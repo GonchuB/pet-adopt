@@ -1,5 +1,6 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
             continueToHome();
             return;
         }
+
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null)
+//            actionBar.hide();
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
