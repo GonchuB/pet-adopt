@@ -6,7 +6,6 @@ package com.fiuba.tdp.petadopt.fragments.search;
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
-import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.PetListItemAdapter;
 import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,7 +33,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SearchFragment extends Fragment {
 
@@ -122,7 +119,7 @@ public class SearchFragment extends Fragment {
 
     private void renderResults() {
         String[] from = {"line_1", "line_2"};
-        int[] to = {R.id.line_1, R.id.line_2};
+        int[] to = {R.id.name, R.id.image};
         if (pets != null && pets.size() != 0) {
             ArrayAdapter adapter = new PetListItemAdapter(getActivity(), pets);
             lv.setAdapter(adapter);

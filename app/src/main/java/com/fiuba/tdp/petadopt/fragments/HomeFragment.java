@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -53,7 +52,7 @@ public class HomeFragment extends Fragment {
 
     private void renderResults() {
         String[] from = {"line_1", "line_2"};
-        int[] to = {R.id.line_1, R.id.line_2};
+        int[] to = {R.id.name, R.id.image};
         if (pets != null && pets.size() != 0) {
             ArrayAdapter adapter = new PetListItemAdapter(getActivity(), pets);
             lv.setAdapter(adapter);

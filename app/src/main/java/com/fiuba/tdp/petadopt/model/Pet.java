@@ -10,8 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 public class Pet {
@@ -27,6 +31,7 @@ public class Pet {
     private String firstColor;
     private String secondColor;
     private ArrayList<String> colors;
+    private Date createdAt;
     ArrayList<Image> images;
 
 
@@ -53,6 +58,15 @@ public class Pet {
     public Type getType() {
         return type;
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
 
     //TODO - improve
     public void setType(String type) {
@@ -159,6 +173,16 @@ public class Pet {
         this.gender = parseGender(jsonObject.getString("gender"));
         this.colors = parseColors(jsonObject.getString("colors"));
         this.images = parseImages(jsonObject.getJSONArray("images"));
+        this.createdAt = parseDate(jsonObject.getString("created_at"));
+    }
+
+    private Date parseDate(String date) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        SimpleDateFormat parserSDF=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        ParsePosition p = new ParsePosition(0);
+        parserSDF.setTimeZone(tz);
+        return parserSDF.parse(date,p);
+
     }
 
     private ArrayList<String> parseColors(String colors) {

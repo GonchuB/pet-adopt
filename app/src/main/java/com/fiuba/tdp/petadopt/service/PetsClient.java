@@ -50,9 +50,8 @@ public class PetsClient extends HttpClient {
     }
 
     public void getPetsForHome(JsonHttpResponseHandler handler) {
-        String url = getApiUrl("/pets.json");
+        String url = getApiUrl("/pets/top.json");
         RequestParams params = new RequestParams();
-        params.put("limit", 10);
         client.get(url, params, handler);
     }
 

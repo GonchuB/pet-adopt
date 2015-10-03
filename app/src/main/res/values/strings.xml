@@ -6,6 +6,11 @@
     <string name="action_settings">Configuración</string>
     <string name="title_activity_adoption_search">Búsqueda adopción</string>
 
+    <string name="cat_string">Gato</string>
+    <string name="dog_string">Perro</string>
+    <string name="male_string">Macho</string>
+    <string name="female_string">Hembra</string>
+
     <string name="edit_message">Editame</string>
     <string name="button_send">Enviar</string>
     <string name="login_message">Por favor, logueate</string>
@@ -46,4 +51,9 @@
     <string name="new_pet_submit_image">Añadir imagenes</string>
     <string name="add_pet_location_not_chosen">La ubicación no puede estar vacía</string>
     <string name="add_pet_image_not_uploaded">Debés subir por lo menos una imagen de tu mascota</string>
+
+
+    <string name="name_type_sep">-</string>
+
+
 </resources>
