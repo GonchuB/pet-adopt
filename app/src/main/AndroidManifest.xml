@@ -39,6 +39,9 @@
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>
         </service>
+        <service
+            android:name=".service.RegistrationIntentService"
+            android:exported="false"/>
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBfgGDN368SxX5rDaK5h3DJ4pmwATyKzVo"/>
         <activity

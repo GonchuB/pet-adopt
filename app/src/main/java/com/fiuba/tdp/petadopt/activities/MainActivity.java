@@ -30,6 +30,7 @@ import com.fiuba.tdp.petadopt.fragments.search.SearchFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.fiuba.tdp.petadopt.service.RegistrationIntentService;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,13 +69,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        }catch (IOException e ){
-            Log.e("Couldn't get push token", e.getLocalizedMessage());
-        }
+
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
