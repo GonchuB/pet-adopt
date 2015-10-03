@@ -95,7 +95,7 @@
         android:layout_marginTop="30dp"
         android:padding="10dp"
         android:text="@string/advance_search_location"
-        android:textColor="@color/light_text"
+        android:textColor="@color/button_text"
         android:background="@color/button_background"
         android:layout_below="@+id/main_color_hint" />
 
@@ -133,7 +133,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/search_button"
-        android:textColor="@color/light_text"
+        android:textColor="@color/button_text"
         android:background="@color/button_background"/>
 
     <TextView

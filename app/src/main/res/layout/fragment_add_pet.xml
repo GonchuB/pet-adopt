@@ -137,7 +137,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="@string/choose_location"
-                android:textColor="@color/light_text"
+                android:textColor="@color/button_text"
                 android:background="@color/button_background"/>
 
             <TextView
@@ -185,7 +185,7 @@
                 android:padding="10dp"
                 android:text="@string/new_pet_submit_image"
                 android:layout_below="@+id/pet_vaccinated"
-                android:textColor="@color/light_text"
+                android:textColor="@color/button_text"
                 android:background="@color/button_background"/>
 
             <ImageView
@@ -243,7 +243,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/new_pet_submit"
-        android:textColor="@color/light_text"
+        android:textColor="@color/button_text"
         android:background="@color/button_background"/>
 
 </RelativeLayout>

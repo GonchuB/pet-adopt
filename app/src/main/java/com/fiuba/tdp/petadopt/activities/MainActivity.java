@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean created = false;
     private HomeFragment homeFragment;
     private SearchView mSearchView;
+    private Boolean atHome = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -148,11 +149,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
         if (item.getItemId() == R.id.advance_search_action){
+            setTitle(R.string.advance_search_title);
             return displayFragment(new AdvancedSearchFragment());
-        }
-
-        if (item.getItemId() == R.id.simple_search_action){
-            return displayFragment(new ResultFragment());
         }
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -229,6 +227,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private boolean displayFragment(Fragment fragment) {
+        if (fragment instanceof HomeFragment) {
+            atHome = true;
+        } else {
+            atHome = false;
+        }
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
@@ -250,15 +253,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private void performSearch(String query) {
+    private void performSearch(final String query) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
         client.simpleQueryPets(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                ResultFragment resultFragment = new ResultFragment();
-                resultFragment.setResults(body);
-                displayFragment(resultFragment);
+                showResults(body);
+                mSearchView.setQuery(query, false);
             }
         });
     }
@@ -274,12 +276,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void goBackToHome() {
         fetchPets();
         displayFragment(homeFragment);
+        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setSelection(0);
+        setTitle(optionTitles[0]);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     public void showResults(JSONArray body) {
         ResultFragment fragment = new ResultFragment();
         fragment.setResults(body);
         displayFragment(fragment);
+        setTitle(R.string.results_title);
     }
 
     @Override
@@ -290,8 +297,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onQueryTextSubmit(String text) {
         performSearch(text);
-
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!mSearchView.isIconified()) {
+            mSearchView.setIconified(true);
+        } else if (!atHome) {
+            goBackToHome();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

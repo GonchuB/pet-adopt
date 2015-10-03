@@ -45,7 +45,6 @@ public class AdvancedSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
-        setHasOptionsMenu(true);
 
         populateSpinner(rootView, R.id.pet_type, R.array.search_pet_type_array);
         populateSpinner(rootView, R.id.pet_gender, R.array.search_pet_gender_array);
@@ -201,10 +200,5 @@ public class AdvancedSearchFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.advanced_search_fragment_actions, menu);
     }
 }

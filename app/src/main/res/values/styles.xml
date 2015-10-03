@@ -12,6 +12,7 @@
     <color name="app_background">#e8e8e8</color>
     <color name="actionbar_background">#137c7c</color>
     <color name="button_background">#137c7c</color>
+    <color name="button_text">#e8e8e8</color>
     <color name="title_text">#0a97a5</color>
     <color name="dark_text">#071926</color>
     <color name="light_text">#8db5a1</color>
