@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pet_type_array">
+    <string-array name="search_pet_type_array">
+        <item>Cualquiera</item>
         <item>Gato</item>
         <item>Perro</item>
     </string-array>
-    <string-array name="pet_gender_array">
+    <string-array name="search_pet_gender_array">
+        <item>Cualquiera</item>
         <item>Macho</item>
         <item>Hembra</item>
     </string-array>
-    <string-array name="pet_color_array">
+    <string-array name="search_pet_color_array">
+        <item>Cualquiera</item>
         <item>Negro</item>
         <item>Gris</item>
         <item>Marron</item>

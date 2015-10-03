@@ -6,6 +6,11 @@
     <string name="action_settings">Configuración</string>
     <string name="title_activity_adoption_search">Búsqueda adopción</string>
 
+    <string name="cat_string">Gato</string>
+    <string name="dog_string">Perro</string>
+    <string name="male_string">Macho</string>
+    <string name="female_string">Hembra</string>
+
     <string name="edit_message">Editame</string>
     <string name="button_send">Enviar</string>
     <string name="login_message">Por favor, logueate</string>
@@ -32,4 +37,23 @@
     <string name="pet_creation_success">Publicación creada!</string>
     <string name="add_pet_name_not_completed">El nombre no puede estar vacio</string>
     <string name="add_pet_age_not_completed">La edad no puede estar vacía</string>
+
+    <string name="search_button">Buscar</string>
+    <string name="search_hint">Introduce tu búsqueda</string>
+    <string name="search_title">Búsqueda Simple</string>
+    <string name="search_error">Hubo un error en la búsqueda. Intente nuevamente más tarde</string>
+    <string name="search_empty">Debés escribir algo para buscar</string>
+    <string name="no_results">No hay resultados para mostrar</string>
+    <string name="advance_search_title">Búsqueda Avanzada</string>
+    <string name="advance_search_color">Color</string>
+    <string name="advance_search_no_filter">Debes seleccionar algún filtro para realizar la búsqueda</string>
+    <string name="advance_search_location">Elegir ubicación cercana</string>
+    <string name="new_pet_submit_image">Añadir imagenes</string>
+    <string name="add_pet_location_not_chosen">La ubicación no puede estar vacía</string>
+    <string name="add_pet_image_not_uploaded">Debés subir por lo menos una imagen de tu mascota</string>
+
+
+    <string name="name_type_sep">-</string>
+
+
 </resources>

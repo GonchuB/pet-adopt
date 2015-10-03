@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/add_pet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background">
+
+
+    <EditText
+        android:id="@+id/pet_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#FFF"
+        android:ems="10"
+        android:hint="@string/new_pet_age_hint"
+        android:inputType="numberDecimal"
+        android:padding="5dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/type_hint" />
+
+    <TextView
+        android:id="@+id/type_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pet_age"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_type_hint"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/gender_hint" />
+
+    <TextView
+        android:id="@+id/gender_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_hint"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/new_pet_gender_hint"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/main_color_hint" />
+
+    <TextView
+        android:id="@+id/main_color_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gender_hint"
+        android:layout_marginTop="10dp"
+        android:gravity="end"
+        android:text="@string/advance_search_color"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:layout_alignStart="@+id/search_submit" />
+
+    <Spinner
+        android:id="@+id/pet_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/type_hint"
+        android:layout_alignLeft="@+id/pet_gender"
+        android:layout_alignStart="@+id/pet_gender"
+        android:layout_alignTop="@+id/type_hint"
+        android:layout_toEndOf="@+id/type_hint"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/pet_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gender_hint"
+        android:layout_alignTop="@+id/gender_hint"
+        android:layout_toEndOf="@+id/gender_hint"
+        android:layout_toRightOf="@+id/gender_hint"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/pet_main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_color_hint"
+        android:layout_alignTop="@+id/main_color_hint"
+        android:layout_toEndOf="@+id/main_color_hint"
+        android:layout_toRightOf="@+id/main_color_hint"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/choose_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:text="@string/advance_search_location"
+        android:textColor="@color/light_text"
+        android:background="@color/button_background"
+        android:layout_below="@+id/main_color_hint" />
+
+    <TextView
+        android:id="@+id/chosen_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/choose_location"
+        android:layout_alignBottom="@+id/choose_location"
+        android:layout_toRightOf="@+id/choose_location"
+        android:text=""
+        android:textSize="14sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignEnd="@+id/search_submit" />
+
+    <CheckBox
+        android:id="@+id/pet_vaccinated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/new_pet_vaccinated_hint"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/choose_location"
+        android:layout_alignStart="@+id/choose_location"
+        android:layout_marginTop="45dp" />
+
+    <Button
+        android:id="@+id/search_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/search_button"
+        android:textColor="@color/light_text"
+        android:background="@color/button_background"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/advance_search_title"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/title_text"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/search_submit" />
+
+</RelativeLayout>

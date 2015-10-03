@@ -1,12 +1,11 @@
 package com.fiuba.tdp.petadopt.activities;
 
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,18 +16,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.HomeFragment;
+import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
+import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
-import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.SearchFragment;
-import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
+import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
+import com.fiuba.tdp.petadopt.fragments.search.SearchFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,6 +41,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONArray;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
@@ -45,14 +50,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
     private int initialFragmentIndex = 0;
+    private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
     private Boolean exit = false;
+    private static int RESULT_LOAD_IMAGE = 1;
     private Fragment mapFragment;
+    private int[] imgViews = {
+            R.id.imgView1,
+            R.id.imgView2,
+            R.id.imgView3,
+            R.id.imgView4,
+            R.id.imgView5
+    };
+    private HomeFragment homeFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            InstanceID instanceID = InstanceID.getInstance(this);
+            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        }catch (IOException e ){
+            Log.e("Couldn't get push token", e.getLocalizedMessage());
+        }
+        FacebookSdk.sdkInitialize(getApplicationContext());
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {
@@ -79,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setupActivity() {
         if (!created) {
             mapFragment = new ChooseLocationMapFragment();
+            homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
 
@@ -135,6 +159,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
+        if (item.getItemId() == R.id.advance_search_action){
+            return displayFragment(new AdvancedSearchFragment());
+        }
+
+        if (item.getItemId() == R.id.simple_search_action){
+            return displayFragment(new SearchFragment());
+        }
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -174,7 +206,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = mapFragment;
+                    goBackToHome();
+                    fragment = homeFragment;
                     break;
                 case 1:
                     fragment = new SearchFragment();
@@ -196,9 +229,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment).commit();
+                displayFragment(fragment);
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -212,19 +243,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private boolean displayFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+
+        this.currentFragment = fragment;
+
+        return true;
+    }
+
     private void fetchPets() {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
-        client.getPets(new JsonHttpResponseHandler() {
+        client.getPetsForHome(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                String items = "";
-                try {
-                    items = body.toString();
-                    Log.v("JSON", items);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                homeFragment.setResults(body);
+                homeFragment.onStart();
             }
         });
     }
@@ -237,6 +273,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
+    public void goBackToHome() {
+        fetchPets();
+        displayFragment(homeFragment);
+    }
+
+    public void showResults(JSONArray body) {
+        SearchFragment fragment = new SearchFragment();
+        fragment.setResults(body);
+        displayFragment(fragment);
+    }
+
     public void showAddPetFragment(View view) {
         Fragment fragment = new AddPetFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -245,6 +292,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setTitle(R.string.new_pet_title);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+
 
 
 }

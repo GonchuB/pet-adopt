@@ -1,5 +1,6 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null)
+//            actionBar.hide();
+
+        //FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -101,6 +106,13 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void byPassLogin(View view) {
+        String harcodedAuthToken = "CAJgH_NsxWNR_edmuzvZ";
+        User.user().loggedInWithFacebook("HarcodedFB_ID", "HarcodedFB_Token");
+        User.user().setAuthToken(harcodedAuthToken);
+        continueToHome();
     }
 
     @Override
