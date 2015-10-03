@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -64,9 +65,14 @@ public class PetListItemAdapter extends ArrayAdapter<Pet> {
         ago.setText(agoTxt);
 
         if (pets.get(position).getFirstImage() != null) {
-            new DownloadImageTask(imageView).execute(pets.get(position).getFirstImage().getThumbUrl());
+            Picasso.with(context)
+                    .load(pets.get(position).getFirstImage().getMediumUrl())
+                    .placeholder(R.drawable.icon)
+                    .error(R.drawable.icon)
+                    .into(imageView);
+        } else {
+            imageView.setImageResource(R.drawable.icon);
         }
-        //imageView.setImageResource(imageId[position]);
         return rowView;
     }
 }
