@@ -1,4 +1,4 @@
-package com.fiuba.tdp.petadopt.fragments.search;
+package com.fiuba.tdp.petadopt.fragments;
 
 /**
  * Created by joaquinstankus on 07/09/15.
@@ -34,18 +34,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class ResultFragment extends Fragment {
 
     private ListView lv;
     private List<Pet> pets = null;
 
-    public SearchFragment(){}
+    public ResultFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_results, container, false);
         setHasOptionsMenu(true);
 
         final Button searchButton = (Button) rootView.findViewById(R.id.submit);
@@ -64,11 +64,6 @@ public class SearchFragment extends Fragment {
     public void onStart() {
         super.onStart();
         renderResults();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_fragment_actions, menu);
     }
 
     @Override

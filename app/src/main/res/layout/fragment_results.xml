@@ -4,17 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/app_background">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/query"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/submit"
-        android:layout_toStartOf="@+id/submit"
-        android:hint="@string/search_hint" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

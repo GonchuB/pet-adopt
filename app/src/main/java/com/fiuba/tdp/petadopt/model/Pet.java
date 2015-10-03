@@ -26,6 +26,7 @@ public class Pet {
     private Gender gender;
     private String description;
     private Boolean vaccinated;
+    private Boolean published;
     private Boolean needs_transit_home;
     private LatLng location;
     private String firstColor;
@@ -36,6 +37,7 @@ public class Pet {
 
 
     public Pet() {
+        published = true;
         colors = new ArrayList<>();
     }
 
@@ -168,6 +170,7 @@ public class Pet {
         this.name = jsonObject.getString("name");
         this.description = jsonObject.getString("description");
         this.vaccinated = jsonObject.getBoolean("vaccinated");
+        this.published = jsonObject.getBoolean("published");
         this.needs_transit_home = jsonObject.getBoolean("needs_transit_home");
         this.type = parseType(jsonObject.getString("type"));
         this.gender = parseGender(jsonObject.getString("gender"));

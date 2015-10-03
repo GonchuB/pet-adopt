@@ -1,15 +1,10 @@
 package com.fiuba.tdp.petadopt.activities;
 
-import android.content.ClipData;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.support.v7.widget.SearchView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
@@ -30,9 +25,8 @@ import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.search.SearchFragment;
+import com.fiuba.tdp.petadopt.fragments.ResultFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
@@ -45,15 +39,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import com.fiuba.tdp.petadopt.service.PetsClient;
-
-import java.io.File;
-import java.net.URI;
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SearchView.OnQueryTextListener {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -63,17 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
-    private Boolean exit = false;
-    private static int RESULT_LOAD_IMAGE = 1;
-    private Fragment mapFragment;
-    private int[] imgViews = {
-            R.id.imgView1,
-            R.id.imgView2,
-            R.id.imgView3,
-            R.id.imgView4,
-            R.id.imgView5
-    };
     private HomeFragment homeFragment;
+    private SearchView mSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setupActivity() {
         if (!created) {
-            mapFragment = new ChooseLocationMapFragment();
             homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
@@ -153,7 +130,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.options_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//        if (mSearchView != null) {
+        mSearchView.setQueryHint(getResources().getString(R.string.search_hint));
+        mSearchView.setOnQueryTextListener(this);
+//        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -167,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         if (item.getItemId() == R.id.simple_search_action){
-            return displayFragment(new SearchFragment());
+            return displayFragment(new ResultFragment());
         }
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -213,18 +198,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = homeFragment;
                     break;
                 case 1:
-                    fragment = new SearchFragment();
-                    break;
-                case 2:
                     fragment = new AddPetFragment();
                     break;
-                case 3:
+                case 2:
                     fragment = new MyPetsFragment();
                     break;
-                case 4:
+                case 3:
                     fragment = new SettingsFragment();
                     break;
-                case 5:
+                case 4:
                     goBackToLogin();
                     break;
                 default:
@@ -268,6 +250,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    private void performSearch(String query) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        client.simpleQueryPets(query, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                ResultFragment resultFragment = new ResultFragment();
+                resultFragment.setResults(body);
+                displayFragment(resultFragment);
+            }
+        });
+    }
+
     private void goBackToLogin() {
         User.user().logout();
         LoginManager.getInstance().logOut();
@@ -282,18 +277,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void showResults(JSONArray body) {
-        SearchFragment fragment = new SearchFragment();
+        ResultFragment fragment = new ResultFragment();
         fragment.setResults(body);
         displayFragment(fragment);
     }
 
-    public void showAddPetFragment(View view) {
-        Fragment fragment = new AddPetFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment).commit();
-        setTitle(R.string.new_pet_title);
-        mDrawerLayout.closeDrawer(mDrawerList);
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String text) {
+        performSearch(text);
+
+        return false;
     }
 
 
