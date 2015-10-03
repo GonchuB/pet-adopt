@@ -2,7 +2,17 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/actionbar_background</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/actionbar_background_dark</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/button_background</item>
+
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
     </style>
 
     <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
@@ -11,15 +21,12 @@
 
     <color name="app_background">#e8e8e8</color>
     <color name="actionbar_background">#137c7c</color>
+    <color name="actionbar_background_dark">#071926</color>
+    <color name="actionbar_background_light">#0a97a5</color>
     <color name="button_background">#137c7c</color>
     <color name="button_text">#e8e8e8</color>
     <color name="title_text">#0a97a5</color>
     <color name="dark_text">#071926</color>
     <color name="light_text">#8db5a1</color>
-    <!-- #e8e8e8
-#8db5a1
-#0a97a5
-#137c7c
-#071926 -->
 
 </resources>
