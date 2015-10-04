@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/add_pet_layout"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -8,36 +9,43 @@
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/pet_submit">
+        android:layout_height="match_parent">
 
         <RelativeLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:paddingBottom="70dp">
-            <EditText
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <com.rey.material.widget.EditText
                 android:id="@+id/pet_name"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="36dp"
-                android:background="#FFF"
-                android:ems="10"
+                android:layout_marginTop="10dp"
                 android:hint="@string/new_pet_name_hint"
                 android:inputType="textPersonName"
-                android:padding="5dp" />
+                android:padding="5dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-            <EditText
+            <com.rey.material.widget.EditText
                 android:id="@+id/pet_age"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/pet_name"
                 android:layout_alignStart="@+id/pet_name"
                 android:layout_below="@+id/pet_name"
-                android:layout_marginTop="10dp"
-                android:background="#FFF"
-                android:ems="10"
+                android:layout_marginTop="5dp"
                 android:hint="@string/new_pet_age_hint"
                 android:inputType="numberDecimal"
-                android:padding="5dp" />
+                android:padding="5dp"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
             <TextView
                 android:id="@+id/type_hint"
@@ -89,7 +97,7 @@
 
             <Spinner
                 android:id="@+id/pet_type"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/type_hint"
                 android:layout_alignLeft="@+id/pet_gender"
@@ -229,22 +237,23 @@
                 android:layout_marginStart="140dp"
                 android:layout_marginTop="15dp"/>
 
+            <Button
+                android:id="@+id/pet_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/new_pet_submit"
+                android:textColor="@color/button_text"
+                android:background="@color/main_button_background"/>
 
         </RelativeLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/pet_submit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/new_pet_submit"
-        android:textColor="@color/button_text"
-        android:background="@color/main_button_background"/>
+
 
 </RelativeLayout>
