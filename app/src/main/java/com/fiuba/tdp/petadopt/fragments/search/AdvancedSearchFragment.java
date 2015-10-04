@@ -6,17 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+import com.rey.material.widget.EditText;
+import com.rey.material.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +45,6 @@ public class AdvancedSearchFragment extends Fragment {
         populateSpinner(rootView, R.id.pet_type, R.array.search_pet_type_array);
         populateSpinner(rootView, R.id.pet_gender, R.array.search_pet_gender_array);
         populateSpinner(rootView, R.id.pet_main_color, R.array.search_pet_color_array);
-        TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
         final Button button = (Button) rootView.findViewById(R.id.choose_location);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,63 +113,46 @@ public class AdvancedSearchFragment extends Fragment {
 
     private void setUpPetFillingCallbacks(View rootView) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.search_pet_type_array);
-                if (position != 0) {
-                    if (position == 1) petFilter.put("type", "Cat");
-                    if (position == 2) petFilter.put("type", "Dog");
+                if (i != 0) {
+                    if (i == 1) petFilter.put("type", "Cat");
+                    if (i == 2) petFilter.put("type", "Dog");
                 } else {
                     petFilter.remove("type");
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
         });
         spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_gender);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.search_pet_gender_array);
-                if (position > 0) {
-                    if (position == 1) petFilter.put("gender", "male");
-                    if (position == 2) petFilter.put("gender", "female");
+                if (i > 0) {
+                    if (i == 1) petFilter.put("gender", "male");
+                    if (i == 2) petFilter.put("gender", "female");
                 } else {
                     petFilter.remove("gender");
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_main_color);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.search_pet_color_array);
-                if (position > 0) {
-                    petFilter.put("colors", petTypes[position]);
+                if (i > 0) {
+                    petFilter.put("colors", petTypes[i]);
                 } else {
                     petFilter.remove("colors");
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
         });
         spinner.setSelection(0);
 
