@@ -47,100 +47,92 @@
                 app:et_labelEnable="true"
                 app:et_labelTextColor="@color/title_text" />
 
-            <TextView
-                android:id="@+id/type_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/pet_age"
-                android:layout_below="@+id/pet_age"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/new_pet_type_hint"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/gender_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/type_hint"
-                android:layout_below="@+id/type_hint"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/new_pet_gender_hint"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/main_color_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/gender_hint"
-                android:layout_below="@+id/gender_hint"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/new_pet_main_color_hint"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/pet_second_color_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@id/gender_hint"
-                android:layout_below="@+id/main_color_hint"
-                android:layout_marginTop="10dp"
-                android:gravity="end"
-                android:text="@string/new_pet_second_color_hint"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
-            <Spinner
+            <com.rey.material.widget.Spinner
                 android:id="@+id/pet_type"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/type_hint"
+                android:layout_alignLeft="@+id/pet_age"
+                android:layout_alignStart="@+id/pet_age"
+                android:layout_below="@+id/pet_age"
+                android:hint="@string/new_pet_type_hint"
+                app:spn_label="@string/new_pet_type_hint"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:spinnerMode="dropdown"
+                app:spn_labelEnable="true"
+                app:spn_labelTextColor="@color/title_text"
+                app:spn_arrowColor="@color/title_text"
+                app:spn_arrowPadding="10dp"
+                app:spn_arrowSize="5sp"
+                app:spn_dividerColor="@color/title_text"
+                app:spn_dividerHeight="1dp"/>
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/pet_gender"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/pet_type"
+                android:layout_alignStart="@+id/pet_type"
+                android:layout_below="@+id/pet_type"
+                android:hint="@string/new_pet_gender_hint"
+                app:spn_label="@string/new_pet_gender_hint"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:spinnerMode="dropdown"
+                app:spn_labelEnable="true"
+                app:spn_labelTextColor="@color/title_text"
+                app:spn_arrowColor="@color/title_text"
+                app:spn_arrowPadding="10dp"
+                app:spn_arrowSize="5sp"
+                app:spn_dividerColor="@color/title_text"
+                app:spn_dividerHeight="1dp" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/pet_main_color"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/pet_gender"
                 android:layout_alignStart="@+id/pet_gender"
-                android:layout_alignTop="@+id/type_hint"
-                android:layout_toEndOf="@+id/type_hint"
-                android:spinnerMode="dropdown" />
+                android:layout_below="@+id/pet_gender"
+                android:hint="@string/new_pet_main_color_hint"
+                app:spn_label="@string/new_pet_main_color_hint"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:spinnerMode="dropdown"
+                app:spn_labelEnable="true"
+                app:spn_labelTextColor="@color/title_text"
+                app:spn_arrowColor="@color/title_text"
+                app:spn_arrowPadding="10dp"
+                app:spn_arrowSize="5sp"
+                app:spn_dividerColor="@color/title_text"
+                app:spn_dividerHeight="1dp" />
 
-            <Spinner
-                android:id="@+id/pet_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/gender_hint"
-                android:layout_alignTop="@+id/gender_hint"
-                android:layout_toEndOf="@+id/gender_hint"
-                android:layout_toRightOf="@+id/gender_hint"
-                android:spinnerMode="dropdown" />
-
-            <Spinner
-                android:id="@+id/pet_main_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/main_color_hint"
-                android:layout_alignTop="@+id/main_color_hint"
-                android:layout_toEndOf="@+id/main_color_hint"
-                android:layout_toRightOf="@+id/main_color_hint"
-                android:spinnerMode="dropdown" />
-
-            <Spinner
+            <com.rey.material.widget.Spinner
                 android:id="@+id/pet_second_color"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pet_second_color_hint"
-                android:layout_alignTop="@+id/pet_second_color_hint"
-                android:layout_toEndOf="@+id/pet_second_color_hint"
-                android:layout_toRightOf="@+id/pet_second_color_hint"
-                android:spinnerMode="dropdown" />
+                android:dropDownWidth="fill_parent"
+                android:layout_alignLeft="@+id/pet_main_color"
+                android:layout_alignStart="@+id/pet_main_color"
+                android:layout_below="@+id/pet_main_color"
+                android:hint="@string/new_pet_second_color_hint"
+                app:spn_label="@string/new_pet_second_color_hint"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:spinnerMode="dropdown"
+                app:spn_labelEnable="true"
+                app:spn_labelTextColor="@color/title_text"
+                app:spn_arrowColor="@color/title_text"
+                app:spn_arrowPadding="10dp"
+                app:spn_arrowSize="5sp"
+                app:spn_dividerColor="@color/title_text"
+                app:spn_dividerHeight="1dp"/>
 
             <Button
                 android:id="@+id/choose_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pet_second_color_hint"
+                android:layout_below="@+id/pet_second_color"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"

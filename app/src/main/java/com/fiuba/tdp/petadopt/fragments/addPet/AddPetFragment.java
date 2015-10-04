@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import com.rey.material.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -415,63 +415,41 @@ public class AddPetFragment extends Fragment {
 
     private void setUpPetFillingCallbacks(View rootView) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.pet_type_array);
-                pet.setType(petTypes[position]);
+                pet.setType(petTypes[i]);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
         });
         spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_gender);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.pet_gender_array);
-                pet.setGender(petTypes[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                pet.setGender(petTypes[i]);
             }
         });
         spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_main_color);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.pet_color_array);
-                pet.setFirstColor(petTypes[position]);
+                pet.setFirstColor(petTypes[i]);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
         });
         spinner.setSelection(0);
 
         spinner = (Spinner) rootView.findViewById(R.id.pet_second_color);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 String[] petTypes = getResources().getStringArray(R.array.pet_color_array);
-                pet.setSecondColor(petTypes[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                pet.setSecondColor(petTypes[i]);
             }
         });
 
