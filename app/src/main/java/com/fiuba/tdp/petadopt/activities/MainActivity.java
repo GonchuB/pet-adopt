@@ -23,6 +23,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
+import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
@@ -150,7 +151,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // the nav drawer indicator touch event
         if (item.getItemId() == R.id.advance_search_action){
             setTitle(R.string.advance_search_title);
-            return displayFragment(new AdvancedSearchFragment());
+            AdvancedSearchFragment fragment = new AdvancedSearchFragment();
+            fragment.setAdvancedSearchResultsDelegate(new AdvanceSearchResultsDelegate() {
+                @Override
+                public void resultsAvailable(JSONArray body) {
+                    showResults(body);
+                }
+            });
+            return displayFragment(fragment);
         }
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -260,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
                 showResults(body);
-                mSearchView.setQuery(query, false);
             }
         });
     }

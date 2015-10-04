@@ -33,6 +33,8 @@ import java.util.HashMap;
 public class AdvancedSearchFragment extends Fragment {
     private HashMap<String, String> petFilter = new HashMap<String, String>();
     private View rootView;
+    private AdvanceSearchResultsDelegate delegate;
+
     public AdvancedSearchFragment(){
     }
 
@@ -94,8 +96,7 @@ public class AdvancedSearchFragment extends Fragment {
                     public void onSuccess(int code, Header[] headers, JSONArray body) {
 
                         progress.dismiss();
-                        MainActivity ma = (MainActivity) getActivity();
-                        ma.showResults(body);
+                        delegate.resultsAvailable(body);
                     }
 
                     @Override
@@ -183,5 +184,9 @@ public class AdvancedSearchFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+    }
+
+    public void setAdvancedSearchResultsDelegate(AdvanceSearchResultsDelegate delegate) {
+        this.delegate = delegate;
     }
 }
