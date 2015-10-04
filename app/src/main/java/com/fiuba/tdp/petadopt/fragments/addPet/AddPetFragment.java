@@ -94,6 +94,11 @@ public class AddPetFragment extends Fragment {
                         TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
                         locationView.setText(address);
                     }
+
+                    @Override
+                    public void locationWasAccepted() {
+                        getFragmentManager().popBackStack();
+                    }
                 });
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.content_frame, mapFragment, "Choose location");

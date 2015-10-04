@@ -7,4 +7,5 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public interface LocationChosenDelegate {
     public void locationWasChosen(LatLng location, String address);
+    public void locationWasAccepted();
 }
