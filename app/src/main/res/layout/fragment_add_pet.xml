@@ -130,11 +130,9 @@
 
             <Button
                 android:id="@+id/choose_location"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pet_second_color"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="@string/choose_location"
@@ -143,51 +141,53 @@
 
             <TextView
                 android:id="@+id/chosen_location"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/choose_location"
-                android:layout_alignBottom="@+id/choose_location"
-                android:layout_toRightOf="@+id/choose_location"
-                android:layout_toEndOf="@+id/choose_location"
+                android:layout_below="@+id/choose_location"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
                 android:text=""
                 android:textSize="14sp"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <EditText
+            <com.rey.material.widget.EditText
                 android:id="@+id/pet_description"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/choose_location"
-                android:ems="10"
                 android:hint="@string/new_pet_description_hint"
-                android:inputType="textMultiLine"
-                android:singleLine="true"
-                android:layout_margin="10dp"/>
+                android:layout_below="@+id/chosen_location"
+                android:padding="5dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-            <CheckBox
+            <com.rey.material.widget.CheckBox
+                style="@style/Material.Drawable.CheckBox"
                 android:id="@+id/pet_vaccinated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/pet_description"
+                android:layout_marginTop="10dp"
+                android:paddingTop="5dp"
                 android:checked="false"
-                android:text="@string/new_pet_vaccinated_hint"
-                android:layout_margin="10dp"/>
+                android:text="@string/new_pet_vaccinated_hint" />
 
 
             <Button
                 android:id="@+id/pet_submit_image"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_below="@+id/pet_vaccinated"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="@string/new_pet_submit_image"
-                android:layout_below="@+id/pet_vaccinated"
                 android:textColor="@color/button_text"
-                android:background="@color/button_background"/>
+                android:background="@color/button_background" />
 
             <ImageView
                 android:id="@+id/imgView1"
@@ -235,8 +235,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/new_pet_submit"
                 android:textColor="@color/button_text"
