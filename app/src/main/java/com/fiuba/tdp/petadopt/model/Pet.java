@@ -42,6 +42,7 @@ public class Pet {
     public Pet() {
         published = true;
         colors = new ArrayList<>();
+        videos = new ArrayList<>();
     }
 
     public String getName() {
