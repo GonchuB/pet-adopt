@@ -27,7 +27,12 @@
     <string name="new_pet_main_color_hint">Color principal</string>
     <string name="new_pet_second_color_hint">Color secundario</string>
     <string name="new_pet_description_hint">Descripción</string>
-    <string name="new_pet_vaccinated_hint">¿Está vacunada?</string>
+    <string name="new_pet_vaccinated_hint">¿Tiene las vacunas al día?</string>
+    <string name="new_pet_friendly_hint">¿Tiene buena relación con otras mascotas?</string>
+    <string name="new_pet_children_friendly_hint">¿Tiene buena relación con los niños?</string>
+    <string name="new_pet_needs_transit_home_hint">¿Necesita un hogar transitorio?</string>
+    <string name="new_pet_video_1_hint">URL Video 1</string>
+    <string name="new_pet_video_2_hint">URL Video 2 </string>
     <string name="new_pet_submit">Publicar mascota</string>
     <string name="choose_location">Elegir ubicación</string>
     <string name="loading">Cargando</string>

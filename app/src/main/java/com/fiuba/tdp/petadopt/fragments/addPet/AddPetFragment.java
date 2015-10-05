@@ -267,9 +267,20 @@ public class AddPetFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final CheckBox vaccinated = (CheckBox) rootView.findViewById(R.id.pet_vaccinated);
+                final CheckBox petFriendly = (CheckBox) rootView.findViewById(R.id.pet_friendly);
+                final CheckBox childrenFriendly = (CheckBox) rootView.findViewById(R.id.pet_children_friendly);
+                final CheckBox needsTransitHome = (CheckBox) rootView.findViewById(R.id.pet_needs_transit_home);
                 final EditText descriptionEditText = (EditText) rootView.findViewById(R.id.pet_description);
+                final EditText video1Url = (EditText) rootView.findViewById(R.id.pet_video1);
+                final EditText video2Url = (EditText) rootView.findViewById(R.id.pet_video2);
+
                 pet.setVaccinated(vaccinated.isChecked());
+                pet.setPetFriendly(petFriendly.isChecked());
+                pet.setChildrenFriendly(childrenFriendly.isChecked());
+                pet.setNeedsTransitHome(needsTransitHome.isChecked());
                 pet.setDescription(descriptionEditText.getText().toString());
+                pet.setVideos(getVideoArray(video1Url.getText().toString(),video2Url.getText().toString()));
+
                 ValidationStatus status = validateFields();
                 if (status.isError) {
                     Toast toast = Toast.makeText(getContext(), status.prettyPrintFields(), Toast.LENGTH_LONG);
@@ -499,6 +510,23 @@ public class AddPetFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+    }
+
+    private ArrayList<String> getVideoArray(String video1, String video2){
+        ArrayList<String> videoList = new ArrayList<>();
+        if (video1.isEmpty() && video2.isEmpty()) {
+            return videoList;
+        } else {
+            if (!video1.isEmpty()) {
+                videoList.add(video1);
+            }
+
+            if (!video2.isEmpty()) {
+                videoList.add(video2);
+            }
+
+            return videoList;
+        }
     }
 
     private class ValidationStatus {

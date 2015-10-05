@@ -28,12 +28,15 @@ public class Pet {
     private Boolean vaccinated;
     private Boolean published;
     private Boolean needs_transit_home;
+    private Boolean pet_friendly;
+    private Boolean children_friendly;
     private LatLng location;
     private String firstColor;
     private String secondColor;
     private ArrayList<String> colors;
     private Date createdAt;
     ArrayList<Image> images;
+    ArrayList<String> videos;
 
 
     public Pet() {
@@ -69,6 +72,37 @@ public class Pet {
         this.createdAt = createdAt;
     }
 
+    public Boolean getNeedsTransitHome() {
+        return needs_transit_home;
+    }
+
+    public void setNeedsTransitHome(Boolean needs_transit_home) {
+        this.needs_transit_home = needs_transit_home;
+    }
+
+    public Boolean getPetFriendly() {
+        return pet_friendly;
+    }
+
+    public void setPetFriendly(Boolean pet_friendly) {
+        this.pet_friendly = pet_friendly;
+    }
+
+    public Boolean getChildrenFriendly() {
+        return children_friendly;
+    }
+
+    public void setChildrenFriendly(Boolean children_friendly) {
+        this.children_friendly = children_friendly;
+    }
+
+    public ArrayList<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<String> videos) {
+        this.videos = videos;
+    }
 
     //TODO - improve
     public void setType(String type) {
@@ -172,16 +206,19 @@ public class Pet {
         this.vaccinated = jsonObject.getBoolean("vaccinated");
         this.published = jsonObject.getBoolean("published");
         this.needs_transit_home = jsonObject.getBoolean("needs_transit_home");
+        this.pet_friendly = jsonObject.getBoolean("pet_friendly");
+        this.children_friendly = jsonObject.getBoolean("children_friendly");
         this.type = parseType(jsonObject.getString("type"));
         this.gender = parseGender(jsonObject.getString("gender"));
         this.colors = parseColors(jsonObject.getString("colors"));
         this.images = parseImages(jsonObject.getJSONArray("images"));
+        this.videos = parseVideos(jsonObject.getJSONArray("videos"));
         this.createdAt = parseDate(jsonObject.getString("created_at"));
     }
 
     private Date parseDate(String date) {
         TimeZone tz = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat parserSDF=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         ParsePosition p = new ParsePosition(0);
         parserSDF.setTimeZone(tz);
         return parserSDF.parse(date,p);
@@ -209,6 +246,17 @@ public class Pet {
         }
 
         return images;
+    }
+
+    private ArrayList<String> parseVideos(JSONArray imagesArray) throws JSONException {
+        ArrayList<String> videos = new ArrayList<>(imagesArray.length());
+        for(int i = 0; i < imagesArray.length(); i++) {
+            JSONObject imageObject = imagesArray.getJSONObject(i);
+            String url = imageObject.getString("url");
+            videos.add(url);
+        }
+
+        return videos;
     }
 
     private Gender parseGender(String gender) {
