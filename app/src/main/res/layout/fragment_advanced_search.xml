@@ -128,11 +128,50 @@
                 android:checked="false"
                 android:text="@string/new_pet_vaccinated_hint" />
 
+
+            <com.rey.material.widget.CheckBox
+                style="@style/Material.Drawable.CheckBox"
+                android:id="@+id/pet_friendly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pet_vaccinated"
+                android:layout_marginTop="10dp"
+                android:paddingTop="5dp"
+                android:checked="false"
+                android:text="@string/new_pet_friendly_hint" />
+
+
+            <com.rey.material.widget.CheckBox
+                style="@style/Material.Drawable.CheckBox"
+                android:id="@+id/pet_children_friendly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pet_friendly"
+                android:layout_marginTop="10dp"
+                android:paddingTop="5dp"
+                android:checked="false"
+                android:text="@string/new_pet_children_friendly_hint" />
+
+
+            <com.rey.material.widget.CheckBox
+                style="@style/Material.Drawable.CheckBox"
+                android:id="@+id/pet_needs_transit_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pet_children_friendly"
+                android:layout_marginTop="10dp"
+                android:paddingTop="5dp"
+                android:checked="false"
+                android:text="@string/new_pet_needs_transit_home_hint" />
+
             <Button
                 android:id="@+id/search_submit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pet_vaccinated"
+                android:layout_below="@+id/pet_needs_transit_home"
                 android:layout_marginTop="20dp"
                 android:text="@string/search_button"
                 android:textColor="@color/button_text"

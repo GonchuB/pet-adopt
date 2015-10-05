@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.Spinner;
 import android.widget.TextView;
@@ -80,8 +82,30 @@ public class AdvancedSearchFragment extends Fragment {
 
     private void setupSubmitButton(View rootView) {
         final Button button = (Button) rootView.findViewById(R.id.search_submit);
+        final View _rootView = rootView;
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                final CheckBox vaccinated = (CheckBox) _rootView.findViewById(R.id.pet_vaccinated);
+                final CheckBox petFriendly = (CheckBox) _rootView.findViewById(R.id.pet_friendly);
+                final CheckBox childrenFriendly = (CheckBox) _rootView.findViewById(R.id.pet_children_friendly);
+                final CheckBox needsTransitHome = (CheckBox) _rootView.findViewById(R.id.pet_needs_transit_home);
+
+                if (vaccinated.isChecked()) {
+                    petFilter.put("vaccinated", "true");
+                }
+
+                if (petFriendly.isChecked()) {
+                    petFilter.put("pet_friendly", "true");
+                }
+
+                if (childrenFriendly.isChecked()) {
+                    petFilter.put("children_friendly", "true");
+                }
+
+                if (needsTransitHome.isChecked()) {
+                    petFilter.put("needs_transit_home", "true");
+                }
+
                 if (petFilter.size() <= 0) {
                     Toast toast = Toast.makeText(getContext(), R.string.advance_search_no_filter, Toast.LENGTH_SHORT);
                     toast.show();
