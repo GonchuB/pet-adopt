@@ -2,12 +2,34 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/actionbar_background</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/actionbar_background</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/actionbar_background_light</item>
+
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+    </style>
+
+    <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
 
-    <color name="main_orange">#ffa500</color>
-    <color name="hover_orange">#ff8607</color>
-    <color name="background">#92DEF7</color>
-    <color name="submit_button">#FF5500</color>
+    <color name="app_background">#e8e8e8</color>
+
+    <color name="actionbar_background">#071926</color>
+    <color name="actionbar_background_dark">#071926</color>
+    <color name="actionbar_background_light">#137c7c</color>
+
+    <color name="button_background">#137c7c</color>
+    <color name="main_button_background">#071926</color>
+    <color name="button_text">#e8e8e8</color>
+
+    <color name="title_text">#0a97a5</color>
+    <color name="dark_text">#071926</color>
+    <color name="light_text">#8db5a1</color>
 
 </resources>

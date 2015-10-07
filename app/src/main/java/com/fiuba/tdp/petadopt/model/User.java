@@ -73,6 +73,7 @@ public class User {
         editor.putString(USER_FB_ID, "");
         editor.putString(USER_FB_TOKEN, "");
         editor.putString(USER_AUTH_TOKEN, "");
+        authToken = null;
         editor.apply();
     }
 

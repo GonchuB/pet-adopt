@@ -1,10 +1,10 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,14 +17,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.support.v7.widget.SearchView;
 
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.HomeFragment;
+import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
+import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.SearchFragment;
+import com.fiuba.tdp.petadopt.fragments.ResultFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
@@ -38,21 +41,24 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONArray;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SearchView.OnQueryTextListener {
     private String[] optionTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private PetsClient client;
     private int initialFragmentIndex = 0;
+    private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
-    private Boolean exit = false;
-    private Fragment mapFragment;
+    private HomeFragment homeFragment;
+    private SearchView mSearchView;
+    private Boolean atHome = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setupActivity() {
         if (!created) {
-            mapFragment = new ChooseLocationMapFragment();
+            homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
 
@@ -126,7 +132,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.options_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//        if (mSearchView != null) {
+        mSearchView.setQueryHint(getResources().getString(R.string.search_hint));
+        mSearchView.setOnQueryTextListener(this);
+//        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -135,6 +149,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
+        if (item.getItemId() == R.id.advance_search_action){
+            setTitle(R.string.advance_search_title);
+            AdvancedSearchFragment fragment = new AdvancedSearchFragment();
+            fragment.setAdvancedSearchResultsDelegate(new AdvanceSearchResultsDelegate() {
+                @Override
+                public void resultsAvailable(JSONArray body) {
+                    showResults(body);
+                }
+            });
+            return displayFragment(fragment);
+        }
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -174,21 +200,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = mapFragment;
+                    goBackToHome();
+                    fragment = homeFragment;
                     break;
                 case 1:
-                    fragment = new SearchFragment();
-                    break;
-                case 2:
                     fragment = new AddPetFragment();
                     break;
-                case 3:
+                case 2:
                     fragment = new MyPetsFragment();
                     break;
-                case 4:
+                case 3:
                     fragment = new SettingsFragment();
                     break;
-                case 5:
+                case 4:
                     goBackToLogin();
                     break;
                 default:
@@ -196,9 +220,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment).commit();
+                displayFragment(fragment);
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -212,19 +234,40 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    private boolean displayFragment(Fragment fragment) {
+        if (fragment instanceof HomeFragment) {
+            atHome = true;
+        } else {
+            atHome = false;
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+
+        this.currentFragment = fragment;
+
+        return true;
+    }
+
     private void fetchPets() {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
-        client.getPets(new JsonHttpResponseHandler() {
+        client.getPetsForHome(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                String items = "";
-                try {
-                    items = body.toString();
-                    Log.v("JSON", items);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                homeFragment.setResults(body);
+                homeFragment.onStart();
+            }
+        });
+    }
+
+    private void performSearch(final String query) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        client.simpleQueryPets(query, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                showResults(body);
             }
         });
     }
@@ -237,13 +280,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
-    public void showAddPetFragment(View view) {
-        Fragment fragment = new AddPetFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment).commit();
-        setTitle(R.string.new_pet_title);
+    public void goBackToHome() {
+        fetchPets();
+        displayFragment(homeFragment);
+        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setSelection(0);
+        setTitle(optionTitles[0]);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    public void showResults(JSONArray body) {
+        ResultFragment fragment = new ResultFragment();
+        fragment.setResults(body);
+        displayFragment(fragment);
+        setTitle(R.string.results_title);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String text) {
+        performSearch(text);
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!mSearchView.isIconified()) {
+            mSearchView.setIconified(true);
+        } else if (!atHome) {
+            goBackToHome();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

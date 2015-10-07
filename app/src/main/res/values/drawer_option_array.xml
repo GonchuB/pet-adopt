@@ -2,7 +2,6 @@
 <resources>
     <string-array name="drawer_option_array">
         <item>Home</item>
-        <item>Buscar</item>
         <item>Agregar una mascota</item>
         <item>Mis Mascotas</item>
         <item>Configuración</item>

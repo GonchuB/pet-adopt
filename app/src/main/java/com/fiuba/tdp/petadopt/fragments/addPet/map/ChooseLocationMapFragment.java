@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fiuba.tdp.petadopt.R;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.rey.material.widget.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,6 +55,13 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
             }
         });
         addressTextView = (TextView) view.findViewById(R.id.addressTextView);
+        FloatingActionButton selectLocationButton = (FloatingActionButton) view.findViewById(R.id.select_location);
+        selectLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationChosenDelegate.locationWasAccepted();
+            }
+        });
         return view;
     }
 
