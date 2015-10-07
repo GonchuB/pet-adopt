@@ -1,19 +1,23 @@
 package com.fiuba.tdp.petadopt.service;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
+import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.model.User;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -22,6 +26,7 @@ public class RegistrationIntentService extends IntentService {
     private static final String[] TOPICS = {"global"};
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
+
     public RegistrationIntentService() {
         super(TAG);
     }
@@ -65,7 +70,7 @@ public class RegistrationIntentService extends IntentService {
 
     /**
      * Persist registration to third-party servers.
-     *
+     * <p/>
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
      *
@@ -73,6 +78,20 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+        UserClient.instance().updatePushToken(User.user(), token, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONObject body) {
+                Log.i("Token", "Token sent");
+                Looper.myLooper().quit();
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("Error sending token", responseString);
+                Looper.myLooper().quit();
+            }
+
+        });
+        Looper.loop();
     }
 
     /**
