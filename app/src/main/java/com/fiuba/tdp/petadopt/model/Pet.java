@@ -203,6 +203,10 @@ public class Pet {
         return result.toString();
     }
 
+    public ArrayList<Image> getImages() {
+        return images;
+    }
+
     public void loadFromJSON(JSONObject jsonObject) throws JSONException {
         this.id = jsonObject.getInt("id");
         this.name = jsonObject.getString("name");
