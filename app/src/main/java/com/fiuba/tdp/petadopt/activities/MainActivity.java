@@ -1,5 +1,6 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.app.ProgressDialog;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private HomeFragment homeFragment;
     private SearchView mSearchView;
     private Boolean atHome = true;
+    private ProgressDialog progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setupActivity() {
         if (!created) {
+            progress = new ProgressDialog(MainActivity.this);
+            progress.setTitle(R.string.loading);
             homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
 
-            this.fetchPets();
+            fetchPets();
             created = true;
         }
     }
@@ -252,9 +256,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void fetchPets() {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
+        progress.show();
         client.getPetsForHome(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
+                progress.dismiss();
                 homeFragment.setResults(body);
                 homeFragment.onStart();
             }
@@ -264,9 +270,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void performSearch(final String query) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
+        progress.show();
         client.simpleQueryPets(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
+                progress.dismiss();
                 showResults(body);
             }
         });
