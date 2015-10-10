@@ -5,7 +5,7 @@
         <item>Agregar una mascota</item>
         <item>Mis Mascotas</item>
         <item>Mis Mascotas Solicitadas</item>
-        <item>Configuración</item>
+        <item>Perfil</item>
         <item>Logout</item>
     </string-array>
 </resources>

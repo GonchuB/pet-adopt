@@ -35,7 +35,12 @@
     <string name="new_pet_video_2_hint">URL Video 2 </string>
     <string name="new_pet_submit">Publicar mascota</string>
     <string name="choose_location">Elegir ubicación</string>
+    <string name="profile_save">Guardar</string>
     <string name="loading">Cargando</string>
+    <string name="user_name_hint">Nombre</string>
+    <string name="user_last_name_hint">Apellido</string>
+    <string name="user_phone_hint">Telefono</string>
+    <string name="user_email_hint">Email</string>
     <string name="center_pin">Centrar pin</string>
 
     <string name="pet_creation_error">Error creando publicación, intentá nuevamente más tarde</string>

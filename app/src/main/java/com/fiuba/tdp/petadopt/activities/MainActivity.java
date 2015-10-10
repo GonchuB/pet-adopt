@@ -35,6 +35,7 @@ import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
 import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
+import com.fiuba.tdp.petadopt.fragments.ProfileFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = myRequestedPetsFragment;
                     break;
                 case 4:
-                    fragment = new SettingsFragment();
+                    fragment = new ProfileFragment();
                     break;
                 case 5:
                     goBackToLogin();

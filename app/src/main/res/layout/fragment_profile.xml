@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_layout"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_background">
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="70dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <com.rey.material.widget.EditText
+                android:id="@+id/user_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/user_name_hint"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+            <com.rey.material.widget.EditText
+                android:id="@+id/user_last_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignStart="@+id/user_name"
+                android:layout_below="@+id/user_name"
+                android:hint="@string/user_last_name_hint"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/user_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignStart="@+id/user_last_name"
+                android:layout_below="@+id/user_last_name"
+                android:hint="@string/user_email_hint"
+                android:inputType="textEmailAddress"
+                android:padding="5dp"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentStart="false"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/user_phone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/user_email"
+                android:layout_below="@+id/user_email"
+                android:layout_marginTop="5dp"
+                android:hint="@string/user_phone_hint"
+                android:inputType="phone"
+                android:padding="5dp"
+                app:et_dividerColor="@color/title_text"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+
+            <Button
+                android:id="@+id/choose_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_phone"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="@string/choose_location"
+                android:textColor="@color/button_text"
+                android:background="@color/button_background"/>
+            <TextView
+                android:id="@+id/chosen_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/choose_location"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text=""
+                android:textSize="14sp"
+
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/pet_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="10dp"
+                android:text="@string/profile_save"
+                android:textColor="@color/button_text"
+                android:background="@color/main_button_background"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
