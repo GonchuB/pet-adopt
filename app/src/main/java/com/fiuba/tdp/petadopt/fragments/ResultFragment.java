@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.detail.PetDetailFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.service.PetListItemAdapter;
 

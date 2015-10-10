@@ -31,7 +31,9 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
 
     private TextView addressTextView;
     private LocationChosenDelegate locationChosenDelegate;
-    ProgressDialog progress;
+    protected ProgressDialog progress;
+    protected SupportMapFragment mapFragment;
+
     public ChooseLocationMapFragment() {
     }
 
@@ -40,7 +42,7 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         //Use the child fragment manager since its a nested fragment
-        final SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.regular_map);
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.regular_map);
 
         progress = new ProgressDialog(view.getContext());
         progress.setTitle(R.string.loading);

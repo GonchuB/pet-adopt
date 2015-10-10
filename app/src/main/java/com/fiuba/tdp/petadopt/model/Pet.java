@@ -1,6 +1,7 @@
 package com.fiuba.tdp.petadopt.model;
 
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -222,6 +223,15 @@ public class Pet {
         this.images = parseImages(jsonObject.getJSONArray("images"));
         this.videos = parseVideos(jsonObject.getJSONArray("videos"));
         this.createdAt = parseDate(jsonObject.getString("created_at"));
+        if (!jsonObject.getString("location").equals("")) {
+            this.location = parseLocation(jsonObject.getString("location"));
+        }
+    }
+
+    @NonNull
+    private LatLng parseLocation(String locationStr) throws JSONException {
+        String[] coords = locationStr.split(",");
+        return new LatLng(Double.parseDouble(coords[0]), Double.parseDouble((coords[1])));
     }
 
     private Date parseDate(String date) {
