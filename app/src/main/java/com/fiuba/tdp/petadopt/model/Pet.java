@@ -39,7 +39,6 @@ public class Pet {
     private Date createdAt;
     ArrayList<Image> images;
     ArrayList<String> videos;
-    private Boolean published = true;
 
 
     public Pet() {
@@ -158,7 +157,7 @@ public class Pet {
         String colors = "";
         for (int i = 0; i < this.colors.size(); i++) {
             colors = colors + this.colors.get(i);
-            if (i < this.colors.size() -1 ) {
+            if (i < this.colors.size() - 1) {
                 if (this.colors.get(i).lastIndexOf(",") < 0) {
                     colors = colors + ", ";
                 } else {
@@ -171,19 +170,19 @@ public class Pet {
 
     public void setFirstColor(String firstColor) {
         this.firstColor = firstColor;
-        if (secondColor != null) {
-            colors = getColors();
+        if (colors.size() < 1) {
+            colors.add(0, firstColor);
         } else {
-            colors = firstColor;
+            colors.set(0, firstColor);
         }
     }
 
     public void setSecondColor(String secondColor) {
         this.secondColor = secondColor;
-        if (firstColor != null) {
-            colors = getColors();
+        if (colors.size() < 2) {
+            colors.add(1, secondColor);
         } else {
-            colors = secondColor;
+            colors.set(1, secondColor);
         }
     }
 
@@ -226,7 +225,7 @@ public class Pet {
         SimpleDateFormat parserSDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         ParsePosition p = new ParsePosition(0);
         parserSDF.setTimeZone(tz);
-        return parserSDF.parse(date,p);
+        return parserSDF.parse(date, p);
 
     }
 
@@ -243,7 +242,7 @@ public class Pet {
 
     private ArrayList<Image> parseImages(JSONArray imagesArray) throws JSONException {
         ArrayList<Image> images = new ArrayList<>(imagesArray.length());
-        for(int i = 0; i < imagesArray.length(); i++) {
+        for (int i = 0; i < imagesArray.length(); i++) {
             JSONObject imageObject = imagesArray.getJSONObject(i);
             Image image = new Image();
             image.fromJson(imageObject);
@@ -255,7 +254,7 @@ public class Pet {
 
     private ArrayList<String> parseVideos(JSONArray imagesArray) throws JSONException {
         ArrayList<String> videos = new ArrayList<>(imagesArray.length());
-        for(int i = 0; i < imagesArray.length(); i++) {
+        for (int i = 0; i < imagesArray.length(); i++) {
             JSONObject imageObject = imagesArray.getJSONObject(i);
             String url = imageObject.getString("url");
             videos.add(url);
