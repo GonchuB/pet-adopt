@@ -219,6 +219,7 @@ public class Pet {
         this.children_friendly = jsonObject.getBoolean("children_friendly");
         this.type = parseType(jsonObject.getString("type"));
         this.gender = parseGender(jsonObject.getString("gender"));
+        this.age = jsonObject.getString("age");
         this.colors = parseColors(jsonObject.getString("colors"));
         this.images = parseImages(jsonObject.getJSONArray("images"));
         this.videos = parseVideos(jsonObject.getJSONArray("videos"));
@@ -321,6 +322,23 @@ public class Pet {
         }
 
         return firstImage;
+    }
+
+    public String getTypeString() {
+        if (this.type == Type.Cat) {
+            return  "Gato";
+        } else if (this.type == Type.Dog) {
+            return "Perro";
+        }
+        return "Unknown";
+    }
+
+    public String getGenderString() {
+        if (this.gender == Gender.male) {
+            return "Macho";
+        } else {
+            return "Hembra";
+        }
     }
 
     public enum Type {

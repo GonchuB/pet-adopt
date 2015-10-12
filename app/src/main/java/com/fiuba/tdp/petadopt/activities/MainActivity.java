@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         private void displayView(int position) {
             // update the main content by replacing fragments
-            // TODO: find way to avoid switch
             Fragment fragment = null;
             switch (position) {
                 case 0:

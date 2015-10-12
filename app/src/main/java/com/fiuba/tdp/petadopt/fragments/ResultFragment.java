@@ -58,6 +58,7 @@ public class ResultFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     PetDetailFragment petDetailFragment = new PetDetailFragment();
                     petDetailFragment.setPet(pets.get(position));
+                    getActivity().setTitle(pets.get(position).getName());
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.add(R.id.content_frame, petDetailFragment, "Choose location");
