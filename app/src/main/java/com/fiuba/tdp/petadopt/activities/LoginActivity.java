@@ -67,12 +67,12 @@ public class LoginActivity extends AppCompatActivity {
                 client.signUp(getApplicationContext(), facebookId, facebookToken, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int code, Header[] headers, JSONObject body) {
-                                String auth_token = "";
                                 try {
-                                    auth_token = body.getString("authentication_token");
-                                    User.user().setAuthToken(auth_token);
+                                    User user = User.user();
+                                    user.loadInfoFromJSON(body);
+                                    user.save();
                                     Log.v("JSON", body.toString());
-                                    Log.v("authtok", auth_token);
+                                    Log.v("authtok", user.getAuthToken());
                                     continueToHome();
                                 } catch (Exception e) {
                                     e.printStackTrace();

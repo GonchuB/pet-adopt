@@ -11,16 +11,8 @@ import android.view.ViewGroup;
 
 import com.fiuba.tdp.petadopt.R;
 
-public class MyPetsFragment extends Fragment {
+public class MyPetsFragment extends ResultFragment {
 
     public MyPetsFragment(){}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_mypets, container, false);
-
-        return rootView;
-    }
 }
