@@ -210,7 +210,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = new AddPetFragment();
                     break;
                 case 2:
-                    goToMyPetsView();
+                    MyPetsFragment myPetsFragment = new MyPetsFragment();
+                    goToMyPetsView(myPetsFragment);
+                    fragment = myPetsFragment;
                     break;
                 case 3:
                     fragment = new SettingsFragment();
@@ -267,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private void goToMyPetsView() {
+    private void goToMyPetsView(final MyPetsFragment fragment) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
         progress.show();
@@ -275,9 +277,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
                 progress.dismiss();
-                ResultFragment fragment = new MyPetsFragment();
                 fragment.setResults(body);
-                displayFragment(fragment);
+                fragment.onStart();
             }
         });
 
