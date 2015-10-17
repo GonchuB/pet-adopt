@@ -22,6 +22,7 @@ import java.util.TimeZone;
 
 public class Pet {
     private String id;
+    private String userId;
     private String name;
     private String age;
     private Type type;
@@ -210,6 +211,7 @@ public class Pet {
 
     public void loadFromJSON(JSONObject jsonObject) throws JSONException {
         this.id = jsonObject.getString("id");
+        this.userId = jsonObject.getString("user_id");
         this.name = jsonObject.getString("name");
         this.description = jsonObject.getString("description");
         this.vaccinated = jsonObject.getBoolean("vaccinated");
@@ -359,6 +361,10 @@ public class Pet {
 
     public ArrayList<Question> getQuestions() {
         return questions;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public enum Type {

@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.User;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -150,5 +151,11 @@ public class PetsClient extends HttpClient {
 
         client.post(url, params, handler);
 
+    }
+
+    public void askForAdoption(String petId, AsyncHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/adoption_requests.json");
+        RequestParams params = new RequestParams();
+        client.post(url, params, handler);
     }
 }

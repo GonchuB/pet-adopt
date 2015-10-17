@@ -146,4 +146,25 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public boolean missingInfo() {
+        Boolean missing = false;
+        if (firstName == null || firstName.equals("null") || firstName.equals("")) {
+            missing = true;
+        }
+
+        if (lastName == null || lastName.equals("null") || lastName.equals("")) {
+            missing = true;
+        }
+
+        if (phone == null || phone.equals("null") || phone.equals("")) {
+            missing = true;
+        }
+
+        if (email == null || email.equals("null") || email.equals("")) {
+            missing = true;
+        }
+
+        return missing;
+    }
 }

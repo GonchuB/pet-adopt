@@ -15,15 +15,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QAListItemAdapter;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.Question;
+import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.fiuba.tdp.petadopt.util.DateUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
@@ -32,12 +36,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PetDetailFragment extends Fragment {
     private Pet pet;
     private HorizontalGridView mHorizontalGridView;
     private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
     private ProgressDialog progress;
+    FloatingActionButton floatingActionButton;
 
 
     private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
@@ -66,6 +72,12 @@ public class PetDetailFragment extends Fragment {
         mHorizontalGridView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
         setupTextViews(rootView);
+
+        floatingActionButton  = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
+        if ((pet != null) && (pet.getUserId().equals(String.valueOf(User.user().getId())))) {
+            floatingActionButton.setVisibility(View.GONE);
+        }
+        setAdoptionButton();
 
 
         Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
@@ -112,6 +124,32 @@ public class PetDetailFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void setAdoptionButton() {
+        floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (User.user().missingInfo()) {
+                    Toast.makeText(getActivity(),R.string.user_missing_info,Toast.LENGTH_LONG).show();
+                } else {
+                    PetsClient client = PetsClient.instance();
+                    progress.show();
+                    client.askForAdoption(pet.getId(), new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            progress.dismiss();
+                            Toast.makeText(getActivity(),R.string.ask_for_adoption_success,Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Toast.makeText(getActivity(), R.string.ask_for_adoption_error, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void setupSampleQuestion(View rootView) {
@@ -199,6 +237,11 @@ public class PetDetailFragment extends Fragment {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+        if (floatingActionButton != null) {
+            if ((pet != null) && (pet.getUserId().equals(String.valueOf(User.user().getId())))) {
+                floatingActionButton.setVisibility(View.GONE);
+            }
+        }
     }
 
 

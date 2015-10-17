@@ -80,6 +80,9 @@
     <string name="questions">Preguntas</string>
     <string name="no_questions">No hay preguntas para esta mascota</string>
     <string name="requesters_title">Solicitantes</string>
+    <string name="user_missing_info">Debe completar la información de su perfil antes de adoptar</string>
+    <string name="ask_for_adoption_success">Se ha enviado su solicitud de adopción</string>
+    <string name="ask_for_adoption_error">Hubo un error al solicitar la adopción. Intente nuevamente más tarde</string>
 
 
 </resources>
