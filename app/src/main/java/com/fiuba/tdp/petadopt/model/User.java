@@ -112,7 +112,6 @@ public class User {
     public void loggedInWithFacebook(String facebookId, String facebookToken){
         this.facebookId = facebookId;
         this.facebookToken = getFacebookToken();
-        save();
     }
 
     public void loadInfoFromJSON(JSONObject info) {
