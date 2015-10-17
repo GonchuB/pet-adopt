@@ -1,6 +1,12 @@
 package com.fiuba.tdp.petadopt.activities;
 
 import android.app.ProgressDialog;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -24,8 +31,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
+import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
+import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
+import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.ResultFragment;
+import com.fiuba.tdp.petadopt.fragments.PetResultFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
@@ -41,6 +52,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, SearchView.OnQueryTextListener {
     private String[] optionTitles;
@@ -61,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        printFacebookKeyHash();
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {
@@ -70,6 +85,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             promptLogin();
         }
 
+    }
+
+    private void printFacebookKeyHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.fiuba.tdp.petadopt",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 
     @Override
@@ -210,12 +242,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = new AddPetFragment();
                     break;
                 case 2:
-                    fragment = new MyPetsFragment();
+                    MyPetsFragment myPetsFragment = new MyPetsFragment();
+                    goToMyPetsView(myPetsFragment);
+                    fragment = myPetsFragment;
                     break;
                 case 3:
-                    fragment = new SettingsFragment();
+                    MyRequestedPetsFragment myRequestedPetsFragment = new MyRequestedPetsFragment();
+                    goToMyRequestedPetsView(myRequestedPetsFragment);
+                    fragment = myRequestedPetsFragment;
                     break;
                 case 4:
+                    fragment = new SettingsFragment();
+                    break;
+                case 5:
                     goBackToLogin();
                     break;
                 default:
@@ -266,6 +305,36 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+
+    private void goToMyPetsView(final MyPetsFragment fragment) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        progress.show();
+        client.getMyPets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                progress.dismiss();
+                fragment.setResults(body);
+                fragment.onStart();
+            }
+        });
+    }
+
+
+    private void goToMyRequestedPetsView(final MyRequestedPetsFragment fragment) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        progress.show();
+        client.getMyRequestedPets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                progress.dismiss();
+                fragment.setResults(body);
+                fragment.onStart();
+            }
+        });
+    }
+
     private void performSearch(final String query) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
@@ -297,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void showResults(JSONArray body) {
-        ResultFragment fragment = new ResultFragment();
+        PetResultFragment fragment = new PetResultFragment();
         fragment.setResults(body);
         displayFragment(fragment);
         setTitle(R.string.results_title);

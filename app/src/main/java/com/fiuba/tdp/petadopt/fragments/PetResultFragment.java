@@ -23,12 +23,27 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultFragment extends Fragment {
+public class PetResultFragment extends Fragment {
 
-    private ListView lv;
-    private List<Pet> pets = null;
+    protected ListView lv;
+    protected List<Pet> pets = null;
+    protected AdapterView.OnItemClickListener onItemClickHandler;
 
-    public ResultFragment(){}
+    public PetResultFragment(){
+        onItemClickHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PetDetailFragment petDetailFragment = new PetDetailFragment();
+                petDetailFragment.setPet(pets.get(position));
+                getActivity().setTitle(pets.get(position).getName());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.add(R.id.content_frame, petDetailFragment, "Choose location");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        };
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,19 +68,7 @@ public class ResultFragment extends Fragment {
         if (pets != null && pets.size() != 0) {
             ArrayAdapter adapter = new PetListItemAdapter(getActivity(), pets);
             lv.setAdapter(adapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    PetDetailFragment petDetailFragment = new PetDetailFragment();
-                    petDetailFragment.setPet(pets.get(position));
-                    getActivity().setTitle(pets.get(position).getName());
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.add(R.id.content_frame, petDetailFragment, "Choose location");
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
-            });
+            lv.setOnItemClickListener(onItemClickHandler);
             getActivity().findViewById(R.id.no_results).setVisibility(View.INVISIBLE);
         } else {
             ArrayAdapter adapter = new PetListItemAdapter(getActivity(), new ArrayList<Pet>());

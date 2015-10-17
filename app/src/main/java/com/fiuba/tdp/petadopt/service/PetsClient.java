@@ -67,6 +67,30 @@ public class PetsClient extends HttpClient {
         client.get(url, params, handler);
     }
 
+    public void getMyPets(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        User user = User.user();
+        RequestParams params = new RequestParams();
+        params.add("user_id", String.valueOf(user.getId()));
+        client.get(url, params, handler);
+    }
+
+    public void getMyRequestedPets(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        User user = User.user();
+        RequestParams params = new RequestParams();
+        params.add("user_id", String.valueOf(user.getId()));
+        params.add("with_adoption_requests", String.valueOf(true));
+        client.get(url, params, handler);
+    }
+
+    public void getAdoptersForPet(String petId, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/adoption_requests.json");
+        User user = User.user();
+        RequestParams params = new RequestParams();
+        client.get(url, params, handler);
+    }
+
     @Override
     public String getApiUrl(String relativeUrl) {
         String url = super.getApiUrl(relativeUrl);
