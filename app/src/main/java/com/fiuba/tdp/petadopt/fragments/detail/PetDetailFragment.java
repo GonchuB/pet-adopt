@@ -1,23 +1,35 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.detail.questions.QAListItemAdapter;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
+import com.fiuba.tdp.petadopt.model.Question;
+import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.fiuba.tdp.petadopt.util.DateUtils;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
-import android.support.v17.leanback.widget.HorizontalGridView;
-import android.widget.TextView;
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,6 +37,7 @@ public class PetDetailFragment extends Fragment {
     private Pet pet;
     private HorizontalGridView mHorizontalGridView;
     private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
+    private ProgressDialog progress;
 
 
     private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
@@ -43,7 +56,7 @@ public class PetDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_pet_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_pet_detail, container, false);
         RecyclerView.Adapter adapter = new HorizontalGridViewAdapter(pet.getImages());
         mHorizontalGridView = (HorizontalGridView) rootView.findViewById(R.id.horizontal_gridView);
         mHorizontalGridView.setAdapter(adapter);
@@ -54,18 +67,6 @@ public class PetDetailFragment extends Fragment {
 
         setupTextViews(rootView);
 
-        Button showQuestionsButton = (Button) rootView.findViewById(R.id.show_questions);
-        showQuestionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                QuestionsFragment questionsFragment = new QuestionsFragment();
-                questionsFragment.setPet(pet);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.content_frame, questionsFragment, "Choose location");
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
 
         Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
         showMapButton.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +80,82 @@ public class PetDetailFragment extends Fragment {
                 ft.commit();
             }
         });
+        progress = new ProgressDialog(getActivity());
+        progress.setTitle(R.string.loading);
+        progress.show();
+
+        PetsClient.instance().getQuestions(pet.getId(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                progress.dismiss();
+                try {
+                    pet.loadQuestionsFromJson(response);
+                    setupSampleQuestion(rootView);
+                } catch (JSONException e) {
+                    Log.e("Error parsing pet", e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+            }
+        });
         return rootView;
+    }
+
+    private void setupSampleQuestion(View rootView) {
+        //FIXME - Copypasted from Adapter, see if we can join both pieces
+        RelativeLayout questionLayout = (RelativeLayout) rootView.findViewById(R.id.question_layout);
+        if (pet.getQuestions() != null && pet.getQuestions().size() > 0) {
+            TextView questionTextView = (TextView) questionLayout.findViewById(R.id.question);
+            TextView questionDateTextView = (TextView) questionLayout.findViewById(R.id.question_date);
+            TextView questionAskerTextView = (TextView) questionLayout.findViewById(R.id.asker_name);
+            TextView answerTextView = (TextView) questionLayout.findViewById(R.id.answer);
+            TextView answerDateTextView = (TextView) questionLayout.findViewById(R.id.answer_date);
+            Button answerButton = (Button) questionLayout.findViewById(R.id.answer_question_button);
+
+            Question question = pet.getQuestions().get(pet.getQuestions().size() - 1);
+            questionTextView.setText(question.getText());
+            questionDateTextView.setText(DateUtils.stringFromDateForQuestionList(question.getCreatedAt()));
+            questionAskerTextView.setText(question.getAsker());
+
+            if (question.getAnswer() == null) {
+                questionLayout.removeView(answerDateTextView);
+                questionLayout.removeView(answerTextView);
+            } else {
+                answerTextView.setText(question.getAnswer().getText());
+                answerDateTextView.setText(DateUtils.stringFromDateForQuestionList(question.getAnswer().getCreatedAt()));
+            }
+            questionLayout.removeView(answerButton);
+
+            Button showQuestionsButton = (Button) rootView.findViewById(R.id.show_questions);
+            showQuestionsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    QuestionsFragment questionsFragment = new QuestionsFragment();
+                    questionsFragment.setPet(pet);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.add(R.id.content_frame, questionsFragment, "Choose location");
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
+        } else {
+            RelativeLayout sampleQuestionLayout = (RelativeLayout) rootView.findViewById(R.id.sample_question_layout);
+            RelativeLayout rootLayout = (RelativeLayout) rootView.findViewById(R.id.root_layout);
+            rootLayout.removeView(sampleQuestionLayout);
+        }
     }
 
     private void setupTextViews(View rootView) {
@@ -94,28 +170,28 @@ public class PetDetailFragment extends Fragment {
         textView = (TextView) rootView.findViewById(R.id.description_value);
         textView.setText(pet.getDescription());
         ArrayList<String> videos = pet.getVideos();
-        if (videos.size() > 0){
+        if (videos.size() > 0) {
             textView = (TextView) rootView.findViewById(R.id.videos_value1);
             textView.setText(pet.getVideos().get(0));
         }
-        if (videos.size() > 1){
+        if (videos.size() > 1) {
             textView = (TextView) rootView.findViewById(R.id.videos_value2);
             textView.setText(pet.getVideos().get(1));
         }
         textView = (TextView) rootView.findViewById(R.id.vaccines_value);
-        if (!pet.getVaccinated()){
+        if (!pet.getVaccinated()) {
             textView.setText(R.string.not_vaccine_field);
         }
         textView = (TextView) rootView.findViewById(R.id.relationship_value);
-        if (!pet.getPetFriendly()){
+        if (!pet.getPetFriendly()) {
             textView.setText(R.string.not_relationship_field);
         }
         textView = (TextView) rootView.findViewById(R.id.kid_value);
-        if (!pet.getChildrenFriendly()){
+        if (!pet.getChildrenFriendly()) {
             textView.setText(R.string.not_kid_field);
         }
         textView = (TextView) rootView.findViewById(R.id.transit_value);
-        if (!pet.getNeedsTransitHome()){
+        if (!pet.getNeedsTransitHome()) {
             textView.setText(R.string.not_transit_field);
         }
     }

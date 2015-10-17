@@ -229,10 +229,8 @@ public class Pet {
         }
     }
 
-    public void loadQuestionsFromJson(JSONObject jsonObject) throws JSONException{
-        if (jsonObject.has("questions")) {
-            this.questions = parseQuestions(jsonObject.getJSONArray("questions"));
-        }
+    public void loadQuestionsFromJson(JSONArray questionArray) throws JSONException{
+        this.questions = parseQuestions(questionArray);
     }
 
     private ArrayList<Question> parseQuestions(JSONArray questionArray) throws JSONException {

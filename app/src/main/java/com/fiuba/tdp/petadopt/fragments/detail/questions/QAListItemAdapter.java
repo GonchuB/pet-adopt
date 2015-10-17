@@ -55,8 +55,10 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
         } else {
             answerTextView.setText(question.getAnswer().getText());
             answerDateTextView.setText(DateUtils.stringFromDateForQuestionList(question.getAnswer().getCreatedAt()));
+            relativeLayout.removeView(answerButton);
         }
 
+        relativeLayout.removeView(answerButton); //See line below!
         /* TODO - Show answer question if its the pet owner
          if (isOwner()){
              answerButton.setVisibility(View.VISIBLE);

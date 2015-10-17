@@ -61,6 +61,12 @@ public class PetsClient extends HttpClient {
         client.get(url, params, handler);
     }
 
+    public void getQuestions(String petId, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/questions.json");
+        RequestParams params = new RequestParams();
+        client.get(url, params, handler);
+    }
+
     @Override
     public String getApiUrl(String relativeUrl) {
         String url = super.getApiUrl(relativeUrl);

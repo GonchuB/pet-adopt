@@ -30,8 +30,6 @@ public class QuestionsFragment extends Fragment {
 
     private ListView lv;
     private Pet pet;
-    private List<Question> questions;
-    private ProgressDialog progress;
     private QAListItemAdapter qaListItemAdapter;
 
     public QuestionsFragment() {
@@ -42,32 +40,18 @@ public class QuestionsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_questions, container, false);
-        progress = new ProgressDialog(getActivity());
-        progress.setTitle(R.string.loading);
+
         lv = (ListView) rootView.findViewById(R.id.question_list);
 
-        progress.show();
-        PetsClient.instance().getPet(pet.getId(), new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                progress.dismiss();
-                try {
-                    pet.loadQuestionsFromJson(response);
-                    if (pet.getQuestions() != null && pet.getQuestions().size() > 0) {
-                        qaListItemAdapter = new QAListItemAdapter(getActivity(), pet.getQuestions());
-                        getActivity().findViewById(R.id.no_results).setVisibility(View.INVISIBLE);
-                    } else {
-                        qaListItemAdapter = new QAListItemAdapter(getActivity(), new ArrayList<Question>());
-                        getActivity().findViewById(R.id.no_results).setVisibility(View.VISIBLE);
-                    }
-                    lv.setAdapter(qaListItemAdapter);
-                    qaListItemAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Log.e("Error parsing pet", e.getLocalizedMessage());
-                }
-            }
-        });
-
+        if (pet.getQuestions() != null && pet.getQuestions().size() > 0) {
+            qaListItemAdapter = new QAListItemAdapter(getActivity(), pet.getQuestions());
+            getActivity().findViewById(R.id.no_results).setVisibility(View.INVISIBLE);
+        } else {
+            qaListItemAdapter = new QAListItemAdapter(getActivity(), new ArrayList<Question>());
+            getActivity().findViewById(R.id.no_results).setVisibility(View.VISIBLE);
+        }
+        lv.setAdapter(qaListItemAdapter);
+        qaListItemAdapter.notifyDataSetChanged();
         return rootView;
     }
 
