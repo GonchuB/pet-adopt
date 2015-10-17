@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ResultFragment extends Fragment {
 
-    private ListView lv;
+    protected ListView lv;
     private List<Pet> pets = null;
 
     public ResultFragment(){}
