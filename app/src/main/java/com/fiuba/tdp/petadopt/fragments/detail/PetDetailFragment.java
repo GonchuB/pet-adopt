@@ -74,7 +74,7 @@ public class PetDetailFragment extends Fragment {
             public void onClick(View v) {
                 ShowLocationMapFragment mapFragment = new ShowLocationMapFragment();
                 mapFragment.setPetLocation(pet.getLocation());
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.add(R.id.content_frame, mapFragment, "Questions");
                 ft.addToBackStack(null);
                 ft.commit();
@@ -145,7 +145,7 @@ public class PetDetailFragment extends Fragment {
                 public void onClick(View v) {
                     QuestionsFragment questionsFragment = new QuestionsFragment();
                     questionsFragment.setPet(pet);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.add(R.id.content_frame, questionsFragment, "Choose location");
                     ft.addToBackStack(null);
                     ft.commit();
