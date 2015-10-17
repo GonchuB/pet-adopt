@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="mypets_tab_indicator">
-        <item>Mis mascotas</item>
-        <item>Adopciones Solicitadas</item>
-    </string-array>
-</resources>
