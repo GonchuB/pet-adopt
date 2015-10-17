@@ -341,6 +341,10 @@ public class Pet {
         }
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public enum Type {
         Cat,
         Dog,

@@ -1,3 +1,3 @@
 package com.fiuba.tdp.petadopt.fragments;
 
-public class HomeFragment extends ResultFragment {}
+public class HomeFragment extends PetResultFragment {}

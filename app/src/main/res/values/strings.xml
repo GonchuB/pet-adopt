@@ -76,6 +76,7 @@
     <string name="not_kid_field">No tiene buena relación con los niños</string>
     <string name="transit_field">Necesita un hogar transitorio</string>
     <string name="not_transit_field">No necesita un hogar transitorio</string>
+    <string name="requesters_title">Solicitantes</string>
 
 
 </resources>
