@@ -1,76 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative_layout"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="10dp">
 
     <TextView
-        android:background="@drawable/layout_rounded_border_bg"
+        android:id="@+id/asker_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/question"
-        android:layout_alignParentTop="true"
-        android:textStyle="bold"
-        android:textColor="@color/title_text"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:text="Gonzalo Beviglia"
         android:textSize="18sp"
-        android:text = "Qest"
-        android:padding="10dp">
-    </TextView>
+        android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/question_date"
-        android:layout_below="@+id/question"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="12sp"
-        android:gravity="start"
-        android:text = "date"
-        android:paddingStart="10dp"
-        android:paddingEnd="0dp">
-    </TextView>
-
-    <TextView
+        android:layout_below="@id/asker_name"
+        android:layout_marginTop="10dp"
         android:background="@drawable/layout_rounded_border_bg"
+        android:padding="10dp"
+        android:text="Qest"
+        android:textColor="@color/title_text"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/question_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="1dp"
+        android:gravity="start"
+        android:paddingEnd="0dp"
+        android:paddingStart="10dp"
+        android:text="date"
+        android:textSize="12sp"/>
+
+    <TextView
         android:id="@+id/answer"
-        android:textStyle="bold"
-        android:textColor="@color/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/question_date"
         android:layout_marginTop="10dp"
-        android:textSize="18sp"
+        android:background="@drawable/layout_rounded_border_bg"
         android:gravity="end"
-        android:text = "Ans"
-        android:layout_alignParentEnd="true"
-        android:padding="10dp">
-    </TextView>
+        android:padding="10dp"
+        android:text="Ans"
+        android:textColor="@color/title_text"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/answer_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/answer_date"
-        android:layout_below="@+id/answer"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="12sp"
-        android:gravity="start"
-        android:text = "date"
-        android:paddingStart="10dp"
         android:layout_alignParentEnd="true"
-        android:paddingEnd="0dp">
-    </TextView>
+        android:layout_below="@+id/answer"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="1dp"
+        android:gravity="start"
+        android:paddingEnd="0dp"
+        android:paddingStart="10dp"
+        android:text="Date"
+        android:textSize="12sp"/>
 
-
-
+    <Button
+        android:id="@+id/answer_question_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question_date"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
+        android:text="Responder" />
 </RelativeLayout>

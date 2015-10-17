@@ -12,6 +12,7 @@ import java.util.Date;
 public class Question {
     private String text;
     private Date created;
+    private String askerName;
     private Answer answer;
 
     public String getText() {
@@ -26,6 +27,11 @@ public class Question {
             if (jsonObject.has("answer")) {
                 question.answer = Answer.fromJson(jsonObject.getJSONObject("answer"));
             }
+            JSONObject userObject = jsonObject.getJSONObject("user");
+            question.askerName = userObject.getString("full_name");
+            if (question.askerName.equals("")){
+                question.askerName = "Anónimo";
+            }
         } catch (JSONException e) {
             question.text = "Download failed";
             Log.e("Error parsing question", e.getLocalizedMessage());
@@ -39,5 +45,9 @@ public class Question {
 
     public Date getCreatedAt() {
         return created;
+    }
+
+    public String getAsker() {
+        return askerName;
     }
 }
