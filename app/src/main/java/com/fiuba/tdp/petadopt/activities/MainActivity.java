@@ -36,7 +36,7 @@ import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.ResultFragment;
+import com.fiuba.tdp.petadopt.fragments.PetResultFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
@@ -366,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void showResults(JSONArray body) {
-        ResultFragment fragment = new ResultFragment();
+        PetResultFragment fragment = new PetResultFragment();
         fragment.setResults(body);
         displayFragment(fragment);
         setTitle(R.string.results_title);

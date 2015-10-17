@@ -1,9 +1,39 @@
 package com.fiuba.tdp.petadopt.fragments;
 
-/**
- * Created by joaquinstankus on 07/09/15.
- */
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.AdapterView;
 
-public class MyRequestedPetsFragment extends ResultFragment {
-    public MyRequestedPetsFragment(){}
+import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.detail.PetDetailFragment;
+import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+
+public class MyRequestedPetsFragment extends PetResultFragment {
+    public MyRequestedPetsFragment(){
+        onItemClickHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer selectedId = pets.get(position).getId();
+                final AdopterResultFragment adopterResultFragment = new AdopterResultFragment();
+                PetsClient client = PetsClient.instance();
+                client.getAdoptersForPet(selectedId, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int code, Header[] headers, JSONArray body) {
+                        adopterResultFragment.setResults(body);
+                        adopterResultFragment.onStart();
+                    }
+                });
+                getActivity().setTitle(pets.get(position).getName() + " - " + getActivity().getString(R.string.requesters_title));
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.add(R.id.content_frame, adopterResultFragment, "Adopter Result Fragment");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        };
+    }
 }

@@ -79,6 +79,7 @@
     <string name="show_questions">Ver más preguntas</string>
     <string name="questions">Preguntas</string>
     <string name="no_questions">No hay preguntas para esta mascota</string>
+    <string name="requesters_title">Solicitantes</string>
 
 
 </resources>
