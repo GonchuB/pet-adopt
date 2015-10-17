@@ -13,7 +13,7 @@ import java.util.TimeZone;
  */
 public class Adopter {
 
-    private Integer id;
+    private String id;
     private String fullName;
     private String firstName;
     private String lastName;
@@ -28,7 +28,7 @@ public class Adopter {
 
     public void loadFromJSON(JSONObject adoptantJSON) throws JSONException {
         JSONObject userObject = adoptantJSON.getJSONObject("user");
-        this.id = userObject.getInt("id");
+        this.id = userObject.getString("id");
         this.fullName = userObject.getString("full_name");
         this.firstName = userObject.getString("first_name");
         this.lastName = userObject.getString("last_name");
@@ -47,7 +47,7 @@ public class Adopter {
 
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

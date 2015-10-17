@@ -84,7 +84,7 @@ public class PetsClient extends HttpClient {
         client.get(url, params, handler);
     }
 
-    public void getAdoptersForPet(Integer petId, JsonHttpResponseHandler handler) {
+    public void getAdoptersForPet(String petId, JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets/" + petId + "/adoption_requests.json");
         User user = User.user();
         RequestParams params = new RequestParams();
