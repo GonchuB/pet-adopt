@@ -305,7 +305,7 @@
                 android:textColor="@color/button_text"
                 android:background="@color/main_button_background"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
     </ScrollView>
 

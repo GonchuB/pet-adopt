@@ -1,38 +1,25 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v17.leanback.widget.OnChildSelectedListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.text.method.LinkMovementMethod;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.fiuba.tdp.petadopt.R;
-import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.map.LocationChosenDelegate;
+import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import android.support.v17.leanback.widget.HorizontalGridView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PetDetailFragment extends Fragment {
     private Pet pet;
@@ -65,6 +52,37 @@ public class PetDetailFragment extends Fragment {
         mHorizontalGridView.addOnScrollListener(mScrollListener);
         mHorizontalGridView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
+        setupTextViews(rootView);
+
+        Button showQuestionsButton = (Button) rootView.findViewById(R.id.show_questions);
+        showQuestionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QuestionsFragment questionsFragment = new QuestionsFragment();
+                questionsFragment.setPet(pet);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.content_frame, questionsFragment, "Choose location");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+
+        Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
+        showMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowLocationMapFragment mapFragment = new ShowLocationMapFragment();
+                mapFragment.setPetLocation(pet.getLocation());
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.add(R.id.content_frame, mapFragment, "Questions");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+        return rootView;
+    }
+
+    private void setupTextViews(View rootView) {
         TextView textView = (TextView) rootView.findViewById(R.id.type_value);
         textView.setText(pet.getTypeString());
         textView = (TextView) rootView.findViewById(R.id.age_value);
@@ -100,22 +118,6 @@ public class PetDetailFragment extends Fragment {
         if (!pet.getNeedsTransitHome()){
             textView.setText(R.string.not_transit_field);
         }
-
-
-
-        Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
-        showMapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowLocationMapFragment mapFragment = new ShowLocationMapFragment();
-                mapFragment.setPetLocation(pet.getLocation());
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.content_frame, mapFragment, "Choose location");
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-        return rootView;
     }
 
 

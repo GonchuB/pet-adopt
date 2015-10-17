@@ -3,363 +3,381 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/app_background">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_background">
-        <android.support.v17.leanback.widget.HorizontalGridView
-            android:id="@+id/horizontal_gridView"
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-        <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/detail_show_map"
-            android:id="@+id/show_map_button"
-            android:layout_below="@id/horizontal_gridView"
-            android:layout_gravity="center_vertical"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:background="@color/app_background">
 
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id= "@+id/type_item"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            <android.support.v17.leanback.widget.HorizontalGridView
+                android:id="@+id/horizontal_gridView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-            <TextView
+            <Button
+                android:id="@+id/show_map_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/type"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/type_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/horizontal_gridView"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:text="@string/detail_show_map" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/type_item"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/type_value"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/type"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
+                android:layout_below="@id/show_map_button"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
 
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/type_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/type_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/type"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/age_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/type_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/age_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/age_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/age"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gender_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/age_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/gender_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gender_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/gender"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/colors_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/gender_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/colors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/colors_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/colors_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/colors"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/description_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/colors_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/description_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/description_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/description"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/video_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/description_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/videos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/videos_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/videos_value1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/videos"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:autoLink="web"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/videos_value2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@+id/videos_value1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:autoLink="web"
+                    android:text="-"
+                    android:textColor="@color/dark_text"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/other_info_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/show_map_button"
+                android:layout_below="@+id/video_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/vaccines_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/image"
+                    android:text="@string/vaccine_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/relationship_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/vaccines_value"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/image"
+                    android:autoLink="web"
+                    android:text="@string/relationship_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/kid_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/relationship_value"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/image"
+                    android:autoLink="web"
+                    android:text="@string/kid_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    />
+
+                <TextView
+                    android:id="@+id/transit_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/kid_value"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/image"
+                    android:autoLink="web"
+                    android:text="@string/transit_field"
+                    android:textColor="@color/title_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/other_info_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <Button
+                    android:id="@+id/show_questions"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@id/image"
+                    android:autoLink="web"
+                    android:text="@string/show_questions"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
         </RelativeLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id= "@+id/age_item"
-            android:layout_below="@+id/type_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/age"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/age_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/age_value"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/age"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:id="@+id/gender_item"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/age_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gender"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/gender_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gender_value"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/gender"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/colors_item"
-            android:layout_below="@+id/gender_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/colors"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/colors_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/colors_value"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/colors"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/description_item"
-            android:layout_below="@+id/colors_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/description"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/description_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/description_value"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/description"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/video_item"
-            android:layout_below="@+id/description_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/videos"
-                android:layout_alignParentTop="true"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/videos_field"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp">
-            </TextView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/videos_value1"
-                android:textStyle="bold"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:autoLink="web"
-                android:layout_below="@+id/videos"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/videos_value2"
-                android:textStyle="bold"
-                android:autoLink="web"
-                android:textColor="@color/dark_text"
-                android:text="-"
-                android:layout_marginStart="5dp"
-                android:layout_below="@+id/videos_value1"
-                android:layout_alignParentTop="false"
-                android:layout_marginTop="2dp" />
-
-        </RelativeLayout>
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/other_info_item"
-            android:layout_below="@+id/video_item"
-            android:layout_alignStart="@+id/show_map_button"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/vaccines_value"
-                android:textStyle="bold"
-                android:textColor="@color/title_text"
-                android:text="@string/vaccine_field"
-                android:layout_marginTop="2dp"
-                android:textSize="18sp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/relationship_value"
-                android:textStyle="bold"
-                android:autoLink="web"
-                android:textColor="@color/title_text"
-                android:text="@string/relationship_field"
-                android:layout_below="@+id/vaccines_value"
-                android:layout_marginTop="2dp"
-                android:textSize="18sp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/kid_value"
-                android:textStyle="bold"
-                android:autoLink="web"
-                android:textColor="@color/title_text"
-                android:text="@string/kid_field"
-                android:layout_below="@+id/relationship_value"
-                android:layout_marginTop="2dp"
-                android:textSize="18sp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/transit_value"
-                android:textStyle="bold"
-                android:autoLink="web"
-                android:textColor="@color/title_text"
-                android:text="@string/transit_field"
-                android:layout_below="@+id/kid_value"
-                android:layout_marginTop="2dp"
-                android:textSize="18sp"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_toEndOf="@id/image"
-
-                />
-
-        </RelativeLayout>
-    </RelativeLayout>
-
 
     </ScrollView>
+
 
 </RelativeLayout>

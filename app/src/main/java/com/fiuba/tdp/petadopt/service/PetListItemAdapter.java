@@ -16,10 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by tomas on 9/28/15.
- */
-
 public class PetListItemAdapter extends ArrayAdapter<Pet> {
 
     private final Activity context;

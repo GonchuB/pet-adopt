@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:id="@+id/relative_layout"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:background="@drawable/layout_rounded_border_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/question"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold"
+        android:textColor="@color/title_text"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:text = "Qest"
+        android:padding="10dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/question_date"
+        android:layout_below="@+id/question"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="12sp"
+        android:gravity="start"
+        android:text = "date"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp">
+    </TextView>
+
+    <TextView
+        android:background="@drawable/layout_rounded_border_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answer"
+        android:textStyle="bold"
+        android:textColor="@color/title_text"
+        android:layout_below="@+id/question_date"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:gravity="end"
+        android:text = "Ans"
+        android:layout_alignParentEnd="true"
+        android:padding="10dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/answer_date"
+        android:layout_below="@+id/answer"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="12sp"
+        android:gravity="start"
+        android:text = "date"
+        android:paddingStart="10dp"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="0dp">
+    </TextView>
+
+
+
+</RelativeLayout>

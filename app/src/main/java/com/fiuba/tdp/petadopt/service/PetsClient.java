@@ -17,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import org.apache.http.entity.StringEntity;
 
 import java.io.InputStream;
@@ -24,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 
 
 public class PetsClient extends HttpClient {
@@ -51,6 +51,12 @@ public class PetsClient extends HttpClient {
 
     public void getPetsForHome(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets/top.json");
+        RequestParams params = new RequestParams();
+        client.get(url, params, handler);
+    }
+
+    public void getPet(String petId, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + ".json");
         RequestParams params = new RequestParams();
         client.get(url, params, handler);
     }
@@ -94,15 +100,15 @@ public class PetsClient extends HttpClient {
         RequestParams params = new RequestParams();
         Iterator it = petFilter.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             params.add(pair.getKey().toString(), pair.getValue().toString());
         }
 
         return params;
     }
 
-    public void uploadImage(String petId, String path, JsonHttpResponseHandler handler){
-        String url = getApiUrl("/pets/"+petId+"/images.json");
+    public void uploadImage(String petId, String path, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/images.json");
 
         RequestParams params = new RequestParams();
 
@@ -112,7 +118,7 @@ public class PetsClient extends HttpClient {
             e.printStackTrace();
         }
 
-        client.post(url,params,handler);
+        client.post(url, params, handler);
 
     }
 }

@@ -2,7 +2,6 @@ package com.fiuba.tdp.petadopt.model;
 
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -22,7 +21,7 @@ import java.util.TimeZone;
 
 
 public class Pet {
-    private Integer id;
+    private String id;
     private String name;
     private String age;
     private Type type;
@@ -40,6 +39,7 @@ public class Pet {
     private Date createdAt;
     ArrayList<Image> images;
     ArrayList<String> videos;
+    private ArrayList<Question> questions;
 
 
     public Pet() {
@@ -209,7 +209,7 @@ public class Pet {
     }
 
     public void loadFromJSON(JSONObject jsonObject) throws JSONException {
-        this.id = jsonObject.getInt("id");
+        this.id = jsonObject.getString("id");
         this.name = jsonObject.getString("name");
         this.description = jsonObject.getString("description");
         this.vaccinated = jsonObject.getBoolean("vaccinated");
@@ -227,6 +227,20 @@ public class Pet {
         if (!jsonObject.getString("location").equals("")) {
             this.location = parseLocation(jsonObject.getString("location"));
         }
+    }
+
+    public void loadQuestionsFromJson(JSONObject jsonObject) throws JSONException{
+        if (jsonObject.has("questions")) {
+            this.questions = parseQuestions(jsonObject.getJSONArray("questions"));
+        }
+    }
+
+    private ArrayList<Question> parseQuestions(JSONArray questionArray) throws JSONException {
+        ArrayList<Question> questions = new ArrayList<>(questionArray.length());
+        for (int i = 0; i < questionArray.length(); i++) {
+            questions.add(Question.fromJson(questionArray.getJSONObject(i)));
+        }
+        return questions;
     }
 
     @NonNull
@@ -326,7 +340,7 @@ public class Pet {
 
     public String getTypeString() {
         if (this.type == Type.Cat) {
-            return  "Gato";
+            return "Gato";
         } else if (this.type == Type.Dog) {
             return "Perro";
         }
@@ -339,6 +353,14 @@ public class Pet {
         } else {
             return "Hembra";
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return questions;
     }
 
     public enum Type {
