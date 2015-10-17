@@ -28,6 +28,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
+import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
@@ -240,9 +241,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     fragment = myPetsFragment;
                     break;
                 case 3:
-                    fragment = new SettingsFragment();
+                    MyRequestedPetsFragment myRequestedPetsFragment = new MyRequestedPetsFragment();
+                    goToMyRequestedPetsView(myRequestedPetsFragment);
+                    fragment = myRequestedPetsFragment;
                     break;
                 case 4:
+                    fragment = new SettingsFragment();
+                    break;
+                case 5:
                     goBackToLogin();
                     break;
                 default:
@@ -306,7 +312,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 fragment.onStart();
             }
         });
+    }
 
+
+    private void goToMyRequestedPetsView(final MyRequestedPetsFragment fragment) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        progress.show();
+        client.getMyRequestedPets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                progress.dismiss();
+                fragment.setResults(body);
+                fragment.onStart();
+            }
+        });
     }
 
     private void performSearch(final String query) {
