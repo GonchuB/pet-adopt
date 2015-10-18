@@ -13,10 +13,10 @@
         android:background="@color/app_background">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/app_background"
-            android:id="@+id/root_layout">
+            android:background="@color/app_background">
 
             <android.support.v17.leanback.widget.HorizontalGridView
                 android:id="@+id/horizontal_gridView"
@@ -37,13 +37,13 @@
                 android:id="@+id/adopt_pet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_backgroundColor="@color/button_background"
-                app:fab_radius="30dp"
-                app:fab_iconSrc="@drawable/white_heart"
-                app:fab_elevation="2dp"
-                android:layout_below="@id/horizontal_gridView"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp" />
+                android:layout_below="@id/horizontal_gridView"
+                android:layout_marginEnd="20dp"
+                app:fab_backgroundColor="@color/button_background"
+                app:fab_elevation="2dp"
+                app:fab_iconSrc="@drawable/white_heart"
+                app:fab_radius="30dp" />
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/type_item"
@@ -367,23 +367,32 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/ask_question"
+            <RelativeLayout
+                android:id="@+id/ask_question_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/other_info_item"
-                android:layout_marginTop="2dp"
-                android:layout_toEndOf="@id/image"
-                android:autoLink="web"
-                android:text="@string/ask_questions"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_below="@+id/other_info_item"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <Button
+                    android:id="@+id/ask_question"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/ask_questions"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/sample_question_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ask_question"
+                android:layout_below="@+id/ask_question_layout"
                 android:paddingBottom="10dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
