@@ -88,6 +88,7 @@
     <string name="ask_question_hint">Ingresá tu pregunta</string>
     <string name="must_write_question">Ingrese una pregunta por favor</string>
     <string name="add_question_success">Se ha añadido su pregunta</string>
+    <string name="pet_image">Imagen de la mascota</string>
 
 
 </resources>

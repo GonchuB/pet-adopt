@@ -3,12 +3,14 @@ package com.fiuba.tdp.petadopt.fragments.detail;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
+import android.support.v17.leanback.widget.OnChildViewHolderSelectedListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -273,6 +275,19 @@ public class PetDetailFragment extends Fragment {
             ImageView imageView = new ImageView(getContext());
             imageView.setAdjustViewBounds(true);
             imageView.setPadding(8, 8, 8, 8);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FullScreenImageFragment fullScreenImageFragment = new FullScreenImageFragment();
+                    ImageView view = (ImageView)v;
+                    fullScreenImageFragment.setImageDrawable(view.getDrawable());
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.add(R.id.content_frame, fullScreenImageFragment, "Image fullscreen");
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
             return new ImageViewHolder(imageView);
         }
 
