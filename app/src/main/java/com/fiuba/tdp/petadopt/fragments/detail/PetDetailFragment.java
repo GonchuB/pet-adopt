@@ -104,6 +104,18 @@ public class PetDetailFragment extends Fragment {
                 try {
                     pet.loadQuestionsFromJson(response);
                     setupSampleQuestion(rootView);
+                    Button askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
+                    askQuestionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AskQuestionFragment askQuestionFragment = new AskQuestionFragment();
+                            askQuestionFragment.setPet(pet);
+                            FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                            ft.add(R.id.content_frame, askQuestionFragment, "Choose location");
+                            ft.addToBackStack(null);
+                            ft.commit();
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e("Error parsing pet", e.getLocalizedMessage());
                 }
@@ -186,18 +198,6 @@ public class PetDetailFragment extends Fragment {
                     questionsFragment.setPet(pet);
                     FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.add(R.id.content_frame, questionsFragment, "Choose location");
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
-            });
-            Button askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
-            askQuestionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AskQuestionFragment askQuestionFragment = new AskQuestionFragment();
-                    askQuestionFragment.setPet(pet);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.add(R.id.content_frame, askQuestionFragment, "Choose location");
                     ft.addToBackStack(null);
                     ft.commit();
                 }
