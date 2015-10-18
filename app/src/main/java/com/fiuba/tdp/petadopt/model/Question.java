@@ -3,6 +3,9 @@ package com.fiuba.tdp.petadopt.model;
 import android.util.Log;
 
 import com.fiuba.tdp.petadopt.util.DateUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +17,13 @@ public class Question {
     private Date created;
     private String askerName;
     private Answer answer;
+
+    public Question(){
+
+    }
+    public Question(String text){
+        this.text = text;
+    }
 
     public String getText() {
         return text;
@@ -37,6 +47,17 @@ public class Question {
             Log.e("Error parsing question", e.getLocalizedMessage());
         }
         return question;
+    }
+
+    public String toJson(){
+
+        JsonObject result = new JsonObject();
+        JsonObject petQuestion = new JsonObject();
+
+        petQuestion.addProperty("body", text);
+        result.add("pet_question", petQuestion);
+
+        return result.toString();
     }
 
     public Answer getAnswer() {

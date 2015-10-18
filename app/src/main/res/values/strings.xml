@@ -77,12 +77,17 @@
     <string name="transit_field">Necesita un hogar transitorio</string>
     <string name="not_transit_field">No necesita un hogar transitorio</string>
     <string name="show_questions">Ver más preguntas</string>
+    <string name="ask_questions">Hacer pregunta</string>
     <string name="questions">Preguntas</string>
     <string name="no_questions">No hay preguntas para esta mascota</string>
     <string name="requesters_title">Solicitantes</string>
     <string name="user_missing_info">Debe completar la información de su perfil antes de adoptar</string>
     <string name="ask_for_adoption_success">Se ha enviado su solicitud de adopción</string>
     <string name="ask_for_adoption_error">Hubo un error al solicitar la adopción. Intente nuevamente más tarde</string>
+    <string name="send_question">Enviar</string>
+    <string name="ask_question_hint">Ingresá tu pregunta</string>
+    <string name="must_write_question">Ingrese una pregunta por favor</string>
+    <string name="add_question_success">Se ha añadido su pregunta</string>
 
 
 </resources>

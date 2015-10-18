@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.detail.questions.AskQuestionFragment;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QAListItemAdapter;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
@@ -189,6 +190,20 @@ public class PetDetailFragment extends Fragment {
                     ft.commit();
                 }
             });
+            Button askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
+            askQuestionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AskQuestionFragment askQuestionFragment = new AskQuestionFragment();
+                    askQuestionFragment.setPet(pet);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    ft.add(R.id.content_frame, askQuestionFragment, "Choose location");
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
+
+
         } else {
             RelativeLayout sampleQuestionLayout = (RelativeLayout) rootView.findViewById(R.id.sample_question_layout);
             RelativeLayout rootLayout = (RelativeLayout) rootView.findViewById(R.id.root_layout);

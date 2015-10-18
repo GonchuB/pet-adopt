@@ -367,11 +367,23 @@
 
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/ask_question"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/other_info_item"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@id/image"
+                android:autoLink="web"
+                android:text="@string/ask_questions"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:id="@+id/sample_question_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/other_info_item"
+                android:layout_below="@+id/ask_question"
                 android:paddingBottom="10dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -420,6 +432,7 @@
                     android:text="@string/show_questions"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
             </RelativeLayout>
         </RelativeLayout>
 

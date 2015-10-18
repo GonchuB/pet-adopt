@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ask_question_layout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray" >
+
+
+    <EditText
+        android:id="@+id/question_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:hint="@string/ask_question_hint"
+        android:singleLine="false"
+        android:lines="18"
+        android:layout_marginTop="11dip"
+        android:layout_marginBottom="10dip"
+        android:layout_marginStart="20dip"
+        android:layout_marginEnd="20dip"
+        android:background="@color/app_background"
+        android:padding="20dip"
+        />
+
+    <Button
+        android:id="@+id/ask_question"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/send_question"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
