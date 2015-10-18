@@ -3,14 +3,12 @@ package com.fiuba.tdp.petadopt.fragments.detail;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
-import android.support.v17.leanback.widget.OnChildViewHolderSelectedListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.AskQuestionFragment;
-import com.fiuba.tdp.petadopt.fragments.detail.questions.QAListItemAdapter;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.Question;
@@ -39,7 +36,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PetDetailFragment extends Fragment {
     private Pet pet;
@@ -178,7 +174,7 @@ public class PetDetailFragment extends Fragment {
             TextView answerDateTextView = (TextView) questionLayout.findViewById(R.id.answer_date);
             Button answerButton = (Button) questionLayout.findViewById(R.id.answer_question_button);
 
-            Question question = pet.getQuestions().get(pet.getQuestions().size() - 1);
+            Question question = pet.getQuestions().get(0);
             questionTextView.setText(question.getText());
             questionDateTextView.setText(DateUtils.stringFromDateForQuestionList(question.getCreatedAt()));
             questionAskerTextView.setText(question.getAsker());
