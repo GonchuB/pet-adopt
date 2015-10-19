@@ -1,6 +1,7 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,8 @@ public class PetDetailFragment extends Fragment {
             mScrollState = newState;
         }
     };
+    private View rootView;
+    private RelativeLayout sampleQuestionLayout;
 
 
     public PetDetailFragment() {
@@ -64,6 +67,7 @@ public class PetDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         final View rootView = inflater.inflate(R.layout.fragment_pet_detail, container, false);
+        this.rootView = rootView;
         RecyclerView.Adapter adapter = new HorizontalGridViewAdapter(pet.getImages());
         mHorizontalGridView = (HorizontalGridView) rootView.findViewById(R.id.horizontal_gridView);
         mHorizontalGridView.setAdapter(adapter);
@@ -94,10 +98,17 @@ public class PetDetailFragment extends Fragment {
                 ft.commit();
             }
         });
+        loadQuestions(rootView);
+        return rootView;
+    }
+
+    private void loadQuestions(final View rootView) {
         progress = new ProgressDialog(getActivity());
         progress.setTitle(R.string.loading);
         progress.show();
 
+        // TODO: OMG scope issues
+        final PetDetailFragment previous_fragment = this;
         PetsClient.instance().getQuestions(pet.getId(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -105,11 +116,12 @@ public class PetDetailFragment extends Fragment {
                 try {
                     pet.loadQuestionsFromJson(response);
                     setupSampleQuestion(rootView);
-                    askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
+                    final Button askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
                     askQuestionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             AskQuestionFragment askQuestionFragment = new AskQuestionFragment();
+                            askQuestionFragment.setPreviousFragment(previous_fragment);
                             askQuestionFragment.setPet(pet);
                             FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                             ft.add(R.id.content_frame, askQuestionFragment, "Choose location");
@@ -137,15 +149,15 @@ public class PetDetailFragment extends Fragment {
                 progress.dismiss();
             }
         });
-        return rootView;
     }
+
 
     private void setAdoptionButton() {
         floatingActionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (User.user().missingInfo()) {
-                    Toast.makeText(getActivity(),R.string.user_missing_info,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.user_missing_info, Toast.LENGTH_LONG).show();
                 } else {
                     PetsClient client = PetsClient.instance();
                     progress.show();
@@ -153,7 +165,7 @@ public class PetDetailFragment extends Fragment {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             progress.dismiss();
-                            Toast.makeText(getActivity(),R.string.ask_for_adoption_success,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), R.string.ask_for_adoption_success, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -166,7 +178,7 @@ public class PetDetailFragment extends Fragment {
         });
     }
 
-    private void setupSampleQuestion(View rootView) {
+    private void setupSampleQuestion(final View rootView) {
         //FIXME - Copypasted from Adapter, see if we can join both pieces
         RelativeLayout questionLayout = (RelativeLayout) rootView.findViewById(R.id.question_layout);
         if (pet.getQuestions() != null && pet.getQuestions().size() > 0) {
@@ -206,8 +218,9 @@ public class PetDetailFragment extends Fragment {
 
 
         } else {
-            RelativeLayout sampleQuestionLayout = (RelativeLayout) rootView.findViewById(R.id.sample_question_layout);
+            this.sampleQuestionLayout = (RelativeLayout) rootView.findViewById(R.id.sample_question_layout);
             RelativeLayout rootLayout = (RelativeLayout) rootView.findViewById(R.id.root_layout);
+
             rootLayout.removeView(sampleQuestionLayout);
         }
     }
@@ -291,6 +304,17 @@ public class PetDetailFragment extends Fragment {
                 askQuestionButton.setVisibility(View.GONE);
             }
         }
+    }
+
+
+    public void reload() {
+
+        if (this.pet.getQuestions().size() == 0){
+            RelativeLayout rootLayout = (RelativeLayout) this.rootView.findViewById(R.id.root_layout);
+            rootLayout.addView(sampleQuestionLayout);
+        }
+
+        loadQuestions(this.rootView);
     }
 
 
