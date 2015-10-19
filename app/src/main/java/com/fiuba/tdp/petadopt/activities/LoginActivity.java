@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -16,6 +20,7 @@ import com.facebook.login.widget.LoginButton;
 import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
+import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.fiuba.tdp.petadopt.service.UserClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -30,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private UserClient client;
+    private int clicks; // DEBUGGING PURPOSES
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
             continueToHome();
             return;
         }
+
+
 
 //        ActionBar actionBar = getSupportActionBar();
 //        if (actionBar != null)
@@ -98,6 +106,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // DEBUG PURPOSES
+        final EditText endpointInput = (EditText) findViewById(R.id.endpoint_input);
+        endpointInput.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    Log.d("Pet Adopt", "Changing endpoint to " + v.getText().toString());
+                    PetsClient.instance().base_url = v.getText().toString();
+                    endpointInput.setVisibility(View.GONE);
+                }
+                return false;
+            }
+        });
+
 
     }
 
@@ -127,4 +149,21 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
     }
 
+
+    // DEBUG PURPOSES
+    public void debugOnClick(View view) {
+        clicks += 1;
+        if (clicks >= 3) {
+            EditText endpointInput = (EditText) findViewById(R.id.endpoint_input);
+            endpointInput.setVisibility(View.VISIBLE);
+        }
+
+        new android.os.Handler().postDelayed(
+            new Runnable() {
+                public void run() {
+                    clicks = 0;
+                }
+            },
+            500);
+    }
 }

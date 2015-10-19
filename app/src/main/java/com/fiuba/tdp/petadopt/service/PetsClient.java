@@ -33,6 +33,7 @@ public class PetsClient extends HttpClient {
 
     private String auth_token;
     private static PetsClient singletonClient;
+    public String base_url = null;
 
     private PetsClient() {
 
@@ -94,7 +95,13 @@ public class PetsClient extends HttpClient {
 
     @Override
     public String getApiUrl(String relativeUrl) {
-        String url = super.getApiUrl(relativeUrl);
+        String url;
+        if (base_url == null) {
+            url = super.getApiUrl(relativeUrl);
+        } else {
+            url = base_url + relativeUrl;
+        }
+
         if (auth_token != null) {
             return url + "?user_token=" + auth_token;
         }
