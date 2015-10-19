@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnCameraChangeListener, OnMapReadyCallback {
+public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnCameraChangeListener {
 
     private TextView addressTextView;
     private LocationChosenDelegate locationChosenDelegate;
@@ -47,10 +47,11 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
         progress = new ProgressDialog(view.getContext());
         progress.setTitle(R.string.loading);
         progress.show();
-        mapFragment.getMapAsync(this);
-        mapFragment.getMap().setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapLoaded() {
+            public void onMapReady(GoogleMap googleMap) {
+                progress.dismiss();
+                googleMap.setOnCameraChangeListener(ChooseLocationMapFragment.this);
                 LatLngBounds BAIRES = new LatLngBounds(
                         new LatLng(-34.6033, -58.3817), new LatLng(-34.60, -58.38));
                 mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(BAIRES, 0));
@@ -65,11 +66,6 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
             }
         });
         return view;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        googleMap.setOnCameraChangeListener(this);
     }
 
     @Override

@@ -47,19 +47,19 @@ public class ShowLocationMapFragment extends ChooseLocationMapFragment {
         addressView.setVisibility(View.INVISIBLE);
         FloatingActionButton selectLocationButton = (FloatingActionButton) rootView.findViewById(R.id.select_location);
         selectLocationButton.setVisibility(View.INVISIBLE);
-        mapFragment.getMap().setOnMapLoadedCallback(null);
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                progress.dismiss();
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(petLocation.latitude, petLocation.longitude))
+                        .title("Ubicación de la mascota"));
+                LatLngBounds region = new LatLngBounds(
+                        new LatLng(petLocation.latitude - 0.001, petLocation.longitude - 0.001), new LatLng(petLocation.latitude + 0.001, petLocation.longitude + 0.001));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(region, 0));
+            }
+        });
         return rootView;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        progress.dismiss();
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(petLocation.latitude, petLocation.longitude))
-                .title("Ubicación de la mascota"));
-        LatLngBounds region = new LatLngBounds(
-                new LatLng(petLocation.latitude - 0.001, petLocation.longitude - 0.001), new LatLng(petLocation.latitude + 0.001, petLocation.longitude + 0.001));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(region, 0));
     }
 
     public void setPetLocation(LatLng petLocation) {

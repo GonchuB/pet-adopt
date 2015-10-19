@@ -32,6 +32,7 @@ import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
 import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
@@ -44,6 +45,7 @@ import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.fiuba.tdp.petadopt.service.RegistrationIntentService;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -66,16 +68,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Fragment currentFragment;
     private String auth_token;
     private Boolean created = false;
+    private Boolean exit = false;
+    private Fragment mapFragment;
     private HomeFragment homeFragment;
     private SearchView mSearchView;
     private Boolean atHome = true;
     private ProgressDialog progress;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         printFacebookKeyHash();
+
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+
         HttpClient.ActivityContext = getBaseContext();
         User.currentContext = getApplicationContext();
         if (User.user().isLoggedIn()) {
@@ -118,8 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setupActivity() {
         if (!created) {
-            progress = new ProgressDialog(MainActivity.this);
-            progress.setTitle(R.string.loading);
+            mapFragment = new ChooseLocationMapFragment();
             homeFragment = new HomeFragment();
 
             DrawerItemClickListener listener = new DrawerItemClickListener();
@@ -185,18 +193,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
-        if (item.getItemId() == R.id.advance_search_action){
-            setTitle(R.string.advance_search_title);
-            AdvancedSearchFragment fragment = new AdvancedSearchFragment();
-            fragment.setAdvancedSearchResultsDelegate(new AdvanceSearchResultsDelegate() {
-                @Override
-                public void resultsAvailable(JSONArray body) {
-                    showResults(body);
-                }
-            });
-            return displayFragment(fragment);
-        }
-
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -262,7 +258,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             if (fragment != null) {
-                displayFragment(fragment);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, fragment).commit();
 
                 // Highlight the selected item, update the title, and close the drawer
                 mDrawerList.setItemChecked(position, true);
@@ -277,11 +275,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private boolean displayFragment(Fragment fragment) {
-        if (fragment instanceof HomeFragment) {
-            atHome = true;
-        } else {
-            atHome = false;
-        }
+        atHome = fragment instanceof HomeFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
@@ -294,11 +288,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void fetchPets() {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
-        progress.show();
         client.getPetsForHome(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int code, Header[] headers, JSONArray body) {
-                progress.dismiss();
                 homeFragment.setResults(body);
                 homeFragment.onStart();
             }
@@ -348,6 +340,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+
+    public void goBackToHome() {
+        fetchPets();
+        displayFragment(homeFragment);
+        mDrawerList.setItemChecked(0, true);
+        mDrawerList.setSelection(0);
+        setTitle(optionTitles[0]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+
     private void goBackToLogin() {
         User.user().logout();
         LoginManager.getInstance().logOut();
@@ -356,12 +359,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
-    public void goBackToHome() {
-        fetchPets();
-        displayFragment(homeFragment);
-        mDrawerList.setItemChecked(0, true);
-        mDrawerList.setSelection(0);
-        setTitle(optionTitles[0]);
+    public void showAddPetFragment(View view) {
+        Fragment fragment = new AddPetFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment).commit();
+        setTitle(R.string.new_pet_title);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

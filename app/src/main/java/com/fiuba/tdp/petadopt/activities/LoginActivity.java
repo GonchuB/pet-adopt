@@ -10,14 +10,13 @@ import android.view.View;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
-import com.fiuba.tdp.petadopt.service.AuthClient;
+import com.fiuba.tdp.petadopt.service.UserClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String EXIT_FLAG = "exit_flag";
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-    private AuthClient client;
+    private UserClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                 + facebookToken
                 );
                 User.user().loggedInWithFacebook(facebookId, facebookToken);
-                client = new AuthClient();
+                client = new UserClient();
                 client.signUp(getApplicationContext(), facebookId, facebookToken, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int code, Header[] headers, JSONObject body) {
