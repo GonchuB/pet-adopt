@@ -1,6 +1,8 @@
 package com.fiuba.tdp.petadopt.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        debugGetSavedEndpoint();
         FacebookSdk.sdkInitialize(getApplicationContext());
         printFacebookKeyHash();
 
@@ -399,5 +402,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    // DEBUG PURPOSES
+    private void debugGetSavedEndpoint() {
+        SharedPreferences endpointData = getSharedPreferences("endpoint", Context.MODE_PRIVATE);
+        String url = endpointData.getString("url", "");
+        if (!url.isEmpty()) {
+            HttpClient.base_url = url;
+        } else {
+            HttpClient.base_url = null;
+        }
+
+    }
 
 }

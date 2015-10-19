@@ -1,5 +1,7 @@
 package com.fiuba.tdp.petadopt.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -116,8 +118,17 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     Log.d("Pet Adopt", "Changing endpoint to " + v.getText().toString());
-                    HttpClient.base_url = v.getText().toString();
+                    String url = v.getText().toString();
+                    if (url.isEmpty()) {
+                        HttpClient.base_url = null;
+                    } else {
+                        HttpClient.base_url = url;
+                    }
                     endpointInput.setVisibility(View.GONE);
+                    SharedPreferences endpointData = getSharedPreferences("endpoint", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = endpointData.edit();
+                    editor.putString("url", HttpClient.base_url);
+                    editor.apply();
                 }
                 return false;
             }
