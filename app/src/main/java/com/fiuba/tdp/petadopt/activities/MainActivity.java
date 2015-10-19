@@ -127,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setupActivity() {
         if (!created) {
+            progress = new ProgressDialog(MainActivity.this);
+            progress.setTitle(R.string.loading);
             mapFragment = new ChooseLocationMapFragment();
             homeFragment = new HomeFragment();
 
