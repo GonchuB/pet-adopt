@@ -87,6 +87,7 @@
     <string name="must_write_question">Ingrese una pregunta por favor</string>
     <string name="add_question_success">Se ha añadido su pregunta</string>
     <string name="pet_image">Imagen de la mascota</string>
+    <string name="adoption_request_notification">Alguien quiere adoptar a tu mascota!</string>
 
 
 </resources>
