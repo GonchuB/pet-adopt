@@ -27,6 +27,7 @@ import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.fiuba.tdp.petadopt.util.DateUtils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -210,25 +211,26 @@ public class PetDetailFragment extends Fragment {
     }
 
     private void setupTextViews(View rootView) {
-        TextView textView = (TextView) rootView.findViewById(R.id.type_value);
-        textView.setText(pet.getTypeString());
-        textView = (TextView) rootView.findViewById(R.id.age_value);
-        textView.setText(pet.getAge());
-        textView = (TextView) rootView.findViewById(R.id.gender_value);
-        textView.setText(pet.getGenderString());
-        textView = (TextView) rootView.findViewById(R.id.colors_value);
-        textView.setText(pet.getColors());
-        textView = (TextView) rootView.findViewById(R.id.description_value);
-        textView.setText(pet.getDescription());
+        EditText typeField = (EditText) rootView.findViewById(R.id.type);
+        setPetField(typeField, pet.getTypeString());
+
+        EditText ageField = (EditText) rootView.findViewById(R.id.age);
+        setPetField(ageField, pet.getAge());
+
+        EditText genderField = (EditText) rootView.findViewById(R.id.gender);
+        setPetField(genderField, pet.getGenderString());
+
+        EditText colorsField = (EditText) rootView.findViewById(R.id.colors);
+        setPetField(colorsField, pet.getColors());
+
+        EditText descriptionField = (EditText) rootView.findViewById(R.id.description);
+        setPetField(descriptionField, pet.getDescription());
+
+        EditText videoField = (EditText) rootView.findViewById(R.id.videos);
+        setVideoField(videoField, pet.getVideos());
+
+        TextView textView;
         ArrayList<String> videos = pet.getVideos();
-        if (videos.size() > 0) {
-            textView = (TextView) rootView.findViewById(R.id.videos_value1);
-            textView.setText(pet.getVideos().get(0));
-        }
-        if (videos.size() > 1) {
-            textView = (TextView) rootView.findViewById(R.id.videos_value2);
-            textView.setText(pet.getVideos().get(1));
-        }
         textView = (TextView) rootView.findViewById(R.id.vaccines_value);
         if (!pet.getVaccinated()) {
             textView.setText(R.string.not_vaccine_field);
@@ -245,6 +247,31 @@ public class PetDetailFragment extends Fragment {
         if (!pet.getNeedsTransitHome()) {
             textView.setText(R.string.not_transit_field);
         }
+    }
+
+    private void setVideoField(EditText videoField, ArrayList<String> videos) {
+        if (videos.size() == 0) {
+            videoField.setVisibility(View.GONE);
+        } else {
+            String videoString = "";
+            for (int i = 0; i < videos.size(); i++) {
+                if (!videoString.isEmpty()) {
+                    videoString += "\n";
+                }
+                videoString += videos.get(i);
+            }
+            videoField.setText(videoString);
+        }
+        videoField.setKeyListener(null);
+    }
+
+    private void setPetField(EditText field, String text) {
+        if (text.isEmpty()) {
+            field.setVisibility(View.GONE);
+        } else {
+            field.setText(text);
+        }
+        field.setKeyListener(null);
     }
 
 
