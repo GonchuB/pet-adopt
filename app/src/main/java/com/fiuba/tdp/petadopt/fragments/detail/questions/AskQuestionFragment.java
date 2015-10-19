@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.detail.PetDetailFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.Question;
 import com.fiuba.tdp.petadopt.model.User;
@@ -35,12 +36,19 @@ import java.util.logging.Logger;
 
 public class AskQuestionFragment extends Fragment {
 
+    private PetDetailFragment previous_fragment;
     private ListView lv;
     private Pet pet;
     private QAClient client;
     private String auth_token;
 
-    public AskQuestionFragment() {
+
+    public AskQuestionFragment(){
+
+    }
+
+    public void setPreviousFragment(PetDetailFragment previous_fragment) {
+        this.previous_fragment = previous_fragment;
     }
 
     @Override
@@ -61,16 +69,18 @@ public class AskQuestionFragment extends Fragment {
 
                 TextView questionTextView = (TextView) getActivity().findViewById(R.id.question_text);
 
-                String questionText = questionTextView.getText().toString();
-                if (questionText.equals("")) {
+                Question question =  new Question(questionTextView.getText().toString());
+
+                if (questionTextView.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), R.string.must_write_question, Toast.LENGTH_LONG).show();
                     return;
                 }
-                client.postQuestion(pet.getId(), questionText, new JsonHttpResponseHandler() {
+                client.postQuestion(pet.getId(), question, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int code, Header[] headers, JSONObject response) {
                         Toast.makeText(getActivity(), R.string.add_question_success, Toast.LENGTH_LONG).show();
                         getFragmentManager().popBackStack();
+                        previous_fragment.reload();
                     }
                 });
             }

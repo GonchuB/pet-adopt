@@ -36,10 +36,8 @@ public class QAClient extends HttpClient {
         return url;
     }
 
-    public void postQuestion(String id, String questionText, JsonHttpResponseHandler handler){
+    public void postQuestion(String id, Question question, JsonHttpResponseHandler handler){
         String url = getApiUrl("/pets/"+id+"/questions.json");
-
-        Question question = new Question(questionText);
 
         try {
             StringEntity entity = new StringEntity(question.toJson());
