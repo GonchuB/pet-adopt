@@ -20,11 +20,14 @@ import com.facebook.login.widget.LoginButton;
 import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
+import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
+import com.fiuba.tdp.petadopt.service.QAClient;
 import com.fiuba.tdp.petadopt.service.UserClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 
@@ -70,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                 + facebookToken
                 );
                 User.user().loggedInWithFacebook(facebookId, facebookToken);
-                client = new UserClient();
+                client = UserClient.instance();
                 client.signUp(getApplicationContext(), facebookId, facebookToken, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int code, Header[] headers, JSONObject body) {
@@ -113,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     Log.d("Pet Adopt", "Changing endpoint to " + v.getText().toString());
-                    PetsClient.instance().base_url = v.getText().toString();
+                    HttpClient.base_url = v.getText().toString();
                     endpointInput.setVisibility(View.GONE);
                 }
                 return false;

@@ -95,12 +95,7 @@ public class PetsClient extends HttpClient {
 
     @Override
     public String getApiUrl(String relativeUrl) {
-        String url;
-        if (base_url == null) {
-            url = super.getApiUrl(relativeUrl);
-        } else {
-            url = base_url + relativeUrl;
-        }
+        String url = super.getApiUrl(relativeUrl);
 
         if (auth_token != null) {
             return url + "?user_token=" + auth_token;
