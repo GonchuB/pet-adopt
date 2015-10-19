@@ -33,6 +33,7 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
     private LocationChosenDelegate locationChosenDelegate;
     protected ProgressDialog progress;
     protected SupportMapFragment mapFragment;
+    protected Boolean shouldCenterInBA = true;
 
     public ChooseLocationMapFragment() {
     }
@@ -46,17 +47,19 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
 
         progress = new ProgressDialog(view.getContext());
         progress.setTitle(R.string.loading);
-        progress.show();
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                progress.dismiss();
-                googleMap.setOnCameraChangeListener(ChooseLocationMapFragment.this);
-                LatLngBounds BAIRES = new LatLngBounds(
-                        new LatLng(-34.6033, -58.3817), new LatLng(-34.60, -58.38));
-                mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(BAIRES, 0));
-            }
-        });
+        if (shouldCenterInBA) {
+            progress.show();
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    progress.dismiss();
+                    googleMap.setOnCameraChangeListener(ChooseLocationMapFragment.this);
+                    LatLngBounds BAIRES = new LatLngBounds(
+                            new LatLng(-34.6033, -58.3817), new LatLng(-34.60, -58.38));
+                    mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngBounds(BAIRES, 0));
+                }
+            });
+        }
         addressTextView = (TextView) view.findViewById(R.id.addressTextView);
         FloatingActionButton selectLocationButton = (FloatingActionButton) view.findViewById(R.id.select_location);
         selectLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +85,7 @@ public class ChooseLocationMapFragment extends Fragment implements GoogleMap.OnC
                         && address.getLocality() != null
                         && address.getSubLocality() != null) {
                     addressTextView.setText(getAddressAsString(address));
-                    if (locationChosenDelegate!=null){
+                    if (locationChosenDelegate != null) {
                         locationChosenDelegate.locationWasChosen(cameraPosition.target, getAddressAsString(address));
                     }
                 }

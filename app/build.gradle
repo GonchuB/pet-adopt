@@ -28,7 +28,7 @@ android {
             applicationId "com.fiuba.tdp.petadopt"
             // For running in emulator: 10.0.2.2 is the ip for host machine.
             // Server should run in host at port 3000
-            buildConfigField "String", BASE_ENDPOINT, '"http://10.0.2.2:3000/"'
+            buildConfigField "String", BASE_ENDPOINT, '"http://192.168.100.109:3000/"'
         }
 
         qa {

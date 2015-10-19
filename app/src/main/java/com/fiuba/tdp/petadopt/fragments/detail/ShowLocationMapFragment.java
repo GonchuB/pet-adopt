@@ -40,6 +40,7 @@ public class ShowLocationMapFragment extends ChooseLocationMapFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        shouldCenterInBA = false;
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ImageView centerPin = (ImageView) rootView.findViewById(R.id.map_pin);
         centerPin.setVisibility(View.INVISIBLE);
@@ -47,6 +48,7 @@ public class ShowLocationMapFragment extends ChooseLocationMapFragment {
         addressView.setVisibility(View.INVISIBLE);
         FloatingActionButton selectLocationButton = (FloatingActionButton) rootView.findViewById(R.id.select_location);
         selectLocationButton.setVisibility(View.INVISIBLE);
+        progress.show();
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
