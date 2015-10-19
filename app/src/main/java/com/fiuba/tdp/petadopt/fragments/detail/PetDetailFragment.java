@@ -44,6 +44,7 @@ public class PetDetailFragment extends Fragment {
     private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
     private ProgressDialog progress;
     FloatingActionButton floatingActionButton;
+    Button askQuestionButton;
 
 
     private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
@@ -71,16 +72,17 @@ public class PetDetailFragment extends Fragment {
         mHorizontalGridView.addOnScrollListener(mScrollListener);
         mHorizontalGridView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
-        setupTextViews(rootView);
-
+        askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
         floatingActionButton  = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
         if ((pet != null) && (pet.getUserId().equals(String.valueOf(User.user().getId())))) {
             floatingActionButton.setVisibility(View.GONE);
+            askQuestionButton.setVisibility(View.GONE);
         }
         setAdoptionButton();
 
+        setupTextViews(rootView);
 
-        Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
+                Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
         showMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +105,7 @@ public class PetDetailFragment extends Fragment {
                 try {
                     pet.loadQuestionsFromJson(response);
                     setupSampleQuestion(rootView);
-                    Button askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
+                    askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
                     askQuestionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -211,6 +213,9 @@ public class PetDetailFragment extends Fragment {
     }
 
     private void setupTextViews(View rootView) {
+        EditText nameField = (EditText) rootView.findViewById(R.id.name);
+        setPetField(nameField, pet.getName());
+
         EditText typeField = (EditText) rootView.findViewById(R.id.type);
         setPetField(typeField, pet.getTypeString());
 
@@ -229,24 +234,27 @@ public class PetDetailFragment extends Fragment {
         EditText videoField = (EditText) rootView.findViewById(R.id.videos);
         setVideoField(videoField, pet.getVideos());
 
-        TextView textView;
-        ArrayList<String> videos = pet.getVideos();
-        textView = (TextView) rootView.findViewById(R.id.vaccines_value);
-        if (!pet.getVaccinated()) {
-            textView.setText(R.string.not_vaccine_field);
+        EditText vaccinesField = (EditText) rootView.findViewById(R.id.vaccines);
+        setBooleanField(vaccinesField, pet.getVaccinated());
+
+        EditText petsRelationshipField = (EditText) rootView.findViewById(R.id.pets_relationship);
+        setBooleanField(petsRelationshipField, pet.getPetFriendly());
+
+        EditText kidsRelationshipField = (EditText) rootView.findViewById(R.id.kids_relationship);
+        setBooleanField(kidsRelationshipField, pet.getChildrenFriendly());
+
+        EditText transitHomeField = (EditText) rootView.findViewById(R.id.transit);
+        setBooleanField(transitHomeField, pet.getNeedsTransitHome());
+    }
+
+    private void setBooleanField(EditText field, Boolean condition) {
+        if (condition) {
+            field.setText(R.string.true_value);
+        } else {
+            field.setText(R.string.false_value);
         }
-        textView = (TextView) rootView.findViewById(R.id.relationship_value);
-        if (!pet.getPetFriendly()) {
-            textView.setText(R.string.not_relationship_field);
-        }
-        textView = (TextView) rootView.findViewById(R.id.kid_value);
-        if (!pet.getChildrenFriendly()) {
-            textView.setText(R.string.not_kid_field);
-        }
-        textView = (TextView) rootView.findViewById(R.id.transit_value);
-        if (!pet.getNeedsTransitHome()) {
-            textView.setText(R.string.not_transit_field);
-        }
+        field.setKeyListener(null);
+
     }
 
     private void setVideoField(EditText videoField, ArrayList<String> videos) {
@@ -277,9 +285,10 @@ public class PetDetailFragment extends Fragment {
 
     public void setPet(Pet pet) {
         this.pet = pet;
-        if (floatingActionButton != null) {
+        if (floatingActionButton != null && askQuestionButton != null) {
             if ((pet != null) && (pet.getUserId().equals(String.valueOf(User.user().getId())))) {
                 floatingActionButton.setVisibility(View.GONE);
+                askQuestionButton.setVisibility(View.GONE);
             }
         }
     }

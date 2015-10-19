@@ -15,7 +15,7 @@
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/root_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_coent"
+            android:layout_height="wrap_content"
             android:background="@color/app_background"
             android:paddingBottom="5dp"
             android:paddingLeft="16dp"
@@ -26,16 +26,6 @@
                 android:id="@+id/horizontal_gridView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
-
-            <Button
-                android:id="@+id/show_map_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/horizontal_gridView"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:text="@string/detail_show_map" />
 
             <com.rey.material.widget.FloatingActionButton
                 android:id="@+id/adopt_pet"
@@ -50,10 +40,38 @@
                 app:fab_radius="30dp" />
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/name_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/horizontal_gridView"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+
+                <com.rey.material.widget.EditText
+                    android:id="@+id/name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@id/image"
+                    android:hint="@string/type_field"
+                    android:textSize="16sp"
+                    app:et_dividerHeight="0dp"
+                    app:et_labelEnable="true"
+                    app:et_labelTextColor="@color/title_text" />
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/type_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/show_map_button"
+                android:layout_below="@id/name_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -66,10 +84,9 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/type_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
@@ -82,7 +99,6 @@
                 android:id="@+id/age_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
                 android:layout_below="@+id/type_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
@@ -96,10 +112,9 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/age_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
@@ -110,7 +125,6 @@
                 android:id="@+id/gender_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
                 android:layout_below="@+id/age_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
@@ -124,10 +138,9 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/gender_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
@@ -138,7 +151,6 @@
                 android:id="@+id/colors_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
                 android:layout_below="@+id/gender_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
@@ -152,10 +164,9 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/colors_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
@@ -166,7 +177,6 @@
                 android:id="@+id/description_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
                 android:layout_below="@+id/colors_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
@@ -180,13 +190,38 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/description_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/show_map_item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/description_item"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/show_map_button"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/detail_show_map"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/button_text"
+                    android:background="@color/button_background"/>
 
             </RelativeLayout>
 
@@ -194,8 +229,7 @@
                 android:id="@+id/video_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
-                android:layout_below="@+id/description_item"
+                android:layout_below="@+id/show_map_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -208,10 +242,9 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/image"
                     android:hint="@string/videos_field"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:et_dividerHeight="0dp"
                     app:et_labelEnable="true"
                     app:et_labelTextColor="@color/title_text" />
@@ -222,74 +255,69 @@
                 android:id="@+id/other_info_item"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/show_map_button"
                 android:layout_below="@+id/video_item"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="10dp">
 
-                <TextView
-                    android:id="@+id/vaccines_value"
-                    android:layout_width="wrap_content"
+                <com.rey.material.widget.EditText
+                    android:id="@+id/vaccines"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
-                    android:layout_marginTop="2dp"
                     android:layout_toEndOf="@id/image"
-                    android:text="@string/vaccine_field"
-                    android:textColor="@color/title_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:hint="@string/vaccine_field"
+                    android:textSize="16sp"
+                    app:et_dividerHeight="0dp"
+                    app:et_labelEnable="true"
+                    app:et_labelTextColor="@color/title_text" />
 
-                <TextView
-                    android:id="@+id/relationship_value"
-                    android:layout_width="wrap_content"
+                <com.rey.material.widget.EditText
+                    android:id="@+id/pets_relationship"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
-                    android:layout_below="@+id/vaccines_value"
-                    android:layout_marginTop="2dp"
+                    android:layout_below="@+id/vaccines"
                     android:layout_toEndOf="@id/image"
-                    android:autoLink="web"
-                    android:text="@string/relationship_field"
-                    android:textColor="@color/title_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:hint="@string/pet_relationship_field"
+                    android:textSize="16sp"
+                    app:et_dividerHeight="0dp"
+                    app:et_labelEnable="true"
+                    app:et_labelTextColor="@color/title_text"
+                    android:layout_marginTop="2dp" />
 
-                <TextView
-                    android:id="@+id/kid_value"
-                    android:layout_width="wrap_content"
+                <com.rey.material.widget.EditText
+                    android:id="@+id/kids_relationship"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
-                    android:layout_below="@+id/relationship_value"
-                    android:layout_marginTop="2dp"
+                    android:layout_below="@+id/pets_relationship"
                     android:layout_toEndOf="@id/image"
-                    android:autoLink="web"
-                    android:text="@string/kid_field"
-                    android:textColor="@color/title_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:hint="@string/kids_relationship_field"
+                    android:textSize="16sp"
+                    app:et_dividerHeight="0dp"
+                    app:et_labelEnable="true"
+                    app:et_labelTextColor="@color/title_text"
+                    android:layout_marginTop="-18dp" />
 
-                    />
-
-                <TextView
-                    android:id="@+id/transit_value"
-                    android:layout_width="wrap_content"
+                <com.rey.material.widget.EditText
+                    android:id="@+id/transit"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
-                    android:layout_below="@+id/kid_value"
-                    android:layout_marginTop="2dp"
+                    android:layout_below="@+id/kids_relationship"
                     android:layout_toEndOf="@id/image"
-                    android:autoLink="web"
-                    android:text="@string/transit_field"
-                    android:textColor="@color/title_text"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-
-                    />
+                    android:hint="@string/transit_field"
+                    android:textSize="16sp"
+                    app:et_dividerHeight="0dp"
+                    app:et_labelEnable="true"
+                    app:et_labelTextColor="@color/title_text"
+                    android:layout_marginTop="2dp" />
 
             </RelativeLayout>
 
@@ -309,8 +337,12 @@
                     android:layout_height="wrap_content"
                     android:autoLink="web"
                     android:text="@string/ask_questions"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/button_text"
+                    android:background="@color/button_background"
                     />
             </RelativeLayout>
 
@@ -339,7 +371,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="@string/questions"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <View
@@ -361,12 +393,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/question_layout"
-                    android:layout_marginTop="2dp"
                     android:layout_toEndOf="@id/image"
-                    android:autoLink="web"
                     android:text="@string/show_questions"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/button_text"
+                    android:background="@color/button_background" />
 
             </RelativeLayout>
         </RelativeLayout>
