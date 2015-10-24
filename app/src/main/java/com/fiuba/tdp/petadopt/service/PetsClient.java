@@ -69,6 +69,15 @@ public class PetsClient extends HttpClient {
         client.get(url, params, handler);
     }
 
+    public void answerQuestion(String petId, String questionId, String answer, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/questions/" + questionId + "/answer.json");
+        RequestParams params = new RequestParams();
+        Map<String, String> answerMap = new HashMap<>();
+        answerMap.put("body", answer);
+        params.put("pet_question_answer", answerMap);
+        client.post(url, params, handler);
+    }
+
     public void getMyPets(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         User user = User.user();

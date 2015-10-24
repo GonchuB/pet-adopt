@@ -32,4 +32,12 @@ public class Answer {
     public Date getCreatedAt() {
         return created;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 }

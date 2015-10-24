@@ -1,6 +1,7 @@
 package com.fiuba.tdp.petadopt.fragments.detail.questions;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -61,13 +63,12 @@ public class AskQuestionFragment extends Fragment {
         client = QAClient.instance();
         client.setAuth_token(auth_token);
 
-
         Button showQuestionsButton = (Button) rootView.findViewById(R.id.ask_question);
         showQuestionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                TextView questionTextView = (TextView) getActivity().findViewById(R.id.question_text);
+                final TextView questionTextView = (TextView) getActivity().findViewById(R.id.question_text);
 
                 Question question =  new Question(questionTextView.getText().toString());
 
@@ -78,6 +79,8 @@ public class AskQuestionFragment extends Fragment {
                 client.postQuestion(pet.getId(), question, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int code, Header[] headers, JSONObject response) {
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(questionTextView.getWindowToken(), 0);
                         Toast.makeText(getActivity(), R.string.add_question_success, Toast.LENGTH_LONG).show();
                         getFragmentManager().popBackStack();
                         previous_fragment.reload();

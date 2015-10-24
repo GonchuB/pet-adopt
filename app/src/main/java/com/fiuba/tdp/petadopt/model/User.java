@@ -167,4 +167,9 @@ public class User {
 
         return missing;
     }
+
+    public boolean ownsPet(Pet pet) {
+        return pet.getUserId().equals(String.valueOf(id));
+    }
+
 }

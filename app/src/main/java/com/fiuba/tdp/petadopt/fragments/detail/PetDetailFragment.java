@@ -1,7 +1,6 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
@@ -78,7 +77,7 @@ public class PetDetailFragment extends Fragment {
 
         askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
         floatingActionButton  = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
-        if ((pet != null) && (pet.getUserId().equals(String.valueOf(User.user().getId())))) {
+        if (User.user().ownsPet(pet)) {
             floatingActionButton.setVisibility(View.GONE);
             askQuestionButton.setVisibility(View.GONE);
         }
@@ -178,7 +177,7 @@ public class PetDetailFragment extends Fragment {
         });
     }
 
-    private void setupSampleQuestion(final View rootView) {
+    public void setupSampleQuestion(final View rootView) {
         //FIXME - Copypasted from Adapter, see if we can join both pieces
         RelativeLayout questionLayout = (RelativeLayout) rootView.findViewById(R.id.question_layout);
         if (pet.getQuestions() != null && pet.getQuestions().size() > 0) {
@@ -195,19 +194,23 @@ public class PetDetailFragment extends Fragment {
             questionAskerTextView.setText(question.getAsker());
 
             if (question.getAnswer() == null) {
-                questionLayout.removeView(answerDateTextView);
-                questionLayout.removeView(answerTextView);
+                answerTextView.setVisibility(View.GONE);
+                answerDateTextView.setVisibility(View.GONE);
+                answerButton.setVisibility(View.GONE);
             } else {
+                answerTextView.setVisibility(View.VISIBLE);
+                answerDateTextView.setVisibility(View.VISIBLE);
                 answerTextView.setText(question.getAnswer().getText());
                 answerDateTextView.setText(DateUtils.stringFromDateForQuestionList(question.getAnswer().getCreatedAt()));
+                questionLayout.removeView(answerButton);
             }
-            questionLayout.removeView(answerButton);
 
             Button showQuestionsButton = (Button) rootView.findViewById(R.id.show_questions);
             showQuestionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     QuestionsFragment questionsFragment = new QuestionsFragment();
+                    questionsFragment.petDetailFragment = PetDetailFragment.this;
                     questionsFragment.setPet(pet);
                     FragmentTransaction ft = getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     ft.add(R.id.content_frame, questionsFragment, "Choose location");
@@ -308,7 +311,6 @@ public class PetDetailFragment extends Fragment {
 
 
     public void reload() {
-
         if (this.pet.getQuestions().size() == 0){
             RelativeLayout rootLayout = (RelativeLayout) this.rootView.findViewById(R.id.root_layout);
             rootLayout.addView(sampleQuestionLayout);

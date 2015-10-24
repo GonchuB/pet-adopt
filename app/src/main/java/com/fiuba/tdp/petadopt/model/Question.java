@@ -16,6 +16,9 @@ public class Question {
     private String text;
     private Date created;
     private String askerName;
+    private Integer id;
+
+
     private Answer answer;
 
     public Question(){
@@ -32,6 +35,7 @@ public class Question {
     public static Question fromJson(JSONObject jsonObject) {
         Question question = new Question();
         try {
+            question.id = jsonObject.getInt("id");
             question.text = jsonObject.getString("body");
             question.created = DateUtils.dateFromString(jsonObject.getString("created_at"));
             if (jsonObject.has("answer")) {
@@ -64,11 +68,19 @@ public class Question {
         return answer;
     }
 
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
+
     public Date getCreatedAt() {
         return created;
     }
 
     public String getAsker() {
         return askerName;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

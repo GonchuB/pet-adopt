@@ -1,6 +1,8 @@
 package com.fiuba.tdp.petadopt.fragments.detail.questions;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,9 @@ import java.util.List;
 public class QAListItemAdapter extends ArrayAdapter<Question> {
     private final List<Question> questions;
     private final Activity context;
-
+    private Boolean isOwner;
+    private View.OnClickListener answerQuestionListener;
+    private Button answerButton;
 
     public QAListItemAdapter(Activity context,
                              List<Question> questions) {
@@ -40,7 +44,7 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
         TextView questionAskerTextView = (TextView) rowView.findViewById(R.id.asker_name);
         TextView answerTextView = (TextView) rowView.findViewById(R.id.answer);
         TextView answerDateTextView = (TextView) rowView.findViewById(R.id.answer_date);
-        Button answerButton = (Button) rowView.findViewById(R.id.answer_question_button);
+        answerButton = (Button) rowView.findViewById(R.id.answer_question_button);
 
         RelativeLayout relativeLayout = (RelativeLayout) rowView.findViewById(R.id.relative_layout);
 
@@ -58,15 +62,25 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
             relativeLayout.removeView(answerButton);
         }
 
-        relativeLayout.removeView(answerButton); //See line below!
-        /* TODO - Show answer question if its the pet owner
-         if (isOwner()){
-             answerButton.setVisibility(View.VISIBLE);
-         }
-          //Set button listener!
-         */
-
+        if (!isOwner) {
+            relativeLayout.removeView(answerButton);
+        } else {
+            answerButton.setOnClickListener(answerQuestionListener);
+            answerButton.setTag(position);
+        }
         return rowView;
+    }
+
+    public void setIsOwner(Boolean isOwner) {
+        this.isOwner = isOwner;
+    }
+
+    public void setAnswerQuestionListener(View.OnClickListener answerQuestionListener) {
+        this.answerQuestionListener = answerQuestionListener;
+    }
+
+    public Button getAnswerButton() {
+        return answerButton;
     }
 }
 

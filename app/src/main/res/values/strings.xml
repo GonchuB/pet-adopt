@@ -88,6 +88,10 @@
     <string name="add_question_success">Se ha añadido su pregunta</string>
     <string name="pet_image">Imagen de la mascota</string>
     <string name="adoption_request_notification">Alguien quiere adoptar a tu mascota!</string>
+    <string name="answer">Responder</string>
+    <string name="answer_question_success">Pregunta contestada exitosamente</string>
+    <string name="must_write_answer">La respuesta no puede estar vacía</string>
+    <string name="answer_placeholder">Ingresá tu respuesta</string>
 
 
 </resources>
