@@ -41,6 +41,7 @@ public class Pet {
     ArrayList<Image> images;
     ArrayList<String> videos;
     private ArrayList<Question> questions;
+    private PublicationType publicationType;
 
 
     public Pet() {
@@ -229,9 +230,10 @@ public class Pet {
         if (!jsonObject.getString("location").equals("")) {
             this.location = parseLocation(jsonObject.getString("location"));
         }
+        this.publicationType = PublicationType.fromString(jsonObject.getString("publication_type"));
     }
 
-    public void loadQuestionsFromJson(JSONArray questionArray) throws JSONException{
+    public void loadQuestionsFromJson(JSONArray questionArray) throws JSONException {
         this.questions = parseQuestions(questionArray);
     }
 
@@ -367,6 +369,13 @@ public class Pet {
         return userId;
     }
 
+    public PublicationType getPublicationType() {
+        return publicationType;
+    }
+
+    public void setPublicationType(PublicationType publicationType) {
+        this.publicationType = publicationType;
+    }
 
 
     public enum Type {
@@ -417,6 +426,32 @@ public class Pet {
             thumbUrl = object.getString("thumb_url");
             mediumUrl = object.getString("medium_url");
             originalUrl = object.getString("original_url");
+        }
+    }
+
+    public enum PublicationType {
+        ADOPTION("adoption"), LOSS("lost");
+
+        private String name;
+
+        PublicationType(String s) {
+            name = s;
+        }
+
+        public static PublicationType fromString(String s){
+            if (s != null && s.equals("lost")){
+                return LOSS;
+            } else{
+                return ADOPTION;
+            }
+        }
+
+        public String toString() {
+            return this.name;
+        }
+
+        public boolean equalsName(String otherName) {
+            return (otherName != null) && name.equals(otherName);
         }
     }
 }

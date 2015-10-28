@@ -92,6 +92,7 @@
     <string name="answer_question_success">Pregunta contestada exitosamente</string>
     <string name="must_write_answer">La respuesta no puede estar vacía</string>
     <string name="answer_placeholder">Ingresá tu respuesta</string>
+    <string name="lost_or_adopt_hint">Tipo de publicación</string>
 
 
 </resources>

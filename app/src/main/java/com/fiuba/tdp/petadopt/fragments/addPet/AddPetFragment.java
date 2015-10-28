@@ -76,10 +76,12 @@ public class AddPetFragment extends Fragment {
 
         setUpPetFillingCallbacks(rootView);
 
+        populateSpinner(rootView, R.id.lost_or_adopt, R.array.publication_type_array);
         populateSpinner(rootView, R.id.pet_type, R.array.pet_type_array);
         populateSpinner(rootView, R.id.pet_gender, R.array.pet_gender_array);
         populateSpinner(rootView, R.id.pet_main_color, R.array.pet_color_array);
         populateSpinner(rootView, R.id.pet_second_color, R.array.pet_color_array);
+
         TextView locationView = (TextView) rootView.findViewById(R.id.chosen_location);
         final Button button = (Button) rootView.findViewById(R.id.choose_location);
         button.setOnClickListener(new View.OnClickListener() {
@@ -279,7 +281,7 @@ public class AddPetFragment extends Fragment {
                 pet.setChildrenFriendly(childrenFriendly.isChecked());
                 pet.setNeedsTransitHome(needsTransitHome.isChecked());
                 pet.setDescription(descriptionEditText.getText().toString());
-                pet.setVideos(getVideoArray(video1Url.getText().toString(),video2Url.getText().toString()));
+                pet.setVideos(getVideoArray(video1Url.getText().toString(), video2Url.getText().toString()));
 
                 ValidationStatus status = validateFields();
                 if (status.isError) {
@@ -294,7 +296,7 @@ public class AddPetFragment extends Fragment {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-                        for (Uri uri : imageUris){
+                        for (Uri uri : imageUris) {
                             try {
                                 PetsClient.instance().uploadImage(response.getString("id"), getPath(uri), new JsonHttpResponseHandler() {
                                     @Override
@@ -311,7 +313,8 @@ public class AddPetFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        };
+                        }
+                        ;
                         progress.dismiss();
                         Toast toast = Toast.makeText(getContext(), R.string.pet_creation_success, Toast.LENGTH_SHORT);
                         toast.show();
@@ -424,7 +427,19 @@ public class AddPetFragment extends Fragment {
     }
 
     private void setUpPetFillingCallbacks(View rootView) {
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.lost_or_adopt);
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
+                if (i == 0) {
+                    pet.setPublicationType(Pet.PublicationType.ADOPTION);
+                } else {
+                    pet.setPublicationType(Pet.PublicationType.LOSS);
+                }
+            }
+        });
+        spinner.setSelection(0);
+        spinner = (Spinner) rootView.findViewById(R.id.pet_type);
         spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner spinner, View view, int i, long l) {
