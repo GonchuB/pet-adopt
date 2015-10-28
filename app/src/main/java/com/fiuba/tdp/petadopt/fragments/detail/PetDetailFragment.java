@@ -76,7 +76,7 @@ public class PetDetailFragment extends Fragment {
         mHorizontalGridView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
         askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
-        floatingActionButton  = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
         if (User.user().ownsPet(pet)) {
             floatingActionButton.setVisibility(View.GONE);
             askQuestionButton.setVisibility(View.GONE);
@@ -85,7 +85,7 @@ public class PetDetailFragment extends Fragment {
 
         setupTextViews(rootView);
 
-                Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
+        Button showMapButton = (Button) rootView.findViewById(R.id.show_map_button);
         showMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,16 +251,20 @@ public class PetDetailFragment extends Fragment {
         setVideoField(videoField, pet.getVideos());
 
         EditText vaccinesField = (EditText) rootView.findViewById(R.id.vaccines);
-        setBooleanField(vaccinesField, pet.getVaccinated());
-
         EditText petsRelationshipField = (EditText) rootView.findViewById(R.id.pets_relationship);
-        setBooleanField(petsRelationshipField, pet.getPetFriendly());
-
         EditText kidsRelationshipField = (EditText) rootView.findViewById(R.id.kids_relationship);
-        setBooleanField(kidsRelationshipField, pet.getChildrenFriendly());
-
         EditText transitHomeField = (EditText) rootView.findViewById(R.id.transit);
-        setBooleanField(transitHomeField, pet.getNeedsTransitHome());
+        if (pet.getPublicationType() == Pet.PublicationType.ADOPTION) {
+            setBooleanField(vaccinesField, pet.getVaccinated());
+            setBooleanField(petsRelationshipField, pet.getPetFriendly());
+            setBooleanField(kidsRelationshipField, pet.getChildrenFriendly());
+            setBooleanField(transitHomeField, pet.getNeedsTransitHome());
+        } else {
+            vaccinesField.setVisibility(View.GONE);
+            petsRelationshipField.setVisibility(View.GONE);
+            kidsRelationshipField.setVisibility(View.GONE);
+            transitHomeField.setVisibility(View.GONE);
+        }
     }
 
     private void setBooleanField(EditText field, Boolean condition) {
@@ -311,7 +315,7 @@ public class PetDetailFragment extends Fragment {
 
 
     public void reload() {
-        if (this.pet.getQuestions().size() == 0){
+        if (this.pet.getQuestions().size() == 0) {
             RelativeLayout rootLayout = (RelativeLayout) this.rootView.findViewById(R.id.root_layout);
             rootLayout.addView(sampleQuestionLayout);
         }
@@ -337,7 +341,7 @@ public class PetDetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     FullScreenImageFragment fullScreenImageFragment = new FullScreenImageFragment();
-                    ImageView view = (ImageView)v;
+                    ImageView view = (ImageView) v;
                     fullScreenImageFragment.setImageDrawable(view.getDrawable());
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
