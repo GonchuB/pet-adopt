@@ -31,5 +31,8 @@
     <color name="title_text">#0a97a5</color>
     <color name="dark_text">#071926</color>
     <color name="light_text">#8db5a1</color>
+    <color name="pink_background">#FFCCCC</color>
+    <color name="black">#000</color>
+
 
 </resources>
