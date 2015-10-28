@@ -198,11 +198,13 @@ public class Pet {
         jo.remove("images");
         jo.remove("firstColor");
         jo.remove("secondColor");
+        jo.remove("publicationType");
 
         jo.addProperty("location", String.valueOf(this.location.latitude) + "," + String.valueOf(this.location.longitude));
         jo.addProperty("colors", this.getColors());
         JsonObject result = new JsonObject();
         result.add("pet", jo);
+        jo.addProperty("publication_type", publicationType.toString());
         return result.toString();
     }
 
@@ -438,10 +440,10 @@ public class Pet {
             name = s;
         }
 
-        public static PublicationType fromString(String s){
-            if (s != null && s.equals("lost")){
+        public static PublicationType fromString(String s) {
+            if (s != null && s.equals("lost")) {
                 return LOSS;
-            } else{
+            } else {
                 return ADOPTION;
             }
         }
