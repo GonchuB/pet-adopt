@@ -3,6 +3,15 @@ package com.fiuba.tdp.petadopt.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fiuba.tdp.petadopt.BuildConfig;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +41,7 @@ public class User {
     private final static String USER_FB_ID = "user_fb_id";
     private final static String USER_FB_TOKEN = "user_fb_token";
     private final static String USER_AUTH_TOKEN = "user_auth_token";
+    private String id;
 
 
     public void setAuthToken(String authToken) {
@@ -112,6 +122,32 @@ public class User {
     public void loggedInWithFacebook(String facebookId, String facebookToken){
         this.facebookId = facebookId;
         this.facebookToken = getFacebookToken();
+        save();
+    }
+    
+    public void getUserProfile(JsonHttpResponseHandler handler){
+        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token="+ authToken;
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        try {
+            client.get(url, handler);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUserProfile(Context context, JSONObject user, JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token="+ authToken;
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        try {
+            StringEntity se = new StringEntity(user.toString());
+            client.put(context, url, se, "application/json", jsonHttpResponseHandler);
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loadInfoFromJSON(JSONObject info) {

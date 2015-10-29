@@ -79,16 +79,6 @@
                 app:et_labelEnable="true"
                 app:et_labelTextColor="@color/title_text" />
 
-            <Button
-                android:id="@+id/choose_location"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_phone"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="@string/choose_location"
-                android:textColor="@color/button_text"
-                android:background="@color/button_background"/>
             <TextView
                 android:id="@+id/chosen_location"
                 android:layout_width="fill_parent"
@@ -101,20 +91,21 @@
 
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <Button
-                android:id="@+id/pet_submit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="10dp"
-                android:text="@string/profile_save"
-                android:textColor="@color/button_text"
-                android:background="@color/main_button_background"/>
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/pet_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:text="@string/profile_save"
+        android:textColor="@color/button_text"
+        android:background="@color/main_button_background"/>
 
 
 

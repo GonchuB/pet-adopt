@@ -65,6 +65,10 @@
 
     <string name="name_type_sep">-</string>
     <string name="results_title">Resultados</string>
+    <string name="profile_updated">Perfil actualizado</string>
+    <string name="something_wrong">Algo salio mal</string>
+    <string name="email_in_use">Email en uso!</string>
+    <string name="invalid_email">Email inválido</string>
     <string name="detail_show_map">Mostrar en Mapa</string>
     <string name="type_field">Tipo</string>
     <string name="age_field">Edad</string>
