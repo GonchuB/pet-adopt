@@ -41,7 +41,6 @@ public class User {
     private final static String USER_FB_ID = "user_fb_id";
     private final static String USER_FB_TOKEN = "user_fb_token";
     private final static String USER_AUTH_TOKEN = "user_auth_token";
-    private String id;
 
 
     public void setAuthToken(String authToken) {
