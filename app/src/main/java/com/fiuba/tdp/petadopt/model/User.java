@@ -87,7 +87,9 @@ public class User {
         SharedPreferences userData = currentContext.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userData.edit();
         editor.putBoolean(USER_PRESENT, true);
-        editor.putInt(USER_ID, id);
+        if (id != null){
+            editor.putInt(USER_ID, id);
+        }
         editor.putString(USER_FIRST_NAME, firstName);
         editor.putString(USER_LAST_NAME, lastName);
         editor.putString(USER_PHONE, phone);
