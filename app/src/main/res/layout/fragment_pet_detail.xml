@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
+
             <com.rey.material.widget.FloatingActionButton
                 android:id="@+id/adopt_pet"
                 android:layout_width="wrap_content"
@@ -322,10 +323,33 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/ask_question_layout"
+                android:id="@+id/report_pet_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/other_info_item"
+                android:paddingBottom="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/report_pet"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/report_pet"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/button_text"
+                    android:background="@color/button_background"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/ask_question_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/report_pet_layout"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"

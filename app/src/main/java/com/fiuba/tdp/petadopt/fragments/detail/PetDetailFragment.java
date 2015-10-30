@@ -1,6 +1,8 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
@@ -97,6 +99,32 @@ public class PetDetailFragment extends Fragment {
                 ft.commit();
             }
         });
+
+        Button reportPetButton = (Button) rootView.findViewById(R.id.report_pet);
+
+        reportPetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.sure_report)
+                        .setMessage(R.string.sure_report_message)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
         loadQuestions(rootView);
         return rootView;
     }
