@@ -42,7 +42,6 @@ import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.PetResultFragment;
 import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.model.User;
@@ -199,6 +198,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Pass the event to ActionBarDrawerToggle
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
+        if (item.getItemId() == R.id.advance_search_action) {
+            return goToAdvancedSearch();
+        }
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -344,6 +347,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showResults(body);
             }
         });
+    }
+
+    private boolean goToAdvancedSearch() {
+        setTitle(R.string.advance_search_title);
+        AdvancedSearchFragment fragment = new AdvancedSearchFragment();
+        fragment.setAdvancedSearchResultsDelegate(new AdvanceSearchResultsDelegate() {
+            @Override
+            public void resultsAvailable(JSONArray body) {
+                showResults(body);
+            }
+        });
+        return displayFragment(fragment);
     }
 
 

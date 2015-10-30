@@ -213,4 +213,6 @@ public class AdvancedSearchFragment extends Fragment {
     public void setAdvancedSearchResultsDelegate(AdvanceSearchResultsDelegate delegate) {
         this.delegate = delegate;
     }
+
+
 }
