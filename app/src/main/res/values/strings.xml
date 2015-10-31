@@ -109,6 +109,9 @@
     <string name="lost_or_adopt_hint">Tipo de publicación</string>
     <string name="adoption">Adopción</string>
     <string name="loss">Pérdida</string>
+    <string name="confirm_adoption_request">¿Desea enviar la solicitud de adopción?</string>
+    <string name="confirm_adoption_request_message">Confirmar</string>
+    <string name="reject_adoption_request_message">Cancelar</string>
 
 
 </resources>
