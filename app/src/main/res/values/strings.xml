@@ -106,6 +106,9 @@
     <string name="sure_report_message">Esta seguro de que quiere reportar esta publicacion?</string>
     <string name="mark_adoption_success">Se ha confirmado la adopción</string>
     <string name="mark_adoption_error">No se ha podido confirmar la adopción. Intentelo de nuevo más tarde</string>
+    <string name="lost_or_adopt_hint">Tipo de publicación</string>
+    <string name="adoption">Adopción</string>
+    <string name="loss">Pérdida</string>
 
 
 </resources>

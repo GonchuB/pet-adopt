@@ -13,7 +13,6 @@ import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.squareup.picasso.Picasso;
 
-import java.util.Date;
 import java.util.List;
 
 public class PetListItemAdapter extends ArrayAdapter<Pet> {
@@ -68,6 +67,14 @@ public class PetListItemAdapter extends ArrayAdapter<Pet> {
                     .into(imageView);
         } else {
             imageView.setImageResource(R.drawable.icon);
+        }
+
+        TextView publicationType = (TextView) rowView.findViewById(R.id.publication_type);
+        if (pets.get(position).getPublicationType() == Pet.PublicationType.ADOPTION){
+            publicationType.setText(R.string.adoption);
+        } else {
+            publicationType.setText(R.string.loss);
+            rowView.setBackgroundResource(R.color.pink_background);
         }
         return rowView;
     }
