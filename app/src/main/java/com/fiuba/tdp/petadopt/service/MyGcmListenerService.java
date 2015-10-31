@@ -32,9 +32,20 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
+        String type = data.getString("type");
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Type: " + type);
+
+        if (type == null) {
+            return;
+        }
+
+        String message = "";
+        if (type.equals("create_adoption")) {
+            message = getString(R.string.adoption_request_notification);
+        } else if (type.equals("create_lost")) {
+            message = getString(R.string.find_notification);
+        }
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -76,7 +87,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setSmallIcon(R.drawable.notif_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icon))
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.adoption_request_notification))
+                .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
