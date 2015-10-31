@@ -40,341 +40,207 @@
                 app:fab_iconSrc="@drawable/white_heart"
                 app:fab_radius="30dp" />
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/name_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/horizontal_gridView"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/adopt_pet"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/new_pet_name_hint"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/name"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/new_pet_name_hint"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/type_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/type"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/name"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/type_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/type"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/type_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/age_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/age"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/type_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/type"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/age_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/age"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/age_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/gender_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/gender"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/age_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/age"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/gender_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/gender"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/gender_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/colors_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/colors"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/gender_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/gender"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/colors_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/colors"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/colors_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/description_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/description"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/colors_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/colors"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/description_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/description"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/description_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/show_map_item"
+            <Button
+                android:id="@+id/show_map_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/description_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
-                <Button
-                    android:id="@+id/show_map_button"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/detail_show_map"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp"
-                    android:textColor="@color/button_text"
-                    android:background="@color/button_background"/>
+                android:layout_below="@id/description"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/button_background"
+                android:padding="10dp"
+                android:text="@string/detail_show_map"
+                android:textColor="@color/button_text" />
 
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/video_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/videos"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/show_map_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/show_map_button"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/videos_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/videos"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/videos_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/other_info_item"
+            <com.rey.material.widget.EditText
+                android:id="@+id/vaccines"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/video_item"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@id/videos"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/vaccine_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/vaccines"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/vaccine_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text" />
 
-                <com.rey.material.widget.EditText
-                    android:id="@+id/pets_relationship"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_below="@+id/vaccines"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/pet_relationship_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text"
-                    android:layout_marginTop="2dp" />
-
-                <com.rey.material.widget.EditText
-                    android:id="@+id/kids_relationship"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_below="@+id/pets_relationship"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/kids_relationship_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text"
-                    android:layout_marginTop="-18dp" />
-
-                <com.rey.material.widget.EditText
-                    android:id="@+id/transit"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_below="@+id/kids_relationship"
-                    android:layout_toEndOf="@id/image"
-                    android:hint="@string/transit_field"
-                    android:textSize="16sp"
-                    app:et_dividerHeight="0dp"
-                    app:et_labelEnable="true"
-                    app:et_labelTextColor="@color/title_text"
-                    android:layout_marginTop="2dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/report_pet_layout"
+            <com.rey.material.widget.EditText
+                android:id="@+id/pets_relationship"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/other_info_item"
-                android:paddingBottom="0dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
-                <Button
-                    android:id="@+id/report_pet"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:text="@string/report_pet"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp"
-                    android:textColor="@color/button_text"
-                    android:background="@color/button_background"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/ask_question_layout"
+                android:layout_below="@+id/vaccines"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/pet_relationship_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+
+            <com.rey.material.widget.EditText
+                android:id="@+id/kids_relationship"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/report_pet_layout"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="10dp">
+                android:layout_below="@+id/pets_relationship"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/kids_relationship_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
 
-                <Button
-                    android:id="@+id/ask_question"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:text="@string/ask_questions"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:padding="10dp"
-                    android:textColor="@color/button_text"
-                    android:background="@color/button_background"
-                    />
-            </RelativeLayout>
+            <com.rey.material.widget.EditText
+                android:id="@+id/transit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kids_relationship"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/image"
+                android:hint="@string/transit_field"
+                android:textSize="16sp"
+                app:et_dividerHeight="0dp"
+                app:et_labelEnable="true"
+                app:et_labelTextColor="@color/title_text" />
+
+            <Button
+                android:id="@+id/report_pet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/transit"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:autoLink="web"
+                android:background="@color/button_background"
+                android:padding="10dp"
+                android:text="@string/report_pet"
+                android:textColor="@color/button_text"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/ask_question"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/report_pet"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:autoLink="web"
+                android:background="@color/button_background"
+                android:padding="10dp"
+                android:text="@string/ask_questions"
+                android:textColor="@color/button_text"
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:id="@+id/sample_question_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ask_question_layout"
+                android:layout_below="@+id/ask_question"
                 android:paddingBottom="5dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
@@ -417,16 +283,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/question_layout"
-                    android:layout_toEndOf="@id/image"
-                    android:text="@string/show_questions"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/image"
+                    android:background="@color/button_background"
                     android:padding="10dp"
+                    android:text="@string/show_questions"
                     android:textColor="@color/button_text"
-                    android:background="@color/button_background" />
+                    android:textSize="16sp" />
 
             </RelativeLayout>
+
         </RelativeLayout>
 
     </ScrollView>
