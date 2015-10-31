@@ -62,6 +62,7 @@ public class AddPetFragment extends Fragment {
     };
     private static int RESULT_LOAD_IMAGE = 1;
     private ArrayList<Uri> imageUris;
+    private CheckBox vaccionesCheckbox, petRelationshipCheckbox, kidsRelationshipCheckbox, transitCheckbox;
 
     public AddPetFragment() {
     }
@@ -74,6 +75,11 @@ public class AddPetFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_add_pet, container, false);
 
+
+        vaccionesCheckbox = (CheckBox)rootView.findViewById(R.id.pet_vaccinated);
+        petRelationshipCheckbox = (CheckBox)rootView.findViewById(R.id.pet_friendly);
+        kidsRelationshipCheckbox = (CheckBox)rootView.findViewById(R.id.pet_children_friendly);
+        transitCheckbox = (CheckBox)rootView.findViewById(R.id.pet_needs_transit_home);
         setUpPetFillingCallbacks(rootView);
 
         populateSpinner(rootView, R.id.lost_or_adopt, R.array.publication_type_array);
@@ -426,14 +432,22 @@ public class AddPetFragment extends Fragment {
         return status;
     }
 
-    private void setUpPetFillingCallbacks(View rootView) {
+    private void setUpPetFillingCallbacks(final View rootView) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.lost_or_adopt);
         spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner spinner, View view, int i, long l) {
                 if (i == 0) {
                     pet.setPublicationType(Pet.PublicationType.ADOPTION);
+                    vaccionesCheckbox.setVisibility(View.VISIBLE);
+                    petRelationshipCheckbox.setVisibility(View.VISIBLE);
+                    kidsRelationshipCheckbox.setVisibility(View.VISIBLE);
+                    transitCheckbox.setVisibility(View.VISIBLE);
                 } else {
+                    vaccionesCheckbox.setVisibility(View.GONE);
+                    petRelationshipCheckbox.setVisibility(View.GONE);
+                    kidsRelationshipCheckbox.setVisibility(View.GONE);
+                    transitCheckbox.setVisibility(View.GONE);
                     pet.setPublicationType(Pet.PublicationType.LOSS);
                 }
             }
