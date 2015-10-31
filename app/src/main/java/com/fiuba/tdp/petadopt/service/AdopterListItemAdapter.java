@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.model.Adopter;
+import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +25,16 @@ public class AdopterListItemAdapter extends ArrayAdapter<Adopter> {
 
     private final Activity context;
     private final List<Adopter> adopters;
+    private AdopterConfirmDelegate delegate;
 
-    public AdopterListItemAdapter(Activity context,
-                                  List<Adopter> adopters) {
+    public AdopterListItemAdapter(Activity context, List<Adopter> adopters) {
         super(context, R.layout.pet_list_item, adopters);
         this.context = context;
         this.adopters = adopters;
+    }
 
+    public void setAdopterConfirmDelegate(AdopterConfirmDelegate delegate) {
+        this.delegate = delegate;
     }
 
     @Override
@@ -50,6 +55,15 @@ public class AdopterListItemAdapter extends ArrayAdapter<Adopter> {
                 DateUtils.MINUTE_IN_MILLIS, 0);
 
         ago.setText(agoTxt);
+
+        FloatingActionButton selectLocationButton = (FloatingActionButton) rowView.findViewById(R.id.confirm_adoption);
+        final int pos = position;
+        selectLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delegate.confirmAdoption(adopters.get(pos));
+            }
+        });
 
         return rowView;
     }

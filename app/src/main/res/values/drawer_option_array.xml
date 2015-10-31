@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="drawer_option_array">
-        <item>Home</item>
+        <item>Inicio</item>
         <item>Agregar una mascota</item>
-        <item>Mis Mascotas</item>
-        <item>Mis Mascotas Solicitadas</item>
+        <item>Mis publicaciones</item>
+        <item>Mis solicitudes</item>
         <item>Perfil</item>
-        <item>Logout</item>
+        <item>Cerrar Sesión</item>
     </string-array>
 </resources>

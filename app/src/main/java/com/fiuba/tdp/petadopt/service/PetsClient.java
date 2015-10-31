@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
+import com.fiuba.tdp.petadopt.model.Adopter;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.User;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -166,6 +167,12 @@ public class PetsClient extends HttpClient {
 
     public void askForAdoption(String petId, AsyncHttpResponseHandler handler) {
         String url = getApiUrl("/pets/" + petId + "/adoption_requests.json");
+        RequestParams params = new RequestParams();
+        client.post(url, params, handler);
+    }
+
+    public void markAsAdopted(String petId, String adopterId, AsyncHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + petId + "/adoption_requests/" + adopterId + "/accept.json");
         RequestParams params = new RequestParams();
         client.post(url, params, handler);
     }
