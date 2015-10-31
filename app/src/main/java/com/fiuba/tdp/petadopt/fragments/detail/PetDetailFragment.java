@@ -186,7 +186,13 @@ public class PetDetailFragment extends Fragment {
         askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmDialogFragment dialog = new ConfirmDialogFragment(getString(R.string.confirm_adoption_request), new ConfirmDialogDelegate() {
+                String dialogMessage;
+                if (pet.getPublicationType() == Pet.PublicationType.ADOPTION) {
+                    dialogMessage = getString(R.string.confirm_adoption_request);
+                } else {
+                    dialogMessage = getString(R.string.confirm_find_notification);
+                }
+                ConfirmDialogFragment dialog = new ConfirmDialogFragment(dialogMessage, new ConfirmDialogDelegate() {
                     @Override
                     public void onConfirm(DialogInterface dialog, int id) {
                         if (User.user().missingInfo()) {
