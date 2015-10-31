@@ -2,6 +2,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
@@ -49,7 +50,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image"
         android:id="@+id/ago"
         android:layout_alignParentTop="true"
         android:textStyle="bold"
@@ -57,7 +57,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="false"
         android:layout_marginTop="10dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:layout_marginRight="20dp" />
+
+    <com.rey.material.widget.FloatingActionButton
+        android:id="@+id/confirm_adoption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_backgroundColor="@color/button_background"
+        app:fab_radius="20dp"
+        app:fab_iconSrc="@drawable/ic_check"
+        app:fab_elevation="2dp"
+        android:layout_alignTop="@+id/ago"
+        android:layout_alignEnd="@+id/ago"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

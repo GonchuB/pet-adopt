@@ -104,6 +104,8 @@
     <string name="report_pet">Reportar Publicacion</string>
     <string name="sure_report">Reportar publicacion</string>
     <string name="sure_report_message">Esta seguro de que quiere reportar esta publicacion?</string>
+    <string name="mark_adoption_success">Se ha confirmado la adopción</string>
+    <string name="mark_adoption_error">No se ha podido confirmar la adopción. Intentelo de nuevo más tarde</string>
 
 
 </resources>

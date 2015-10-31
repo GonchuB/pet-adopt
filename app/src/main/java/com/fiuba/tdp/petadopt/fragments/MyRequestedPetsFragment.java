@@ -19,6 +19,7 @@ public class MyRequestedPetsFragment extends PetResultFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedId = pets.get(position).getId();
                 final AdopterResultFragment adopterResultFragment = new AdopterResultFragment();
+                adopterResultFragment.setPet(pets.get(position));
                 PetsClient client = PetsClient.instance();
                 client.getAdoptersForPet(selectedId, new JsonHttpResponseHandler() {
                     @Override
