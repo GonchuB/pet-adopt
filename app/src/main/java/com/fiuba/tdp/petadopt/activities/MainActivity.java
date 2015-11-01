@@ -34,10 +34,14 @@ import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.PetResultFragment;
 import com.fiuba.tdp.petadopt.fragments.ProfileFragment;
+import com.fiuba.tdp.petadopt.fragments.detail.PetDetailFragment;
+import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
+import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
+import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.fiuba.tdp.petadopt.service.PetsClient;
@@ -50,6 +54,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -163,9 +169,37 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
 
-            fetchPets();
+            Intent i = getIntent();
+            String type = i.getStringExtra("type");
+            if (type == null) {
+                fetchPets();
+            } else {
+                String petId = i.getStringExtra("pet_id");
+                String userId = i.getStringExtra("user_id");
+                startFromNotification(type, petId, userId);
+            }
             created = true;
         }
+    }
+
+    private void startFromNotification(String type, String petId, String userId) {
+        client = PetsClient.instance();
+        client.setAuth_token(auth_token);
+        client.getPet(petId, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Pet pet = new Pet();
+                try {
+                    pet.loadFromJSON(response);
+                    PetDetailFragment petDetail = new PetDetailFragment();
+                    petDetail.setPet(pet);
+                    displayFragment(petDetail, 0);
+                    setTitle(pet.getName());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void promptLogin() {
@@ -403,7 +437,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.getBackStackEntryCount() != 0) {
-                fragmentManager.popBackStack();
+                fragmentManager.popBackStackImmediate();
                 if (fragmentManager.getBackStackEntryCount() == 1) {
                     setTitle(currentTitle);
                 }

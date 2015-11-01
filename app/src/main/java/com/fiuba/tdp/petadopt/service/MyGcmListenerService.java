@@ -33,6 +33,8 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String type = data.getString("type");
+        String petId = data.getString("pet_id");
+        String userId = data.getString("user_id");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Type: " + type);
 
@@ -41,10 +43,19 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         String message = "";
-        if (type.equals("create_adoption")) {
-            message = getString(R.string.adoption_request_notification);
-        } else if (type.equals("create_lost")) {
-            message = getString(R.string.find_notification);
+        switch (type) {
+            case "create_adoption":
+                message = getString(R.string.adoption_request_notification);
+                break;
+            case "create_lost":
+                message = getString(R.string.find_notification);
+                break;
+            case "accept_adoption":
+                message = getString(R.string.accepted_own_adoption_request);
+                break;
+            case "accept_lost":
+                message = getString(R.string.accepted_own_lost_notification);
+                break;
         }
 
         if (from.startsWith("/topics/")) {
@@ -65,7 +76,12 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        bundle.putString("pet_id", petId);
+        bundle.putString("user_id", userId);
+        sendNotification(message, bundle);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -75,9 +91,10 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String message, Bundle bundle) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtras(bundle);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
