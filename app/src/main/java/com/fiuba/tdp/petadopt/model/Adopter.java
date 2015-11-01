@@ -14,6 +14,7 @@ import java.util.TimeZone;
 public class Adopter {
 
     private String id;
+    private String userId;
     private String fullName;
     private String firstName;
     private String lastName;
@@ -28,7 +29,8 @@ public class Adopter {
 
     public void loadFromJSON(JSONObject adoptantJSON) throws JSONException {
         JSONObject userObject = adoptantJSON.getJSONObject("user");
-        this.id = userObject.getString("id");
+        this.id = adoptantJSON.getString("id");
+        this.userId = userObject.getString("id");
         this.fullName = userObject.getString("full_name");
         this.firstName = userObject.getString("first_name");
         this.lastName = userObject.getString("last_name");
@@ -73,5 +75,9 @@ public class Adopter {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

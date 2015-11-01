@@ -114,6 +114,8 @@
     <string name="reject_adoption_request_message">Cancelar</string>
     <string name="confirm_find_notification">¿Desea notificar que piensa que ha encontrado esta mascota?</string>
     <string name="find_notification">Alguien cree que encontró tu mascota</string>
+    <string name="accepted_own_adoption_request">Han aprobado tu solicitud de adopción</string>
+    <string name="accepted_own_lost_notification">Han confirmado la mascota que encontraste</string>
 
 
 </resources>
