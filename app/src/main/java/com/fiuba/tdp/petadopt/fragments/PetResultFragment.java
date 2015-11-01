@@ -38,8 +38,8 @@ public class PetResultFragment extends Fragment {
                 getActivity().setTitle(pets.get(position).getName());
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.add(R.id.content_frame, petDetailFragment, "Choose location");
-                ft.addToBackStack(null);
+                ft.add(R.id.content_frame, petDetailFragment, "PetDetail");
+                ft.addToBackStack("PetDetail");
                 ft.commit();
             }
         };

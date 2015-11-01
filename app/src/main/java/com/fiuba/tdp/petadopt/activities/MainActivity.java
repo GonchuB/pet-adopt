@@ -2,14 +2,11 @@ package com.fiuba.tdp.petadopt.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,8 +15,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.support.v7.widget.SearchView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,15 +30,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.fragments.HomeFragment;
-import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
-import com.fiuba.tdp.petadopt.fragments.ProfileFragment;
-import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
-import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
-import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.MyPetsFragment;
+import com.fiuba.tdp.petadopt.fragments.MyRequestedPetsFragment;
 import com.fiuba.tdp.petadopt.fragments.PetResultFragment;
-import com.fiuba.tdp.petadopt.fragments.SettingsFragment;
+import com.fiuba.tdp.petadopt.fragments.ProfileFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
+import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
 import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.model.User;
@@ -76,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SearchView mSearchView;
     private Boolean atHome = true;
     private ProgressDialog progress;
+    private Integer currentPosition;
+    private String currentTitle;
 
 
     @Override
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (User.user().isLoggedIn()) {
             auth_token = User.user().getAuthToken();
             setupActivity();
-        } else{
+        } else {
             promptLogin();
         }
 
@@ -119,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         super.onResume();
-        if (User.user().isLoggedIn()){
+        if (User.user().isLoggedIn()) {
             auth_token = User.user().getAuthToken();
             setupActivity();
-        } else{
+        } else {
             finish();
         }
 
@@ -199,7 +195,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // If it returns true, then it has handled
         // the nav drawer indicator touch event
         if (item.getItemId() == R.id.advance_search_action) {
-            return goToAdvancedSearch();
+            goToAdvancedSearch();
+            return true;
         }
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -225,10 +222,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .title("Marker"));
     }
 
+    public void goBackToHome() {
+        fetchPets();
+        setTitle(optionTitles[0]);
+        displayFragment(homeFragment, 0);
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
-        public void onItemClick(AdapterView parent, View view, int position,long id) {
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
 
             // String text= "menu click... should be implemented";
             // Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
@@ -238,9 +241,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         private void displayView(int position) {
             // update the main content by replacing fragments
             Fragment fragment = null;
+            currentPosition = position;
             switch (position) {
                 case 0:
-                    goBackToHome();
+                    fetchPets();
                     fragment = homeFragment;
                     break;
                 case 1:
@@ -248,12 +252,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
                 case 2:
                     MyPetsFragment myPetsFragment = new MyPetsFragment();
-                    goToMyPetsView(myPetsFragment);
+                    goToMyPetsView(myPetsFragment, position);
                     fragment = myPetsFragment;
                     break;
                 case 3:
                     MyRequestedPetsFragment myRequestedPetsFragment = new MyRequestedPetsFragment();
-                    goToMyRequestedPetsView(myRequestedPetsFragment);
+                    goToMyRequestedPetsView(myRequestedPetsFragment, position);
                     fragment = myRequestedPetsFragment;
                     break;
                 case 4:
@@ -266,32 +270,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
             }
 
-            if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment).commit();
-
-                // Highlight the selected item, update the title, and close the drawer
-                mDrawerList.setItemChecked(position, true);
-                mDrawerList.setSelection(position);
-                setTitle(optionTitles[position]);
-                mDrawerLayout.closeDrawer(mDrawerList);
+            if (fragment != null && !fragment.isAdded()) {
+                displayFragment(fragment, position);
             } else {
                 // error in creating fragment
-                Log.e("MainActivity", "Error in creating fragment");
+                Log.e("MainActivity", "Error in creating fragment or fragment was already added");
             }
         }
     }
 
-    private boolean displayFragment(Fragment fragment) {
+    private void displayFragment(Fragment fragment, Integer position) {
         atHome = fragment instanceof HomeFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
-
         this.currentFragment = fragment;
-
-        return true;
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerList.setSelection(position);
+        currentTitle = optionTitles[position];
+        setTitle(currentTitle);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     private void fetchPets() {
@@ -307,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private void goToMyPetsView(final MyPetsFragment fragment) {
+    private void goToMyPetsView(final MyPetsFragment fragment, int position) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
         progress.show();
@@ -322,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private void goToMyRequestedPetsView(final MyRequestedPetsFragment fragment) {
+    private void goToMyRequestedPetsView(final MyRequestedPetsFragment fragment, int position) {
         client = PetsClient.instance();
         client.setAuth_token(auth_token);
         progress.show();
@@ -349,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private boolean goToAdvancedSearch() {
+    private void goToAdvancedSearch() {
         setTitle(R.string.advance_search_title);
         AdvancedSearchFragment fragment = new AdvancedSearchFragment();
         fragment.setAdvancedSearchResultsDelegate(new AdvanceSearchResultsDelegate() {
@@ -358,17 +357,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showResults(body);
             }
         });
-        return displayFragment(fragment);
-    }
-
-
-    public void goBackToHome() {
-        fetchPets();
-        displayFragment(homeFragment);
-        mDrawerList.setItemChecked(0, true);
-        mDrawerList.setSelection(0);
-        setTitle(optionTitles[0]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        displayFragment(fragment, currentPosition);
     }
 
 
@@ -392,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showResults(JSONArray body) {
         PetResultFragment fragment = new PetResultFragment();
         fragment.setResults(body);
-        displayFragment(fragment);
+        displayFragment(fragment, currentPosition);
         setTitle(R.string.results_title);
     }
 
@@ -411,10 +400,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onBackPressed() {
         if (!mSearchView.isIconified()) {
             mSearchView.setIconified(true);
-        } else if (!atHome) {
-            goBackToHome();
         } else {
-            super.onBackPressed();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            if (fragmentManager.getBackStackEntryCount() != 0) {
+                fragmentManager.popBackStack();
+                if (fragmentManager.getBackStackEntryCount() == 1) {
+                    setTitle(currentTitle);
+                }
+            } else {
+                if (!atHome) {
+                    goBackToHome();
+                }
+            }
         }
     }
 
