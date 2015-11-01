@@ -444,6 +444,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             } else {
                 if (!atHome) {
                     goBackToHome();
+                } else {
+                    super.onBackPressed();
                 }
             }
         }

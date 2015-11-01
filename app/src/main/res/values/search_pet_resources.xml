@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="search_publication_type_array">
+        <item>Cualquiera</item>
+        <item>Solicitud de adopción</item>
+        <item>Perdí mi mascota</item>
+    </string-array>
     <string-array name="search_pet_type_array">
         <item>Cualquiera</item>
         <item>Gato</item>

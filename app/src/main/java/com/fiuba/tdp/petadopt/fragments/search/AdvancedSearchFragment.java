@@ -46,6 +46,7 @@ public class AdvancedSearchFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
 
+        populateSpinner(rootView, R.id.lost_or_adopt, R.array.search_publication_type_array);
         populateSpinner(rootView, R.id.pet_type, R.array.search_pet_type_array);
         populateSpinner(rootView, R.id.pet_gender, R.array.search_pet_gender_array);
         populateSpinner(rootView, R.id.pet_main_color, R.array.search_pet_color_array);
@@ -137,7 +138,20 @@ public class AdvancedSearchFragment extends Fragment {
     }
 
     private void setUpPetFillingCallbacks(View rootView) {
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.pet_type);
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.lost_or_adopt);
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner spinner, View view, int i, long l) {
+                if (i == 1) {
+                    petFilter.put("publication_type", "adoption");
+                } else if (i == 2) {
+                    petFilter.put("publication_type", "lost");
+                } else if (i == 0) {
+                    petFilter.remove("publication_type");
+                }
+            }
+        });
+        spinner = (Spinner) rootView.findViewById(R.id.pet_type);
         spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(Spinner spinner, View view, int i, long l) {

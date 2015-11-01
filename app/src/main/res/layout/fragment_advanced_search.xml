@@ -18,13 +18,30 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
+            <com.rey.material.widget.Spinner
+                android:id="@+id/lost_or_adopt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lost_or_adopt_hint"
+                app:spn_label="@string/lost_or_adopt_hint"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:spinnerMode="dropdown"
+                app:spn_labelEnable="true"
+                app:spn_labelTextColor="@color/title_text"
+                app:spn_arrowColor="@color/title_text"
+                app:spn_arrowPadding="10dp"
+                app:spn_arrowSize="5sp"
+                app:spn_dividerColor="@color/title_text"
+                app:spn_dividerHeight="1dp"/>
+
             <com.rey.material.widget.EditText
                 android:id="@+id/pet_age"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/pet_name"
-                android:layout_alignStart="@+id/pet_name"
-                android:layout_below="@+id/pet_name"
+                android:layout_alignLeft="@+id/lost_or_adopt"
+                android:layout_alignStart="@+id/lost_or_adopt"
+                android:layout_below="@+id/lost_or_adopt"
                 android:layout_marginTop="5dp"
                 android:hint="@string/new_pet_age_hint"
                 android:inputType="numberDecimal"
