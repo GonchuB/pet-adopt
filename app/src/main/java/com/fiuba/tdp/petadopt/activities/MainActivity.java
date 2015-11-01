@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void goBackToHome() {
         fetchPets();
-        setTitle(optionTitles[0]);
         displayFragment(homeFragment, 0);
+        setTitle(optionTitles[0]);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -438,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.getBackStackEntryCount() != 0) {
                 fragmentManager.popBackStackImmediate();
-                if (fragmentManager.getBackStackEntryCount() == 1) {
+                if (fragmentManager.getBackStackEntryCount() == 0 || fragmentManager.getBackStackEntryCount() == 1) {
                     setTitle(currentTitle);
                 }
             } else {
