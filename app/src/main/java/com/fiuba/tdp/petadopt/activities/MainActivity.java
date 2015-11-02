@@ -446,6 +446,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     goBackToHome();
                 } else {
                     super.onBackPressed();
+                    setTitle(currentTitle);
                 }
             }
         }

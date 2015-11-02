@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.model.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import android.widget.Button;
@@ -85,6 +86,8 @@ public class ProfileFragment extends Fragment {
                        Toast.makeText(getActivity(), R.string.profile_updated,
                                Toast.LENGTH_LONG).show();
                        progress.dismiss();
+                       MainActivity activity = (MainActivity) getActivity();
+                       activity.goBackToHome();
                    }
                    @Override
                    public void onFailure(int code, Header[] headers, Throwable t, JSONObject body){
