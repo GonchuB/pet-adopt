@@ -16,6 +16,7 @@ public class HttpClient {
     }
     public String getApiUrl(String relativeUrl) {
         if (base_url == null) {
+            base_url = BuildConfig.BASE_ENDPOINT;
             return BuildConfig.BASE_ENDPOINT + relativeUrl;
         } else {
             return base_url + relativeUrl;

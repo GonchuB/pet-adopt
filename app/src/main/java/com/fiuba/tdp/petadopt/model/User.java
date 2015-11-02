@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.fiuba.tdp.petadopt.BuildConfig;
+import com.fiuba.tdp.petadopt.service.HttpClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -128,7 +129,7 @@ public class User {
     }
 
     public void getUserProfile(JsonHttpResponseHandler handler) {
-        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token=" + authToken;
+        String url = HttpClient.base_url + "/users/profile.json" + "?user_token=" + authToken;
         AsyncHttpClient client = new AsyncHttpClient();
 
         try {
@@ -140,7 +141,7 @@ public class User {
     }
 
     public void updateUserProfile(Context context, JSONObject user, final JsonHttpResponseHandler jsonHttpResponseHandler) {
-        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token=" + authToken;
+        String url = HttpClient.base_url + "/users/profile.json" + "?user_token=" + authToken;
         AsyncHttpClient client = new AsyncHttpClient();
 
         try {
