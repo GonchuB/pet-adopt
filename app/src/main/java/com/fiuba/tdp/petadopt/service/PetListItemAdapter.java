@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PetListItemAdapter extends ArrayAdapter<Pet> {
 
     private final Activity context;
@@ -38,7 +40,12 @@ public class PetListItemAdapter extends ArrayAdapter<Pet> {
         TextView colors = (TextView) rowView.findViewById(R.id.colors);
         TextView ago = (TextView) rowView.findViewById(R.id.ago);
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.image);
+        CircleImageView imageView = (CircleImageView) rowView.findViewById(R.id.image);
+        if (pets.get(position).getPublished()) {
+            imageView.setBorderColorResource(R.color.black);
+        } else {
+            imageView.setBorderColorResource(R.color.red);
+        }
         name.setText(pets.get(position).getName());
         if (pets.get(position).getType() == Pet.Type.Cat) {
             type.setText(R.string.cat_string);
@@ -70,7 +77,7 @@ public class PetListItemAdapter extends ArrayAdapter<Pet> {
         }
 
         TextView publicationType = (TextView) rowView.findViewById(R.id.publication_type);
-        if (pets.get(position).getPublicationType() == Pet.PublicationType.ADOPTION){
+        if (pets.get(position).getPublicationType() == Pet.PublicationType.ADOPTION) {
             publicationType.setText(R.string.adoption);
         } else {
             publicationType.setText(R.string.loss);

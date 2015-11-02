@@ -193,98 +193,107 @@ public class PetDetailFragment extends Fragment {
 
 
     private void setAdoptionButton() {
-        if (User.user().ownsPet(pet)) {
+        if (!pet.getPublished()){
             askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final AdopterResultFragment adopterResultFragment = new AdopterResultFragment();
-                    adopterResultFragment.setPet(pet);
-                    PetsClient client = PetsClient.instance();
-                    progress = new ProgressDialog(getActivity());
-                    progress.setTitle(R.string.loading);
-                    progress.show();
-                    client.getAdoptersForPet(pet.getId(), new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int code, Header[] headers, JSONArray body) {
-                            progress.dismiss();
-                            adopterResultFragment.setResults(body);
-                            adopterResultFragment.onStart();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            progress.dismiss();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            progress.dismiss();
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            progress.dismiss();
-                        }
-                    });
-                    getActivity().setTitle(pet.getName() + " - " + getActivity().getString(R.string.requesters_title));
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    ft.add(R.id.content_frame, adopterResultFragment, "Adopter Result Fragment");
-                    ft.addToBackStack(null);
-                    ft.commit();
+                    Toast.makeText(getActivity(), R.string.pet_already_adopted, Toast.LENGTH_LONG).show();
                 }
             });
         } else {
-            askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String dialogMessage;
-                    if (pet.getPublicationType() == Pet.PublicationType.ADOPTION) {
-                        dialogMessage = getString(R.string.confirm_adoption_request);
-                    } else {
-                        dialogMessage = getString(R.string.confirm_find_notification);
-                    }
-                    ConfirmDialogFragment dialog = new ConfirmDialogFragment(dialogMessage, new ConfirmDialogDelegate() {
-                        @Override
-                        public void onConfirm(DialogInterface dialog, int id) {
-                            if (User.user().missingInfo()) {
-                                Toast.makeText(getActivity(), R.string.user_missing_info, Toast.LENGTH_LONG).show();
-                            } else {
-                                PetsClient client = PetsClient.instance();
-                                progress.show();
-                                client.askForAdoption(pet.getId(), new AsyncHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                        progress.dismiss();
-                                        Toast.makeText(getActivity(), R.string.ask_for_adoption_success, Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                        Toast.makeText(getActivity(), R.string.ask_for_adoption_error, Toast.LENGTH_LONG).show();
-                                    }
-                                });
+            if (User.user().ownsPet(pet)) {
+                askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final AdopterResultFragment adopterResultFragment = new AdopterResultFragment();
+                        adopterResultFragment.setPet(pet);
+                        PetsClient client = PetsClient.instance();
+                        progress = new ProgressDialog(getActivity());
+                        progress.setTitle(R.string.loading);
+                        progress.show();
+                        client.getAdoptersForPet(pet.getId(), new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int code, Header[] headers, JSONArray body) {
+                                progress.dismiss();
+                                adopterResultFragment.setResults(body);
+                                adopterResultFragment.onStart();
                             }
-                        }
 
-                        @Override
-                        public void onReject(DialogInterface dialog, int id) {
-                            Log.d("RequestAdoptionDialog", "Rejected");
-                        }
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                progress.dismiss();
+                            }
 
-                        @Override
-                        public String getConfirmMessage() {
-                            return getString(R.string.confirm_adoption_request_message);
-                        }
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                progress.dismiss();
+                            }
 
-                        @Override
-                        public String getRejectMessage() {
-                            return getString(R.string.reject_adoption_request_message);
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                progress.dismiss();
+                            }
+                        });
+                        getActivity().setTitle(pet.getName() + " - " + getActivity().getString(R.string.requesters_title));
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        ft.add(R.id.content_frame, adopterResultFragment, "Adopter Result Fragment");
+                        ft.addToBackStack(null);
+                        ft.commit();
+                    }
+                });
+            } else {
+                askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String dialogMessage;
+                        if (pet.getPublicationType() == Pet.PublicationType.ADOPTION) {
+                            dialogMessage = getString(R.string.confirm_adoption_request);
+                        } else {
+                            dialogMessage = getString(R.string.confirm_find_notification);
                         }
-                    });
-                    dialog.show(getFragmentManager(), "RequestAdoptionDialog");
-                }
-            });
+                        ConfirmDialogFragment dialog = new ConfirmDialogFragment(dialogMessage, new ConfirmDialogDelegate() {
+                            @Override
+                            public void onConfirm(DialogInterface dialog, int id) {
+                                if (User.user().missingInfo()) {
+                                    Toast.makeText(getActivity(), R.string.user_missing_info, Toast.LENGTH_LONG).show();
+                                } else {
+                                    PetsClient client = PetsClient.instance();
+                                    progress.show();
+                                    client.askForAdoption(pet.getId(), new AsyncHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                            progress.dismiss();
+                                            Toast.makeText(getActivity(), R.string.ask_for_adoption_success, Toast.LENGTH_LONG).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                            Toast.makeText(getActivity(), R.string.ask_for_adoption_error, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onReject(DialogInterface dialog, int id) {
+                                Log.d("RequestAdoptionDialog", "Rejected");
+                            }
+
+                            @Override
+                            public String getConfirmMessage() {
+                                return getString(R.string.confirm_adoption_request_message);
+                            }
+
+                            @Override
+                            public String getRejectMessage() {
+                                return getString(R.string.reject_adoption_request_message);
+                            }
+                        });
+                        dialog.show(getFragmentManager(), "RequestAdoptionDialog");
+                    }
+                });
+            }
         }
     }
 

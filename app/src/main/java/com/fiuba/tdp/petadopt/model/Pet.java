@@ -379,6 +379,14 @@ public class Pet {
         this.publicationType = publicationType;
     }
 
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
+    }
+
 
     public enum Type {
         Cat,
