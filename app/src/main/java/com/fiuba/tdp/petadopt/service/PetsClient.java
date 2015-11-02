@@ -84,13 +84,14 @@ public class PetsClient extends HttpClient {
         User user = User.user();
         RequestParams params = new RequestParams();
         params.add("user_id", String.valueOf(user.getId()));
+        params.add("published", String.valueOf(false));
         client.get(url, params, handler);
     }
 
     public void getMyRequestedPets(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         RequestParams params = new RequestParams();
-        params.add("requested_by_me", String.valueOf(true));
+        params.add("requested_by_me", String.valueOf(true));;
         client.get(url, params, handler);
     }
 
