@@ -46,7 +46,6 @@ import java.util.ArrayList;
 
 public class PetDetailFragment extends Fragment {
     private Pet pet;
-    private Boolean comingFromMyPetsScreen = false;
     private HorizontalGridView mHorizontalGridView;
     private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
     private ProgressDialog progress;
@@ -137,14 +136,9 @@ public class PetDetailFragment extends Fragment {
     private void updateViewsForOwnership(View rootView) {
         askQuestionButton = (Button) rootView.findViewById(R.id.ask_question);
         askAdoptionButton = (FloatingActionButton) rootView.findViewById(R.id.adopt_pet);
+        askAdoptionButton.setVisibility(View.VISIBLE);
         if ((pet != null) && User.user().ownsPet(pet)) {
-            if (!comingFromMyPetsScreen) {
-                askAdoptionButton.setVisibility(View.GONE);
-            } else {
-                askAdoptionButton.setVisibility(View.VISIBLE);
-            }
             askQuestionButton.setVisibility(View.GONE);
-
         }
     }
 
@@ -199,7 +193,7 @@ public class PetDetailFragment extends Fragment {
 
 
     private void setAdoptionButton() {
-        if (comingFromMyPetsScreen) {
+        if (User.user().ownsPet(pet)) {
             askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -434,9 +428,6 @@ public class PetDetailFragment extends Fragment {
         loadQuestions(this.rootView);
     }
 
-    public void setComingFromMyPetsScreen(Boolean comingFromMyPetsScreen) {
-        this.comingFromMyPetsScreen = comingFromMyPetsScreen;
-    }
 
 
     private class HorizontalGridViewAdapter extends RecyclerView.Adapter {

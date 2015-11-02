@@ -13,7 +13,6 @@ public class MyPetsFragment extends PetResultFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PetDetailFragment petDetailFragment = new PetDetailFragment();
-                petDetailFragment.setComingFromMyPetsScreen(true);
                 petDetailFragment.setPet(pets.get(position));
                 getActivity().setTitle(pets.get(position).getName());
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
