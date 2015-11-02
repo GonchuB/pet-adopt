@@ -7,6 +7,7 @@ import com.fiuba.tdp.petadopt.BuildConfig;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONObject;
 
@@ -60,34 +61,34 @@ public class User {
         return facebookToken;
     }
 
-    private User(){
+    private User() {
     }
 
-    public static User user(){
+    public static User user() {
         if (user == null) {
             user = new User();
             SharedPreferences userData = currentContext.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
             boolean userPresent = userData.getBoolean(USER_PRESENT, false);
             if (userPresent) {
-                user.id = userData.getInt(USER_ID,0);
+                user.id = userData.getInt(USER_ID, 0);
                 user.firstName = userData.getString(USER_FIRST_NAME, "");
-                user.lastName = userData.getString(USER_LAST_NAME,"");
-                user.phone = userData.getString(USER_PHONE,"");
-                user.email = userData.getString(USER_EMAIL,"");
-                user.facebookId = userData.getString(USER_FB_ID,"");
-                user.facebookToken = userData.getString(USER_FB_TOKEN,"");
-                user.authToken = userData.getString(USER_AUTH_TOKEN,"");
+                user.lastName = userData.getString(USER_LAST_NAME, "");
+                user.phone = userData.getString(USER_PHONE, "");
+                user.email = userData.getString(USER_EMAIL, "");
+                user.facebookId = userData.getString(USER_FB_ID, "");
+                user.facebookToken = userData.getString(USER_FB_TOKEN, "");
+                user.authToken = userData.getString(USER_AUTH_TOKEN, "");
             }
             return user;
         }
         return user;
     }
 
-    public void save(){
+    public void save() {
         SharedPreferences userData = currentContext.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userData.edit();
         editor.putBoolean(USER_PRESENT, true);
-        if (id != null){
+        if (id != null) {
             editor.putInt(USER_ID, id);
         }
         editor.putString(USER_FIRST_NAME, firstName);
@@ -116,18 +117,18 @@ public class User {
         editor.apply();
     }
 
-    public Boolean isLoggedIn(){
+    public Boolean isLoggedIn() {
         return authToken != null;
     }
 
-    public void loggedInWithFacebook(String facebookId, String facebookToken){
+    public void loggedInWithFacebook(String facebookId, String facebookToken) {
         this.facebookId = facebookId;
         this.facebookToken = getFacebookToken();
         save();
     }
-    
-    public void getUserProfile(JsonHttpResponseHandler handler){
-        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token="+ authToken;
+
+    public void getUserProfile(JsonHttpResponseHandler handler) {
+        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token=" + authToken;
         AsyncHttpClient client = new AsyncHttpClient();
 
         try {
@@ -138,13 +139,33 @@ public class User {
         }
     }
 
-    public void updateUserProfile(Context context, JSONObject user, JsonHttpResponseHandler jsonHttpResponseHandler) {
-        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token="+ authToken;
+    public void updateUserProfile(Context context, JSONObject user, final JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String url = BuildConfig.BASE_ENDPOINT + "/users/profile.json" + "?user_token=" + authToken;
         AsyncHttpClient client = new AsyncHttpClient();
 
         try {
             StringEntity se = new StringEntity(user.toString());
-            client.put(context, url, se, "application/json", jsonHttpResponseHandler);
+            client.put(context, url, se, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int code, Header[] headers, JSONObject body) {
+                    try {
+                        JSONObject u = body.getJSONObject("user");
+                        firstName = u.getString("first_name");
+                        lastName = u.getString("last_name");
+                        email = u.getString("email");
+                        phone = u.getString("phone");
+                        save();
+                        jsonHttpResponseHandler.onSuccess(code, headers, body);
+                    } catch (JSONException e) {
+                        jsonHttpResponseHandler.onFailure(code, headers, e, body);
+                    }
+                }
+
+                @Override
+                public void onFailure(int code, Header[] headers, Throwable t, JSONObject body) {
+                    jsonHttpResponseHandler.onFailure(code, headers, t, body);
+                }
+            });
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
