@@ -64,7 +64,13 @@ public class AdopterResultFragment extends Fragment {
                     client.markAsAdopted(pet.getId(), adopter.getId(), new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            Toast.makeText(getContext(), R.string.mark_adoption_success, Toast.LENGTH_LONG).show();
+                            String message = "";
+                            if (pet.getPublicationType() == Pet.PublicationType.ADOPTION) {
+                                message = getString(R.string.mark_adoption_success);
+                            } else {
+                                message = getString(R.string.mark_find_success);
+                            }
+                            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
                             MainActivity a = (MainActivity) getActivity();
                             a.goBackToHome();
                         }
