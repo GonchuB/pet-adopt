@@ -32,6 +32,7 @@
     <color name="dark_text">#071926</color>
     <color name="light_text">#8db5a1</color>
     <color name="pink_background">#FFCCCC</color>
+    <color name="green_background">#AACC44</color>
     <color name="black">#000</color>
     <color name="red">#F00</color>
 

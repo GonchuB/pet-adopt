@@ -440,7 +440,7 @@ public class Pet {
     }
 
     public enum PublicationType {
-        ADOPTION("adoption"), LOSS("lost");
+        ADOPTION("adoption"), LOSS("lost"), FOUND("found");
 
         private String name;
 
@@ -449,11 +449,16 @@ public class Pet {
         }
 
         public static PublicationType fromString(String s) {
-            if (s != null && s.equals("lost")) {
-                return LOSS;
-            } else {
-                return ADOPTION;
+            if (s != null) {
+                if (s.equals("lost")) {
+                    return LOSS;
+                } else {
+                    if (s.equals("found")) {
+                        return FOUND;
+                    }
+                }
             }
+            return ADOPTION;
         }
 
         public String toString() {

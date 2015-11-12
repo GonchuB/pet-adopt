@@ -3,6 +3,7 @@
     <string-array name="publication_type_array">
         <item>Solicitud de adopción</item>
         <item>Perdí mi mascota</item>
+        <item>Encontré una mascota</item>
     </string-array>
 
     <string-array name="pet_type_array">

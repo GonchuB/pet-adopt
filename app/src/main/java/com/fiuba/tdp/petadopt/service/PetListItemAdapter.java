@@ -80,8 +80,13 @@ public class PetListItemAdapter extends ArrayAdapter<Pet> {
         if (pets.get(position).getPublicationType() == Pet.PublicationType.ADOPTION) {
             publicationType.setText(R.string.adoption);
         } else {
-            publicationType.setText(R.string.loss);
-            rowView.setBackgroundResource(R.color.pink_background);
+            if (pets.get(position).getPublicationType() == Pet.PublicationType.LOSS) {
+                publicationType.setText(R.string.loss);
+                rowView.setBackgroundResource(R.color.pink_background);
+            }else{
+                publicationType.setText(R.string.found);
+                rowView.setBackgroundResource(R.color.green_background);
+            }
         }
         return rowView;
     }

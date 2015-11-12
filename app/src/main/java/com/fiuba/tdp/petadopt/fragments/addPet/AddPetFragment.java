@@ -421,6 +421,7 @@ public class AddPetFragment extends Fragment {
         }
         LatLng location = pet.getLocation();
         if (location == null) {
+            location = new LatLng(0,0);
             status.isError = true;
             status.addErrorField(getString(R.string.add_pet_location_not_chosen));
         }
@@ -448,7 +449,11 @@ public class AddPetFragment extends Fragment {
                     petRelationshipCheckbox.setVisibility(View.GONE);
                     kidsRelationshipCheckbox.setVisibility(View.GONE);
                     transitCheckbox.setVisibility(View.GONE);
-                    pet.setPublicationType(Pet.PublicationType.LOSS);
+                    if (i == 1) {
+                        pet.setPublicationType(Pet.PublicationType.LOSS);
+                    } else {
+                        pet.setPublicationType(Pet.PublicationType.FOUND );
+                    }
                 }
             }
         });
