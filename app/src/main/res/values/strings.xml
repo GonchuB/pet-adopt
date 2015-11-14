@@ -101,9 +101,8 @@
     <string name="answer_question_success">Pregunta contestada exitosamente</string>
     <string name="must_write_answer">La respuesta no puede estar vacía</string>
     <string name="answer_placeholder">Ingresá tu respuesta</string>
-    <string name="report_pet">Reportar Publicacion</string>
-    <string name="sure_report">Reportar publicacion</string>
-    <string name="sure_report_message">Esta seguro de que quiere reportar esta publicacion?</string>
+    <string name="report_pet">Denunciar Publicacion</string>
+    <string name="sure_report_message">Esta seguro de que quiere denunciar esta publicacion?</string>
     <string name="mark_adoption_success">Se ha confirmado la adopción</string>
     <string name="mark_find_success">Se ha confirmado que se encontró su mascota</string>
     <string name="mark_adoption_error">No se ha podido confirmar la adopción. Intentelo de nuevo más tarde</string>
@@ -119,8 +118,8 @@
     <string name="accepted_own_lost_notification">Han confirmado la mascota que encontraste</string>
     <string name="pet_already_adopted">Esta mascota ya ha sido adoptada</string>
     <string name="found">Encontrada</string>
-    <string name="pet_reporting_success">Publicación reportada</string>
-    <string name="pet_reporting_failed">Error al reportar, intente más tarde</string>
+    <string name="pet_reporting_success">Publicación denunciada con éxito</string>
+    <string name="pet_reporting_failed">Error al denunciar, intente más tarde</string>
 
 
 </resources>

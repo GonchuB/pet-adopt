@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         if (item.getItemId() == R.id.report_action) {
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.sure_report)
+                    .setTitle(R.string.report_pet)
                     .setMessage(R.string.sure_report_message)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
