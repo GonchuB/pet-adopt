@@ -65,6 +65,10 @@ public class PetDetailFragment extends Fragment {
     public PetDetailFragment() {
     }
 
+    public Pet getPet() {
+        return pet;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -91,7 +91,8 @@ public class PetsClient extends HttpClient {
     public void getMyRequestedPets(JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         RequestParams params = new RequestParams();
-        params.add("requested_by_me", String.valueOf(true));;
+        params.add("requested_by_me", String.valueOf(true));
+        ;
         client.get(url, params, handler);
     }
 
@@ -174,5 +175,15 @@ public class PetsClient extends HttpClient {
         String url = getApiUrl("/pets/" + petId + "/adoption_requests/" + adopterId + "/accept.json");
         RequestParams params = new RequestParams();
         client.post(url, params, handler);
+    }
+
+    public void reportPet(Pet pet, JsonHttpResponseHandler handler) {
+        try {
+            String url = getApiUrl("/pets/" + pet.getId() + "/report.json");
+            StringEntity entity = new StringEntity("");
+            client.put(ActivityContext, url, entity, "application/json", handler);
+        } catch (UnsupportedEncodingException e) {
+            Log.e("Error in put request", e.getLocalizedMessage());
+        }
     }
 }

@@ -119,6 +119,8 @@
     <string name="accepted_own_lost_notification">Han confirmado la mascota que encontraste</string>
     <string name="pet_already_adopted">Esta mascota ya ha sido adoptada</string>
     <string name="found">Encontrada</string>
+    <string name="pet_reporting_success">Publicación reportada</string>
+    <string name="pet_reporting_failed">Error al reportar, intente más tarde</string>
 
 
 </resources>

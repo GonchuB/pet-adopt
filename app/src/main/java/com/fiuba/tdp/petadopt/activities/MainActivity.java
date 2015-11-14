@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
@@ -41,8 +42,6 @@ import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
 import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.AddPetFragment;
 import com.fiuba.tdp.petadopt.fragments.addPet.map.ChooseLocationMapFragment;
-import com.fiuba.tdp.petadopt.fragments.search.AdvanceSearchResultsDelegate;
-import com.fiuba.tdp.petadopt.fragments.search.AdvancedSearchFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
@@ -253,7 +252,48 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setMessage(R.string.sure_report_message)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            //This is ugly but meh
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            PetDetailFragment petDetailFragment = (PetDetailFragment) fragmentManager.getFragments().get(fragmentManager.getFragments().size() - 1);
+                            progress.show();
+                            PetsClient.instance().reportPet(petDetailFragment.getPet(), new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_success, Toast.LENGTH_LONG).show();
+                                }
 
+                                @Override
+                                public void onSuccess(int code, Header[] headers, JSONArray body) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_success, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_success, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_failed, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_failed, Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                    progress.dismiss();
+                                    Toast.makeText(MainActivity.this, R.string.pet_reporting_failed, Toast.LENGTH_LONG).show();
+                                }
+
+                            });
                             dialog.dismiss();
                         }
                     })
