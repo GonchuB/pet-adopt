@@ -11,4 +11,8 @@
         android:id="@+id/advance_search_action"
         android:title="@string/advance_search_title">
     </item>
+    <item
+        android:id="@+id/report_action"
+        android:title="@string/report_pet">
+    </item>
 </menu>

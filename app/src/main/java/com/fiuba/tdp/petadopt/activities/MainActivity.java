@@ -2,6 +2,7 @@ package com.fiuba.tdp.petadopt.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -14,6 +15,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Base64;
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String auth_token;
     private Boolean created = false;
     private Boolean exit = false;
+
+    private Boolean shouldShowReportButton = false;
     private Fragment mapFragment;
     private HomeFragment homeFragment;
     private SearchView mSearchView;
@@ -100,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+
+
+    public void setShouldShowReportButton(Boolean shouldShowReportButton) {
+        this.shouldShowReportButton = shouldShowReportButton;
+    }
+
 
     private void printFacebookKeyHash() {
         try {
@@ -219,7 +229,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mSearchView.setQueryHint(getResources().getString(R.string.search_hint));
         mSearchView.setOnQueryTextListener(this);
 //        }
-
+        MenuItem reportItem = menu.findItem(R.id.report_action);
+        if (shouldShowReportButton) {
+            reportItem.setVisible(true);
+        } else {
+            reportItem.setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -230,6 +245,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // the nav drawer indicator touch event
         if (item.getItemId() == R.id.advance_search_action) {
             goToAdvancedSearch();
+            return true;
+        }
+        if (item.getItemId() == R.id.report_action) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.sure_report)
+                    .setMessage(R.string.sure_report_message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
             return true;
         }
 
@@ -315,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void displayFragment(Fragment fragment, Integer position) {
         atHome = fragment instanceof HomeFragment;
+        updateReportButtonVisibility(fragment);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment).commit();
@@ -325,6 +360,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentTitle = optionTitles[position];
         setTitle(currentTitle);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    private void updateReportButtonVisibility(Fragment fragment) {
+        shouldShowReportButton = fragment instanceof PetDetailFragment;
+        invalidateOptionsMenu();
     }
 
     private void fetchPets() {
@@ -432,11 +472,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onBackPressed() {
+
         if (!mSearchView.isIconified()) {
             mSearchView.setIconified(true);
         } else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.getBackStackEntryCount() != 0) {
+                if (fragmentManager.getFragments().size() > 1) {
+                    updateReportButtonVisibility(fragmentManager.getFragments().get(fragmentManager.getFragments().size() - 2));
+                }
                 fragmentManager.popBackStackImmediate();
                 if (fragmentManager.getBackStackEntryCount() == 0 || fragmentManager.getBackStackEntryCount() == 1) {
                     setTitle(currentTitle);

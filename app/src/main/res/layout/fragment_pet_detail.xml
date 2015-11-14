@@ -208,25 +208,12 @@
                 app:et_labelEnable="true"
                 app:et_labelTextColor="@color/title_text" />
 
-            <Button
-                android:id="@+id/report_pet"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/transit"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:autoLink="web"
-                android:background="@color/button_background"
-                android:padding="10dp"
-                android:text="@string/report_pet"
-                android:textColor="@color/button_text"
-                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/ask_question"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/report_pet"
+                android:layout_below="@+id/transit"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:autoLink="web"

@@ -1,7 +1,5 @@
 package com.fiuba.tdp.petadopt.fragments.detail;
 
-import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.AdopterResultFragment;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.AskQuestionFragment;
 import com.fiuba.tdp.petadopt.fragments.detail.questions.QuestionsFragment;
@@ -94,32 +93,9 @@ public class PetDetailFragment extends Fragment {
             }
         });
 
-        Button reportPetButton = (Button) rootView.findViewById(R.id.report_pet);
-
-        reportPetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.sure_report)
-                        .setMessage(R.string.sure_report_message)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            }
-        });
-
         loadQuestions(rootView);
+        ((MainActivity) getActivity()).setShouldShowReportButton(true);
+        getActivity().invalidateOptionsMenu();
         return rootView;
     }
 
@@ -193,7 +169,7 @@ public class PetDetailFragment extends Fragment {
 
 
     private void setAdoptionButton() {
-        if (!pet.getPublished()){
+        if (!pet.getPublished()) {
             askAdoptionButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -436,7 +412,6 @@ public class PetDetailFragment extends Fragment {
 
         loadQuestions(this.rootView);
     }
-
 
 
     private class HorizontalGridViewAdapter extends RecyclerView.Adapter {
