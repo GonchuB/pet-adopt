@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.rey.material.widget.EditText;
 
 import org.apache.http.Header;
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,28 +92,33 @@ public class ProfileFragment extends Fragment {
                    }
                    @Override
                    public void onFailure(int code, Header[] headers, Throwable t, JSONObject body){
-                       Log.v("BEMPEOLA", body.toString());
-                       try {
-                           if (body.has("email")){
+                       if (code == HttpStatus.SC_UNAUTHORIZED) {
+                           Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                           ((MainActivity) getActivity()).goBackToLogin();
+                       } else {
+                           try {
+                               if (body.has("email")){
 
-                               JSONArray emailErrors = body.getJSONArray("email");
-                               String error = (String) emailErrors.get(0);
+                                   JSONArray emailErrors = body.getJSONArray("email");
+                                   String error = (String) emailErrors.get(0);
 
-                               if (error.equals("no es válido")){
-                                   Toast.makeText(getActivity(), R.string.invalid_email,
-                                           Toast.LENGTH_LONG).show();
+                                   if (error.equals("no es válido")){
+                                       Toast.makeText(getActivity(), R.string.invalid_email,
+                                               Toast.LENGTH_LONG).show();
+                                   }
+
+                                   if (error.equals("ya está en uso")){
+                                       Toast.makeText(getActivity(), R.string.email_in_use,
+                                               Toast.LENGTH_LONG).show();
+                                   }
+
+                                   progress.dismiss();
                                }
-
-                               if (error.equals("ya está en uso")){
-                                   Toast.makeText(getActivity(), R.string.email_in_use,
-                                           Toast.LENGTH_LONG).show();
-                               }
-
-                               progress.dismiss();
+                           } catch (JSONException e) {
+                               e.printStackTrace();
                            }
-                       } catch (JSONException e) {
-                           e.printStackTrace();
                        }
+
 
                    }
                });
@@ -155,6 +161,16 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                    ((MainActivity) getActivity()).goBackToLogin();
+                } else {
+                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
 
 

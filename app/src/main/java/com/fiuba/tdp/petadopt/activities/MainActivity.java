@@ -54,6 +54,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -206,6 +207,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     setTitle(pet.getName());
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(MainActivity.this, R.string.auth_error, Toast.LENGTH_LONG).show();
+                    goBackToLogin();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.try_again, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -416,6 +427,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 homeFragment.setResults(body);
                 homeFragment.onStart();
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(MainActivity.this, R.string.auth_error, Toast.LENGTH_LONG).show();
+                    goBackToLogin();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.try_again, Toast.LENGTH_LONG).show();
+                }
+            }
         });
     }
 
@@ -430,6 +451,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 progress.dismiss();
                 fragment.setResults(body);
                 fragment.onStart();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(MainActivity.this, R.string.auth_error, Toast.LENGTH_LONG).show();
+                    goBackToLogin();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -446,6 +477,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 fragment.setResults(body);
                 fragment.onStart();
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(MainActivity.this, R.string.auth_error, Toast.LENGTH_LONG).show();
+                    goBackToLogin();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.try_again, Toast.LENGTH_LONG).show();
+                }
+            }
         });
     }
 
@@ -458,6 +499,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onSuccess(int code, Header[] headers, JSONArray body) {
                 progress.dismiss();
                 showResults(body);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(MainActivity.this, R.string.auth_error, Toast.LENGTH_LONG).show();
+                    goBackToLogin();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -475,7 +526,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private void goBackToLogin() {
+    public void goBackToLogin() {
         User.user().logout();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

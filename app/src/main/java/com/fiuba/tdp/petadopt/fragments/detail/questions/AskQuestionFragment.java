@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.detail.PetDetailFragment;
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.Question;
@@ -27,6 +28,7 @@ import com.fiuba.tdp.petadopt.service.QAClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +86,16 @@ public class AskQuestionFragment extends Fragment {
                         Toast.makeText(getActivity(), R.string.add_question_success, Toast.LENGTH_LONG).show();
                         getFragmentManager().popBackStack();
                         previous_fragment.reload();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                            Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                            ((MainActivity) getActivity()).goBackToLogin();
+                        } else {
+                            Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }

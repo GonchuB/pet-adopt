@@ -120,6 +120,9 @@
     <string name="found">Encontrada</string>
     <string name="pet_reporting_success">Publicación denunciada con éxito</string>
     <string name="pet_reporting_failed">Error al denunciar, intente más tarde</string>
+    <string name="auth_error">Algo anduvo mal. Por favor vuelva a iniciar sesión.</string>
+    <string name="try_again">Algo anduvo mal. Por favor intente nuevamente mas tarde</string>
+    <string name="blocked_login">Tu usuario ha sido bloqueado. Si crees que ha habido un error, contacta al administrador</string>
 
 
 </resources>

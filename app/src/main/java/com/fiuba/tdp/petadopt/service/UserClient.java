@@ -70,4 +70,9 @@ public class UserClient extends HttpClient {
 
     }
 
+    public void testAuthToken(String authentication_token, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets.json");
+        url = url + "?user_token=" + authentication_token;
+        client.get(url,handler);
+    }
 }

@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -329,11 +330,15 @@ public class AddPetFragment extends Fragment {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                        progress.dismiss();
-                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, Toast.LENGTH_SHORT);
-                        toast.show();
-                        Log.e("Error creating pet", pet.toJson());
+                        if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                            Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                            ((MainActivity) getActivity()).goBackToLogin();
+                        } else {
+                            progress.dismiss();
+                            Toast toast = Toast.makeText(getContext(), R.string.pet_creation_error, Toast.LENGTH_SHORT);
+                            toast.show();
+                            Log.e("Error creating pet", pet.toJson());
+                        }
                     }
                 });
 

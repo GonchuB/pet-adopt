@@ -37,6 +37,7 @@ import com.rey.material.widget.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
+import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,16 +158,34 @@ public class PetDetailFragment extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 progress.dismiss();
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                    ((MainActivity) getActivity()).goBackToLogin();
+                } else {
+                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 progress.dismiss();
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                    ((MainActivity) getActivity()).goBackToLogin();
+                } else {
+                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
+                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                    ((MainActivity) getActivity()).goBackToLogin();
+                } else {
+                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -202,16 +221,34 @@ public class PetDetailFragment extends Fragment {
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                                 progress.dismiss();
+                                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                                    ((MainActivity) getActivity()).goBackToLogin();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                                }
                             }
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                                 progress.dismiss();
+                                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                                    ((MainActivity) getActivity()).goBackToLogin();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                                }
                             }
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                                 progress.dismiss();
+                                if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                                    Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                                    ((MainActivity) getActivity()).goBackToLogin();
+                                } else {
+                                    Toast.makeText(getActivity(), R.string.try_again, Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                         getActivity().setTitle(pet.getName() + " - " + getActivity().getString(R.string.requesters_title));
@@ -249,7 +286,12 @@ public class PetDetailFragment extends Fragment {
 
                                         @Override
                                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                            Toast.makeText(getActivity(), R.string.ask_for_adoption_error, Toast.LENGTH_LONG).show();
+                                            if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+                                                Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                                                ((MainActivity) getActivity()).goBackToLogin();
+                                            } else {
+                                                Toast.makeText(getActivity(), R.string.ask_for_adoption_error, Toast.LENGTH_LONG).show();
+                                            }
                                         }
                                     });
                                 }

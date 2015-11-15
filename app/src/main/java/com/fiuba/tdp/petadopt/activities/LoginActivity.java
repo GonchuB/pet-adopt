@@ -12,11 +12,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.fiuba.tdp.petadopt.R;
@@ -30,6 +32,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -78,14 +81,26 @@ public class LoginActivity extends AppCompatActivity {
                 client = UserClient.instance();
                 client.signUp(getApplicationContext(), facebookId, facebookToken, new JsonHttpResponseHandler() {
                             @Override
-                            public void onSuccess(int code, Header[] headers, JSONObject body) {
+                            public void onSuccess(int code, Header[] headers, final JSONObject body) {
                                 try {
-                                    User user = User.user();
-                                    user.loadInfoFromJSON(body);
-                                    user.save();
-                                    Log.v("JSON", body.toString());
-                                    Log.v("authtok", user.getAuthToken());
-                                    continueToHome();
+                                    client.testAuthToken(body.getString("authentication_token"), new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int code, Header[] headers, JSONArray content) {
+                                            User user = User.user();
+                                            user.loadInfoFromJSON(body);
+                                            user.save();
+                                            Log.v("JSON", body.toString());
+                                            Log.v("authtok", user.getAuthToken());
+                                            continueToHome();
+                                        }
+
+                                        @Override
+                                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                                            LoginManager.getInstance().logOut();
+                                            Toast.makeText(LoginActivity.this, R.string.blocked_login, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
