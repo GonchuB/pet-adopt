@@ -2,7 +2,6 @@ package com.fiuba.tdp.petadopt.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +24,10 @@ import com.fiuba.tdp.petadopt.R;
 
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.HttpClient;
-import com.fiuba.tdp.petadopt.service.PetsClient;
-import com.fiuba.tdp.petadopt.service.QAClient;
 import com.fiuba.tdp.petadopt.service.UserClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

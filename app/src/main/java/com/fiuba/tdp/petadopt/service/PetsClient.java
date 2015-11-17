@@ -5,24 +5,16 @@
 
 package com.fiuba.tdp.petadopt.service;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 
-import com.fiuba.tdp.petadopt.model.Adopter;
 import com.fiuba.tdp.petadopt.model.Pet;
+import com.fiuba.tdp.petadopt.model.Question;
 import com.fiuba.tdp.petadopt.model.User;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-
-import org.apache.http.entity.StringEntity;
-
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -70,6 +62,19 @@ public class PetsClient extends HttpClient {
         client.get(url, params, handler);
     }
 
+
+    public void postQuestion(String id, Question question, JsonHttpResponseHandler handler){
+        String url = getApiUrl("/pets/"+id+"/questions.json");
+        try {
+            UTF8StringEntity entity = new UTF8StringEntity(question.toJson());
+
+            client.post(ActivityContext, url, entity, "application/json", handler);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+    }
     public void answerQuestion(String petId, String questionId, String answer, JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets/" + petId + "/questions/" + questionId + "/answer.json");
         RequestParams params = new RequestParams();
@@ -116,7 +121,7 @@ public class PetsClient extends HttpClient {
     public void createPet(Pet pet, JsonHttpResponseHandler handler) {
         try {
             String url = getApiUrl("/pets.json");
-            StringEntity entity = new StringEntity(pet.toJson());
+            UTF8StringEntity entity = new UTF8StringEntity(pet.toJson());
             entity.setContentEncoding("utf8");
             client.post(ActivityContext, url, entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {
@@ -180,7 +185,7 @@ public class PetsClient extends HttpClient {
     public void reportPet(Pet pet, JsonHttpResponseHandler handler) {
         try {
             String url = getApiUrl("/pets/" + pet.getId() + "/report.json");
-            StringEntity entity = new StringEntity("");
+            UTF8StringEntity entity = new UTF8StringEntity("");
             client.put(ActivityContext, url, entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {
             Log.e("Error in put request", e.getLocalizedMessage());

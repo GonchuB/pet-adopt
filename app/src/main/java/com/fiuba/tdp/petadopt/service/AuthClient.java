@@ -7,13 +7,9 @@ import android.util.Log;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
 
-/**
- * Created by joaquinstankus on 13/09/15.
- */
+
 public class AuthClient extends HttpClient {
 
     public void signUp(Context context, String fb_id, String fb_token, JsonHttpResponseHandler handler) {
@@ -26,7 +22,7 @@ public class AuthClient extends HttpClient {
             userData.put("facebook_token", fb_token);
             user.put("user", userData);
             Log.v("JSON",user.toString());
-            entity = new StringEntity(user.toString());
+            entity = new UTF8StringEntity(user.toString());
             client.post(context, url, entity, "application/json", handler);
 
         } catch (Exception e) {
@@ -38,7 +34,4 @@ public class AuthClient extends HttpClient {
 
     }
 
-//    public void signUp(String email, String password){
-//
-//    }
 }

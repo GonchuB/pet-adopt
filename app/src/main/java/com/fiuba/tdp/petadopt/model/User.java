@@ -3,17 +3,15 @@ package com.fiuba.tdp.petadopt.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.fiuba.tdp.petadopt.BuildConfig;
 import com.fiuba.tdp.petadopt.service.HttpClient;
+import com.fiuba.tdp.petadopt.service.UserClient;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +42,22 @@ public class User {
     private final static String USER_FB_TOKEN = "user_fb_token";
     private final static String USER_AUTH_TOKEN = "user_auth_token";
 
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
@@ -140,37 +154,20 @@ public class User {
         }
     }
 
-    public void updateUserProfile(Context context, JSONObject user, final JsonHttpResponseHandler jsonHttpResponseHandler) {
-        String url = HttpClient.base_url + "/users/profile.json" + "?user_token=" + authToken;
-        AsyncHttpClient client = new AsyncHttpClient();
+    public void updateUserProfile(final JsonHttpResponseHandler jsonHttpResponseHandler) {
 
-        try {
-            StringEntity se = new StringEntity(user.toString());
-            client.put(context, url, se, "application/json", new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int code, Header[] headers, JSONObject body) {
-                    try {
-                        JSONObject u = body.getJSONObject("user");
-                        firstName = u.getString("first_name");
-                        lastName = u.getString("last_name");
-                        email = u.getString("email");
-                        phone = u.getString("phone");
-                        save();
-                        jsonHttpResponseHandler.onSuccess(code, headers, body);
-                    } catch (JSONException e) {
-                        jsonHttpResponseHandler.onFailure(code, headers, e, body);
-                    }
-                }
+        UserClient.instance().updateProfile(this, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int code, Header[] headers, JSONObject body) {
+                loadInfoFromJSON(body);
+                jsonHttpResponseHandler.onSuccess(code, headers, body);
+            }
 
-                @Override
-                public void onFailure(int code, Header[] headers, Throwable t, JSONObject body) {
-                    jsonHttpResponseHandler.onFailure(code, headers, t, body);
-                }
-            });
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure(int code, Header[] headers, Throwable t, JSONObject body) {
+                jsonHttpResponseHandler.onFailure(code, headers, t, body);
+            }
+        });
     }
 
     public void loadInfoFromJSON(JSONObject info) {
@@ -184,6 +181,18 @@ public class User {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        JsonElement je = gson.toJsonTree(this);
+        JsonObject jo = je.getAsJsonObject();
+        jo.remove("authToken");
+        jo.remove("facebookId");
+        jo.remove("facebookToken");
+        JsonObject result = new JsonObject();
+        result.add("user", jo);
+        return jo.toString();
     }
 
     public Integer getId() {

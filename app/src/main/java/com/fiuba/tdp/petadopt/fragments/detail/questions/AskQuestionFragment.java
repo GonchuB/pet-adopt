@@ -1,19 +1,14 @@
 package com.fiuba.tdp.petadopt.fragments.detail.questions;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,18 +19,11 @@ import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.Question;
 import com.fiuba.tdp.petadopt.model.User;
 import com.fiuba.tdp.petadopt.service.PetsClient;
-import com.fiuba.tdp.petadopt.service.QAClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.apache.http.HttpStatus;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 
 public class AskQuestionFragment extends Fragment {
@@ -43,7 +31,7 @@ public class AskQuestionFragment extends Fragment {
     private PetDetailFragment previous_fragment;
     private ListView lv;
     private Pet pet;
-    private QAClient client;
+    private PetsClient client;
     private String auth_token;
 
 
@@ -62,7 +50,7 @@ public class AskQuestionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_ask_question, container, false);
 
         auth_token = User.user().getAuthToken();
-        client = QAClient.instance();
+        client = PetsClient.instance();
         client.setAuth_token(auth_token);
 
         Button showQuestionsButton = (Button) rootView.findViewById(R.id.ask_question);

@@ -6,9 +6,10 @@ import android.util.Log;
 
 import com.fiuba.tdp.petadopt.model.Pet;
 import com.fiuba.tdp.petadopt.model.User;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.apache.http.entity.StringEntity;
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,13 +35,13 @@ public class UserClient extends HttpClient {
         String url = getApiUrl("/users.json");
         JSONObject user = new JSONObject();
         JSONObject userData = new JSONObject();
-        StringEntity entity;
+        UTF8StringEntity entity;
         try {
             userData.put("facebook_id", fb_id);
             userData.put("facebook_token", fb_token);
             user.put("user", userData);
             Log.v("JSON", user.toString());
-            entity = new StringEntity(user.toString());
+            entity = new UTF8StringEntity(user.toString());
             client.post(context, url, entity, "application/json", handler);
 
         } catch (Exception e) {
@@ -52,14 +53,25 @@ public class UserClient extends HttpClient {
     public void updatePushToken(User user, String newToken, JsonHttpResponseHandler handler) {
         try {
             String url = getApiUrl("/users.json");
-            url = url + "?user_token="+user.getAuthToken();
+            url = url + "?user_token=" + user.getAuthToken();
             JSONObject userObject = new JSONObject();
             JSONObject userTokenData = new JSONObject();
             userTokenData.put("device_id", newToken);
             userObject.put("user", userTokenData);
-            StringEntity entity = new StringEntity(userObject.toString());
+            UTF8StringEntity entity = new UTF8StringEntity(userObject.toString());
             entity.setContentEncoding("utf8");
             client.put(ActivityContext, url, entity, "application/json", handler);
+        } catch (Exception e) {
+            Log.e("Error in put request", e.getLocalizedMessage());
+        }
+    }
+
+
+    public void updateProfile(User user, JsonHttpResponseHandler handler) {
+        try {
+            String url =  getApiUrl("users.json" + "?user_token=" + user.getAuthToken());
+            UTF8StringEntity se = new UTF8StringEntity(user.toJson());
+            client.put(ActivityContext, url, se, "application/json", handler);
         } catch (Exception e) {
             Log.e("Error in put request", e.getLocalizedMessage());
         }
@@ -73,6 +85,6 @@ public class UserClient extends HttpClient {
     public void testAuthToken(String authentication_token, JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets.json");
         url = url + "?user_token=" + authentication_token;
-        client.get(url,handler);
+        client.get(url, handler);
     }
 }

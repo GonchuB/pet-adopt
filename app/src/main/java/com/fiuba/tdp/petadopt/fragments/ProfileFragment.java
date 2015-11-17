@@ -3,6 +3,7 @@ package com.fiuba.tdp.petadopt.fragments;
 /**
  * Created by joaquinstankus on 07/09/15.
  */
+
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.model.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -28,7 +30,8 @@ import org.json.JSONObject;
 
 public class ProfileFragment extends Fragment {
 
-    public ProfileFragment(){}
+    public ProfileFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,81 +50,60 @@ public class ProfileFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                JSONObject jo = new JSONObject();
-                JSONObject user = new JSONObject();
+                EditText editText = (EditText) rootView.findViewById(R.id.user_name);
+                User.user().setFirstName(editText.getText().toString());
+                editText = (EditText) rootView.findViewById(R.id.user_last_name);
+                User.user().setLastName(editText.getText().toString());
+                editText = (EditText) rootView.findViewById(R.id.user_email);
+                User.user().setEmail(editText.getText().toString());
+                editText = (EditText) rootView.findViewById(R.id.user_phone);
+                User.user().setPhone(editText.getText().toString());
 
                 final ProgressDialog progress = new ProgressDialog(v.getContext());
                 progress.setTitle(R.string.loading);
                 progress.show();
 
-                try {
-                    jo.put("user", user);
+                User.user().updateUserProfile(new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int code, Header[] headers, JSONObject body) {
+                        Toast.makeText(getActivity(), R.string.profile_updated,
+                                Toast.LENGTH_LONG).show();
+                        progress.dismiss();
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.goBackToHome();
+                    }
 
-                    EditText editText = (EditText) rootView.findViewById(R.id.user_name);
-                    String first_name = editText.getText().toString();
-                    user.put("first_name", first_name);
+                    @Override
+                    public void onFailure(int code, Header[] headers, Throwable t, JSONObject body) {
+                        progress.dismiss();
+                        if (code == HttpStatus.SC_UNAUTHORIZED) {
+                            Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
+                            ((MainActivity) getActivity()).goBackToLogin();
+                        } else {
+                            try {
+                                if (body.has("email")) {
 
-                    editText = (EditText) rootView.findViewById(R.id.user_last_name);
-                    String last_name = editText.getText().toString();;
-                    user.put("last_name", last_name);
+                                    JSONArray emailErrors = body.getJSONArray("email");
+                                    String error = (String) emailErrors.get(0);
 
-                    editText = (EditText) rootView.findViewById(R.id.user_email);
-                    String email = editText.getText().toString();
-                    user.put("email", email);
+                                    if (error.equals("no es válido")) {
+                                        Toast.makeText(getActivity(), R.string.invalid_email,
+                                                Toast.LENGTH_LONG).show();
+                                    }
 
-                    editText = (EditText) rootView.findViewById(R.id.user_phone);
-                    String phone = editText.getText().toString();
-                    user.put("phone", phone);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    progress.dismiss();
-                    Toast.makeText(getActivity(), R.string.something_wrong,
-                            Toast.LENGTH_LONG).show();
-                }
-
-               User.user().updateUserProfile(getContext(), jo, new JsonHttpResponseHandler(){
-                   @Override
-                   public void onSuccess(int code, Header[] headers, JSONObject body){
-                       Toast.makeText(getActivity(), R.string.profile_updated,
-                               Toast.LENGTH_LONG).show();
-                       progress.dismiss();
-                       MainActivity activity = (MainActivity) getActivity();
-                       activity.goBackToHome();
-                   }
-                   @Override
-                   public void onFailure(int code, Header[] headers, Throwable t, JSONObject body){
-                       if (code == HttpStatus.SC_UNAUTHORIZED) {
-                           Toast.makeText(getActivity(), R.string.auth_error, Toast.LENGTH_LONG).show();
-                           ((MainActivity) getActivity()).goBackToLogin();
-                       } else {
-                           try {
-                               if (body.has("email")){
-
-                                   JSONArray emailErrors = body.getJSONArray("email");
-                                   String error = (String) emailErrors.get(0);
-
-                                   if (error.equals("no es válido")){
-                                       Toast.makeText(getActivity(), R.string.invalid_email,
-                                               Toast.LENGTH_LONG).show();
-                                   }
-
-                                   if (error.equals("ya está en uso")){
-                                       Toast.makeText(getActivity(), R.string.email_in_use,
-                                               Toast.LENGTH_LONG).show();
-                                   }
-
-                                   progress.dismiss();
-                               }
-                           } catch (JSONException e) {
-                               e.printStackTrace();
-                           }
-                       }
+                                    if (error.equals("ya está en uso")) {
+                                        Toast.makeText(getActivity(), R.string.email_in_use,
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
 
-                   }
-               });
+                    }
+                });
             }
         });
     }
@@ -133,26 +115,26 @@ public class ProfileFragment extends Fragment {
         progress.show();
         User.user().getUserProfile(new JsonHttpResponseHandler() {
 
-            public void onSuccess(int code, Header[] headers, JSONObject body){
+            public void onSuccess(int code, Header[] headers, JSONObject body) {
                 try {
                     EditText editText = (EditText) rootView.findViewById(R.id.user_name);
                     String first_name = body.getString("first_name");
-                    if (!first_name.equals("null")){
+                    if (!first_name.equals("null")) {
                         editText.setText(first_name);
                     }
                     editText = (EditText) rootView.findViewById(R.id.user_last_name);
                     String last_name = body.getString("last_name");
-                    if (!last_name.equals("null")){
+                    if (!last_name.equals("null")) {
                         editText.setText(last_name);
                     }
                     editText = (EditText) rootView.findViewById(R.id.user_email);
                     String email = body.getString("email");
-                    if (!email.equals("")){
+                    if (!email.equals("")) {
                         editText.setText(email);
                     }
                     editText = (EditText) rootView.findViewById(R.id.user_phone);
                     String phone = body.getString("phone");
-                    if (!phone.equals("null")){
+                    if (!phone.equals("null")) {
                         editText.setText(phone);
                     }
                     progress.dismiss();
