@@ -303,6 +303,7 @@ public class AddPetFragment extends Fragment {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
+                        final int[] index = {0};
                         for (Uri uri : imageUris) {
                             try {
                                 PetsClient.instance().uploadImage(response.getString("id"), getPath(uri), new JsonHttpResponseHandler() {
@@ -311,6 +312,13 @@ public class AddPetFragment extends Fragment {
                                         String items = "";
                                         try {
                                             items = body.toString();
+                                            if (index[0] == 0) {
+                                                progress.dismiss();
+                                                Toast toast = Toast.makeText(getContext(), R.string.pet_creation_success, Toast.LENGTH_SHORT);
+                                                toast.show();
+                                                ((MainActivity) getActivity()).goBackToHome();
+                                            }
+                                            index[0]++;
                                             Log.v("image response", items);
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -321,11 +329,6 @@ public class AddPetFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        ;
-                        progress.dismiss();
-                        Toast toast = Toast.makeText(getContext(), R.string.pet_creation_success, Toast.LENGTH_SHORT);
-                        toast.show();
-                        ((MainActivity) getActivity()).goBackToHome();
                     }
 
                     @Override
