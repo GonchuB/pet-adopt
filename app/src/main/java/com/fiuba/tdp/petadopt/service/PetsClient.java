@@ -63,8 +63,8 @@ public class PetsClient extends HttpClient {
     }
 
 
-    public void postQuestion(String id, Question question, JsonHttpResponseHandler handler){
-        String url = getApiUrl("/pets/"+id+"/questions.json");
+    public void postQuestion(String id, Question question, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("/pets/" + id + "/questions.json");
         try {
             UTF8StringEntity entity = new UTF8StringEntity(question.toJson());
 
@@ -75,6 +75,7 @@ public class PetsClient extends HttpClient {
 
 
     }
+
     public void answerQuestion(String petId, String questionId, String answer, JsonHttpResponseHandler handler) {
         String url = getApiUrl("/pets/" + petId + "/questions/" + questionId + "/answer.json");
         RequestParams params = new RequestParams();
@@ -185,6 +186,16 @@ public class PetsClient extends HttpClient {
     public void reportPet(Pet pet, JsonHttpResponseHandler handler) {
         try {
             String url = getApiUrl("/pets/" + pet.getId() + "/report.json");
+            UTF8StringEntity entity = new UTF8StringEntity("");
+            client.put(ActivityContext, url, entity, "application/json", handler);
+        } catch (UnsupportedEncodingException e) {
+            Log.e("Error in put request", e.getLocalizedMessage());
+        }
+    }
+
+    public void reportQuestion(Pet pet, Question question, AsyncHttpResponseHandler handler) {
+        try {
+            String url = getApiUrl("/pets/" + pet.getId() + "/questions/" + question.getId() + "/report.json");
             UTF8StringEntity entity = new UTF8StringEntity("");
             client.put(ActivityContext, url, entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {

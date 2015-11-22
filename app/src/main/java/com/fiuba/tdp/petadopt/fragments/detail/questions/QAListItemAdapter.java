@@ -1,6 +1,8 @@
 package com.fiuba.tdp.petadopt.fragments.detail.questions;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -12,8 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fiuba.tdp.petadopt.R;
+import com.fiuba.tdp.petadopt.fragments.dialog.ConfirmDialogDelegate;
+import com.fiuba.tdp.petadopt.fragments.dialog.ConfirmDialogFragment;
 import com.fiuba.tdp.petadopt.model.Question;
+import com.fiuba.tdp.petadopt.service.PetsClient;
 import com.fiuba.tdp.petadopt.util.DateUtils;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.List;
 
@@ -23,6 +29,7 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
     private final Activity context;
     private Boolean isOwner;
     private View.OnClickListener answerQuestionListener;
+    private View.OnClickListener reportQuestionListener;
     private Button answerButton;
 
     public QAListItemAdapter(Activity context,
@@ -45,6 +52,7 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
         TextView answerTextView = (TextView) rowView.findViewById(R.id.answer);
         TextView answerDateTextView = (TextView) rowView.findViewById(R.id.answer_date);
         answerButton = (Button) rowView.findViewById(R.id.answer_question_button);
+        setupReportButton(rowView, position);
 
         RelativeLayout relativeLayout = (RelativeLayout) rowView.findViewById(R.id.relative_layout);
 
@@ -71,6 +79,13 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
         return rowView;
     }
 
+    private void setupReportButton(View rowView, Integer position) {
+        Button button = (Button) rowView.findViewById(R.id.report_button);
+        button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        button.setOnClickListener(reportQuestionListener);
+        button.setTag(position);
+    }
+
     public void setIsOwner(Boolean isOwner) {
         this.isOwner = isOwner;
     }
@@ -81,6 +96,10 @@ public class QAListItemAdapter extends ArrayAdapter<Question> {
 
     public Button getAnswerButton() {
         return answerButton;
+    }
+
+    public void setReportQuestionListener(View.OnClickListener reportQuestionListener) {
+        this.reportQuestionListener = reportQuestionListener;
     }
 }
 

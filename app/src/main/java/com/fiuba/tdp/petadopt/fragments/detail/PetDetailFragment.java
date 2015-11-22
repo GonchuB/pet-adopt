@@ -361,7 +361,8 @@ public class PetDetailFragment extends Fragment {
                 }
             });
 
-
+            Button reportButton = (Button) questionLayout.findViewById(R.id.report_button);
+            reportButton.setVisibility(View.GONE);
         } else {
             this.sampleQuestionLayout = (RelativeLayout) rootView.findViewById(R.id.sample_question_layout);
             RelativeLayout rootLayout = (RelativeLayout) rootView.findViewById(R.id.root_layout);

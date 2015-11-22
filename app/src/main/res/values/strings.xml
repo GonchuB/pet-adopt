@@ -102,6 +102,7 @@
     <string name="must_write_answer">La respuesta no puede estar vacía</string>
     <string name="answer_placeholder">Ingresá tu respuesta</string>
     <string name="report_pet">Denunciar Publicacion</string>
+    <string name="report">Denunciar</string>
     <string name="sure_report_message">¿Está seguro de que quiere denunciar esta publicación?</string>
     <string name="mark_adoption_success">Se ha confirmado la adopción</string>
     <string name="mark_find_success">Se ha confirmado que se encontró su mascota</string>
@@ -123,6 +124,9 @@
     <string name="auth_error">Algo anduvo mal. Por favor vuelva a iniciar sesión.</string>
     <string name="try_again">Algo anduvo mal. Por favor intente nuevamente mas tarde</string>
     <string name="blocked_login">Tu usuario ha sido bloqueado. Si crees que ha habido un error, contacta al administrador (soporte@petadopt.com)</string>
+    <string name="question_reported">Pregunta denunciada</string>
+    <string name="question_reporting_error">Hubo un error al denunciar la pregunta. Intente nuevamente más tarde</string>
+    <string name="question_reporting_confirmation">¿Está seguro de que quiere denunciar esta pregunta?</string>
 
 
 </resources>

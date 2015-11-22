@@ -18,23 +18,23 @@
         android:layout_marginTop="5dp"
         android:text="Gonzalo Beviglia"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/asker_name"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/layout_rounded_border_bg"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginRight="40dp"
         android:text="Qest"
         android:textColor="@color/title_text"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/question_date"
@@ -47,7 +47,20 @@
         android:paddingEnd="0dp"
         android:paddingStart="10dp"
         android:text="date"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/report_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_alignTop="@+id/question_date"
+        android:layout_alignBottom="@+id/question_date"
+        android:layout_toRightOf="@id/question_date"
+        android:layout_marginStart="5dp"
+        android:text="@string/report"
+        android:background="?android:attr/selectableItemBackground"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/answer"
@@ -55,17 +68,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/question_date"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/layout_rounded_border_bg"
         android:gravity="end"
+        android:paddingBottom="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="40dp"
         android:text="Ans"
         android:textColor="@color/title_text"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/answer_date"
@@ -79,14 +92,14 @@
         android:paddingEnd="0dp"
         android:paddingStart="10dp"
         android:text="Date"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/answer_question_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/question_date"
         android:layout_marginTop="5dp"
-        android:layout_alignParentEnd="true"
         android:text="@string/answer" />
 </RelativeLayout>
