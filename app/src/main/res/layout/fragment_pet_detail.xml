@@ -27,9 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-
             <com.rey.material.widget.FloatingActionButton
-                android:id="@+id/adopt_pet"
+                android:id="@+id/share_pet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -37,8 +36,21 @@
                 android:layout_marginEnd="20dp"
                 app:fab_backgroundColor="@color/button_background"
                 app:fab_elevation="2dp"
+                app:fab_iconSrc="@drawable/share"
+                app:fab_radius="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp" />
+
+            <com.rey.material.widget.FloatingActionButton
+                android:id="@+id/adopt_pet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_backgroundColor="@color/button_background"
+                app:fab_elevation="2dp"
                 app:fab_iconSrc="@drawable/white_heart"
-                app:fab_radius="30dp" />
+                app:fab_radius="30dp"
+                android:layout_below="@+id/horizontal_gridView"
+                android:layout_toStartOf="@+id/share_pet" />
 
             <com.rey.material.widget.EditText
                 android:id="@+id/name"

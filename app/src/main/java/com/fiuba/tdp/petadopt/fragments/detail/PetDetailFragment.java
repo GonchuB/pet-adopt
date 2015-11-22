@@ -2,6 +2,8 @@ package com.fiuba.tdp.petadopt.fragments.detail;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.activities.MainActivity;
 import com.fiuba.tdp.petadopt.fragments.AdopterResultFragment;
@@ -46,10 +52,12 @@ import java.util.ArrayList;
 
 public class PetDetailFragment extends Fragment {
     private Pet pet;
+    private ArrayList<ImageView> imageViews = new ArrayList<>();
     private HorizontalGridView mHorizontalGridView;
     private int mScrollState = RecyclerView.SCROLL_STATE_IDLE;
     private ProgressDialog progress;
     FloatingActionButton askAdoptionButton;
+    FloatingActionButton shareButton;
     Button askQuestionButton;
 
 
@@ -95,6 +103,21 @@ public class PetDetailFragment extends Fragment {
                 ft.add(R.id.content_frame, mapFragment, "Questions");
                 ft.addToBackStack(null);
                 ft.commit();
+            }
+        });
+
+        shareButton = (FloatingActionButton) rootView.findViewById(R.id.share_pet);
+        shareButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharePhoto photo = new SharePhoto.Builder()
+                        .setBitmap(((BitmapDrawable) imageViews.get(0).getDrawable()).getBitmap())
+                        .build();
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(photo)
+                        .build();
+
+                ShareDialog.show(PetDetailFragment.this, content);
             }
         });
 
@@ -487,6 +510,7 @@ public class PetDetailFragment extends Fragment {
                     ft.commit();
                 }
             });
+            imageViews.add(imageView);
             return new ImageViewHolder(imageView);
         }
 

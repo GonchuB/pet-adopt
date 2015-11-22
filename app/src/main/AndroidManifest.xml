@@ -64,6 +64,10 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBfgGDN368SxX5rDaK5h3DJ4pmwATyKzVo"/>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1599819030268203"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
