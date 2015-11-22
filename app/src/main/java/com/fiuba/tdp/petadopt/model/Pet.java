@@ -216,6 +216,9 @@ public class Pet {
         this.id = jsonObject.getString("id");
         this.userId = jsonObject.getString("user_id");
         this.name = jsonObject.getString("name");
+        if (this.name.equals("null")) {
+            this.name  = "";
+        }
         this.description = jsonObject.getString("description");
         this.vaccinated = jsonObject.getBoolean("vaccinated");
         this.published = jsonObject.getBoolean("published");

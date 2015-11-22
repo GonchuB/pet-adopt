@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pet Adopt</string>
     <string name="app_id">1599819030268203</string>
+    <string name="google_play_app_url">https://play.google.com</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Configuración</string>
@@ -127,6 +128,12 @@
     <string name="question_reported">Pregunta denunciada</string>
     <string name="question_reporting_error">Hubo un error al denunciar la pregunta. Intente nuevamente más tarde</string>
     <string name="question_reporting_confirmation">¿Está seguro de que quiere denunciar esta pregunta?</string>
+    <string name="adoption_share_title">%s necesita un hogar</string>
+    <string name="adoption_share_description">Descargá PetAdopt para adoptar a esta mascota</string>
+    <string name="loss_share_title">%s se perdió. ¿Nos ayudas a buscar?</string>
+    <string name="loss_share_description">Descargá PetAdopt para ayudar a encontrar a esta mascota</string>
+    <string name="found_share_title">Encontramos  a %s. ¿Nos ayudas a encontrar a su dueño?</string>
+    <string name="found_share_description">Descargá PetAdopt para ayudar a encontrar a su dueño</string>
 
 
 </resources>

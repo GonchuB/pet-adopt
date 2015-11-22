@@ -2,7 +2,6 @@ package com.fiuba.tdp.petadopt.fragments.detail;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
@@ -21,8 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.fiuba.tdp.petadopt.R;
 import com.fiuba.tdp.petadopt.activities.MainActivity;
@@ -110,14 +107,16 @@ public class PetDetailFragment extends Fragment {
         shareButton.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharePhoto photo = new SharePhoto.Builder()
-                        .setBitmap(((BitmapDrawable) imageViews.get(0).getDrawable()).getBitmap())
-                        .build();
-                SharePhotoContent content = new SharePhotoContent.Builder()
-                        .addPhoto(photo)
+                String title = buildShareTitle(pet);
+                String description = buildShareDescription(pet);
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle(title)
+                        .setContentDescription(description)
+                        .setImageUrl(Uri.parse(pet.getFirstImage().getMediumUrl()))
+                        .setContentUrl(Uri.parse(getString(R.string.google_play_app_url)))
                         .build();
 
-                ShareDialog.show(PetDetailFragment.this, content);
+                ShareDialog.show(PetDetailFragment.this, linkContent);
             }
         });
 
@@ -125,6 +124,43 @@ public class PetDetailFragment extends Fragment {
         ((MainActivity) getActivity()).setShouldShowReportButton(true);
         getActivity().invalidateOptionsMenu();
         return rootView;
+    }
+
+
+    private String buildShareTitle(Pet pet) {
+        String title = "";
+        switch (pet.getPublicationType()) {
+            case ADOPTION:
+                title = String.format(getString(R.string.adoption_share_title), pet.getName());
+                break;
+            case LOSS:
+                title = String.format(getString(R.string.loss_share_title), pet.getName());
+                break;
+            case FOUND:
+                if (pet.getName() == null || pet.getName().isEmpty()) {
+                    title = String.format(getString(R.string.found_share_title), "esta mascota");
+                } else {
+                    title = String.format(getString(R.string.found_share_title), pet.getName());
+                }
+                break;
+        }
+        return title;
+    }
+
+    private String buildShareDescription(Pet pet) {
+        String description =  buildShareTitle(pet) + ". ";
+        switch (pet.getPublicationType()) {
+            case ADOPTION:
+                description += getString(R.string.adoption_share_description);
+                break;
+            case LOSS:
+                description = getString(R.string.loss_share_description);
+                break;
+            case FOUND:
+                description = getString(R.string.found_share_description);
+                break;
+        }
+        return description;
     }
 
     private void setupGridView(View rootView) {
