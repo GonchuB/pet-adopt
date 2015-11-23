@@ -56,12 +56,12 @@ public class MyGcmListenerService extends GcmListenerService {
             case "accept_lost":
                 message = getString(R.string.accepted_own_lost_notification);
                 break;
-        }
-
-        if (from.startsWith("/topics/")) {
-            // message received from some topic.
-        } else {
-            // normal downstream message.
+            case "lost_pet_match":
+                message = getString(R.string.matched_lost_pet_notification);
+                break;
+            case "found_pet_match":
+                message = getString(R.string.matched_found_pet_notification);
+                break;
         }
 
         // [START_EXCLUDE]

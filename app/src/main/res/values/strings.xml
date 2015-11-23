@@ -130,10 +130,12 @@
     <string name="question_reporting_confirmation">¿Está seguro de que quiere denunciar esta pregunta?</string>
     <string name="adoption_share_title">%s necesita un hogar</string>
     <string name="adoption_share_description">Descargá PetAdopt para adoptar a esta mascota</string>
-    <string name="loss_share_title">%s se perdió. ¿Nos ayudas a buscar?</string>
+    <string name="loss_share_title">%s se perdió. ¿Nos ayudás a buscar?</string>
     <string name="loss_share_description">Descargá PetAdopt para ayudar a encontrar a esta mascota</string>
-    <string name="found_share_title">Encontramos  a %s. ¿Nos ayudas a encontrar a su dueño?</string>
+    <string name="found_share_title">Encontramos  a %s. ¿Nos ayudás a encontrar a su dueño?</string>
     <string name="found_share_description">Descargá PetAdopt para ayudar a encontrar a su dueño</string>
+    <string name="matched_lost_pet_notification">Alguien encontró una mascota parecida a la que perdiste!</string>
+    <string name="matched_found_pet_notification">Alguien perdió una mascota parecida a la que encontraste!</string>
 
 
 </resources>
